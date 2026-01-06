@@ -1,14 +1,17 @@
 ############################################################
-# Result 1 – Supplementary Figures 1–4
+# Result 1 – Supplementary Figures 1–6
 # Metadata-based characterization of sleep architecture
 # across species
 #
-# This script generates Supplementary Figures 1–4 of Result 1,
+# This script generates Supplementary Figures 1–6 of Result 1,
 # summarizing:
-#   (1) total sleep time
+#   (1) Total sleep time
 #   (2) NREM sleep ratio
-#   (3) sleep frequency
+#   (3) Number of sleep times per day (=sleep frequency)
 #   (4) sleep timing patterns
+#   (5) association between sleep timing and sleep frequency
+#       in primates (Mouse lemur highlighted)
+#   (6) global association between sleep timing and sleep frequency
 #
 # Curated species-level sleep metadata is required.
 # The data file is not included in this repository.
@@ -23,7 +26,9 @@ required_packages <- c(
   "dplyr",
   "ggplot2",
   "ggpubr",
-  "DescTools"
+  "DescTools",
+  "ggmosaic",
+  "scales"
 )
 
 invisible(lapply(required_packages, library, character.only = TRUE))
@@ -186,6 +191,143 @@ supfig4_all <- ggpie(
 )
 
 supfig4_all
+
+
+############################################################
+# Supplementary Figure 5
+# Association between sleep timing and sleep frequency
+# in primates (Mouse lemur highlighted)
+############################################################
+timing_times_Meta <- species_Metadata[!is.na(species_Metadata$Sleep_timing_per_day) & !is.na(species_Metadata$Number_of_sleep_times_per_day), ]
+timing_times_Meta$Sleep_Timing <- factor(timing_times_Meta$Sleep_timing_per_day)
+timing_times_Meta$Number_of_sleep_times_per_day <- factor(timing_times_Meta$Number_of_sleep_times_per_day)
+rownames(timing_times_Meta) <- NULL
+
+fisher.test(timing_times_Meta$Number_of_sleep_times_per_day, timing_times_Meta$Sleep_Timing)
+
+Primates <- timing_times_Meta[which(timing_times_Meta$Order =="Primates"),]
+
+set.seed(42)  
+
+df_plot <- Primates %>%
+  select(Species_name_ensembl, Species_symbol_name_ensembl,
+         Number_of_sleep_times_per_day, Sleep_Timing) %>%
+  mutate(
+    Group = ifelse(Species_symbol_name_ensembl == "Microcebus murinus", "Mouse lemur", "Other primates"),
+    
+    x_base = recode(Number_of_sleep_times_per_day,
+                    "Once" = 1, "More than twice" = 2),
+    y_base = recode(Sleep_Timing,
+                    "Sleep at night" = 1, "Sleep at daytime" = 2),
+    
+    x_jitter = x_base + runif(n(), -0.2, 0.2),
+    y_jitter = y_base + runif(n(), -0.2, 0.2)
+  )
+
+df_plot <- df_plot %>%
+  mutate(
+    jitter_x = as.numeric(factor(Number_of_sleep_times_per_day)) + runif(n(), -0.2, 0.2),
+    jitter_y = as.numeric(factor(Sleep_Timing)) + runif(n(), -0.2, 0.2)
+  )
+
+df_plot <- df_plot %>%
+  mutate(
+    Number_of_sleep_times_per_day = factor(Number_of_sleep_times_per_day,
+                                           levels = c("Once", "More than twice")),
+    Sleep_Timing = factor(Sleep_Timing,
+                          levels = c("Sleep at night", "Sleep at daytime"))
+  )
+
+primates_sleep_pattern <- ggplot(df_plot, aes(x = x_jitter, y = y_jitter)) +
+  geom_point(aes(fill = Group), shape = 21, size = 5, color = "black", stroke = 1.5) +
+  geom_text(aes(label = Species_name_ensembl), vjust = -1.2, size = 3) +
+  
+  geom_vline(xintercept = 1.5, linetype = "dashed", color = "gray30") +
+  geom_hline(yintercept = 1.5, linetype = "dashed", color = "gray30") +
+  
+  scale_x_continuous(breaks = c(1, 2), labels = c("Once", "More than twice"), expand = c(0.1, 0.1)) +
+  scale_y_continuous(breaks = c(1, 2), labels = c("Sleep at night", "Sleep at daytime"), expand = c(0.1, 0.1)) +
+  
+  scale_fill_manual(values = c("Mouse lemur" = "#E64B35", "Other primates" = "gray70")) +
+  
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.border = element_rect(color = "black", fill = NA, linewidth = 1.5),
+    panel.grid = element_blank()
+    # legend.position = "top"
+  ) +
+  
+  labs(
+    title = "",
+    x = "Sleep Frequency",
+    y = "Sleep Timing",
+    fill = "Species"
+  )
+
+primates_sleep_pattern
+
+
+############################################################
+# Supplementary Figure 6
+# Global association between sleep timing and sleep frequency
+############################################################
+custom_colors <- c(
+  "Sleep at night" = "#1f77b4",
+  "Sleep at daytime" = "#ff7f0e",
+  "Sleep at anytime" = "#2ca02c"
+)
+
+p <- ggplot(data = timing_times_Meta) +
+  geom_mosaic(
+    aes(x = product(Number_of_sleep_times_per_day),
+        fill = Sleep_Timing,
+        weight = 1),
+    na.rm = TRUE,
+    color = "black", linewidth = 0.3
+  ) +
+  scale_fill_manual(values = custom_colors) +
+  labs(x = "", y = "", fill = "Diurnality") +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid = element_blank(),
+    legend.position = "top"
+  )
+
+gb <- ggplot_build(p)
+panel_data <- gb$data[[1]]
+
+hex_to_name <- setNames(names(custom_colors), custom_colors)
+
+label_df <- panel_data %>%
+  mutate(
+    Sleep_Timing = hex_to_name[fill],
+    Number_of_sleep_times_per_day = x__Number_of_sleep_times_per_day,
+    x = (xmin + xmax) / 2,
+    y = (ymin + ymax) / 2
+  )
+
+label_info <- timing_times_Meta %>%
+  count(Number_of_sleep_times_per_day, Sleep_Timing) %>%
+  group_by(Number_of_sleep_times_per_day) %>%
+  mutate(prop = n / sum(n)) %>%
+  ungroup()
+
+label_df <- label_df %>%
+  left_join(label_info, by = c("Number_of_sleep_times_per_day", "Sleep_Timing")) %>%
+  mutate(label = paste0(n, " Species\n(", round(prop * 100, 1), "%)"))
+
+times_timing_mosicPlot <- p + geom_text(
+  data = label_df %>% filter(!is.na(n)), 
+  aes(x = x, y = y, label = label),
+  inherit.aes = FALSE,
+  size = 4.2,
+  fontface = "bold",
+  color = "black"
+)
+
+times_timing_mosicPlot
 
 
 ############################################################
