@@ -1,82 +1,95 @@
 ############################################################
-# Result2: Phylogenetic clustering vs sleep phenotype
+# Sleep Evolution Analysis
 #
-# - Input: MUSCLE-aligned CDS FASTA (gene-wise)
-# - Method:
-#   1) Genetic distance (dist.dna)
-#   2) NJ tree → cophenetic distance
-#   3) Hierarchical clustering (average linkage)
-#   4) Cluster-wise association with total sleep time
+# Phylogenetic clustering of circadian genes and
+# association with sleep phenotypes across species
 #
-# - Output:
-#   Gene-wise optimal cluster number (2–12)
-#   with ANOVA / Kruskal statistics
+# Analyses included:
+#  - Result2: Total sleep time
+#  - Result3: NREM sleep ratio
+#
+# Input:
+#  - MUSCLE-aligned CDS FASTA files (gene-wise)
+#  - Species-level sleep metadata
+#
+# Methods:
+#  1) Genetic distance (dist.dna)
+#  2) Neighbor-Joining tree
+#  3) Cophenetic distance
+#  4) Hierarchical clustering (average linkage)
+#  5) Cluster-wise phenotype association (ANOVA / Kruskal)
 ############################################################
 
-## ===============================
+
+## =========================================================
 ## 1. Libraries
-## ===============================
+## =========================================================
 library(ape)
 library(data.table)
 library(Biostrings)
 library(dplyr)
 library(nortest)
 
-## ===============================
-## 2. User-defined paths
-## ===============================
-DATA_DIR <- "DATA/CDS_MUSCLE"     # not included in repo
-META_FILE <- "DATA/species_sleep_metadata.txt"
-OUT_DIR  <- "results/Result2"
+
+## =========================================================
+## 2. Project paths
+## =========================================================
+PROJECT_DIR <- getwd()
+
+DATA_DIR  <- file.path(PROJECT_DIR, "data", "Fasta")
+META_FILE <- file.path(PROJECT_DIR, "data", "Result1", "species_sleep_metadata.txt")
+OUT_DIR   <- file.path(PROJECT_DIR, "data", "Result2")
 
 dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
 
-## ===============================
-## 3. Load metadata
-## ===============================
-metadata <- fread(META_FILE) |> as.data.frame()
 
-metadata$Species_symbol_name_ensembl <- metadata$Species_symbol_name_ensembl |>
+## =========================================================
+## 3. Load metadata
+## =========================================================
+meta <- fread(META_FILE) |> as.data.frame()
+
+meta$Species_symbol_name_ensembl <- meta$Species_symbol_name_ensembl |>
   gsub(" ", "_", x = _) |>
   tolower()
 
-metadata <- metadata |> 
-  filter(!is.na(Total_sleep_time_per_day))
+rownames(meta) <- NULL
 
-rownames(metadata) <- NULL
 
-## ===============================
+## =========================================================
 ## 4. FASTA list
-## ===============================
+## =========================================================
 fasta_files <- list.files(DATA_DIR, pattern = "_muscle.fasta$")
-genes <- sub("_muscle.fasta$", "", fasta_files)
+gene_list   <- sub("_muscle.fasta$", "", fasta_files)
 
-## ===============================
-## 5. Main analysis loop
-## ===============================
-final_result <- list()
 
-for (g in genes) {
+## =========================================================
+## 5. Core function: phylogenetic clustering + association
+## =========================================================
+run_phylo_association <- function(
+  gene,
+  phenotype_col,
+  meta_df
+) {
 
-  message("Processing gene: ", g)
+  fasta_path <- file.path(DATA_DIR, paste0(gene, "_muscle.fasta"))
+  if (!file.exists(fasta_path)) return(NULL)
 
-  fasta_path <- file.path(DATA_DIR, paste0(g, "_muscle.fasta"))
   cds <- readDNAStringSet(fasta_path)
-
   names(cds) <- sapply(strsplit(names(cds), ":"), `[`, 2)
 
-  keep <- intersect(names(cds), metadata$Species_symbol_name_ensembl)
+  keep <- intersect(names(cds), meta_df$Species_symbol_name_ensembl)
   cds <- cds[names(cds) %in% keep]
 
-  names(cds) <- metadata$Species_name_ensembl[
-    match(names(cds), metadata$Species_symbol_name_ensembl)
+  if (length(cds) < 5) return(NULL)
+
+  names(cds) <- meta_df$Species_name_ensembl[
+    match(names(cds), meta_df$Species_symbol_name_ensembl)
   ]
 
-  use_meta <- metadata[
-    match(names(cds), metadata$Species_name_ensembl),
+  use_meta <- meta_df[
+    match(names(cds), meta_df$Species_name_ensembl),
   ]
-
-  if (nrow(use_meta) < 5) next  # safety check
+  rownames(use_meta) <- NULL
 
   dna <- as.DNAbin(cds)
   dm  <- dist.dna(dna, as.matrix = TRUE, pairwise.deletion = TRUE)
@@ -85,51 +98,90 @@ for (g in genes) {
   cophen_dm <- cophenetic.phylo(tree)
   hc <- hclust(as.dist(cophen_dm), method = "average")
 
-  gene_res <- list()
+  res_list <- list()
 
   for (k in 2:12) {
 
     clusters <- cutree(hc, k)
 
     df <- data.frame(
-      Species = names(clusters),
-      Cluster = factor(clusters),
-      Sleep   = use_meta$Total_sleep_time_per_day[
+      Species  = names(clusters),
+      Cluster  = factor(clusters),
+      Phenotype = use_meta[[phenotype_col]][
         match(names(clusters), use_meta$Species_name_ensembl)
       ]
     )
 
-    aov_fit <- aov(Sleep ~ Cluster, data = df)
+    aov_fit <- aov(Phenotype ~ Cluster, data = df)
     aov_sum <- summary(aov_fit)[[1]]
 
-    gene_res[[k]] <- data.frame(
-      Gene        = g,
+    res_list[[k]] <- data.frame(
+      Gene        = gene,
       Cluster    = k,
       F_value    = aov_sum$`F value`[1],
       P_anova    = aov_sum$`Pr(>F)`[1],
-      P_kruskal  = kruskal.test(Sleep ~ Cluster, df)$p.value,
+      P_kruskal  = kruskal.test(Phenotype ~ Cluster, df)$p.value,
       Shapiro_p  = shapiro.test(residuals(aov_fit))$p.value
     )
   }
 
-  final_result[[g]] <- do.call(rbind, gene_res)
+  do.call(rbind, res_list)
 }
 
-## ===============================
-## 6. Summarise & adjust P-values
-## ===============================
-final_df <- do.call(rbind, final_result)
 
-final_best <- final_df |>
+## =========================================================
+## Result2: Total sleep time
+## =========================================================
+meta_R2 <- meta |> filter(!is.na(Total_sleep_time_per_day))
+
+result2_all <- lapply(
+  gene_list,
+  run_phylo_association,
+  phenotype_col = "Total_sleep_time_per_day",
+  meta_df = meta_R2
+)
+
+result2_all <- do.call(rbind, result2_all)
+
+result2_best <- result2_all |>
   group_by(Gene) |>
   slice_max(F_value, n = 1, with_ties = FALSE) |>
   ungroup() |>
   mutate(adj.P = p.adjust(P_anova, method = "BH"))
 
-fwrite(final_df,
-       file.path(OUT_DIR, "Result2_all_clusters.tsv"),
+fwrite(result2_all,
+       file.path(OUT_DIR, "Result2_TotalSleep_all_clusters.tsv"),
        sep = "\t")
 
-fwrite(final_best,
-       file.path(OUT_DIR, "Result2_best_cluster_per_gene.tsv"),
+fwrite(result2_best,
+       file.path(OUT_DIR, "Result2_TotalSleep_best_cluster.tsv"),
+       sep = "\t")
+
+
+## =========================================================
+## Result3: NREM sleep ratio
+## =========================================================
+meta_R3 <- meta |> filter(!is.na(Percentage_of_NREM_time_per_day))
+
+result3_all <- lapply(
+  gene_list,
+  run_phylo_association,
+  phenotype_col = "Percentage_of_NREM_time_per_day",
+  meta_df = meta_R3
+)
+
+result3_all <- do.call(rbind, result3_all)
+
+result3_best <- result3_all |>
+  group_by(Gene) |>
+  slice_max(F_value, n = 1, with_ties = FALSE) |>
+  ungroup() |>
+  mutate(adj.P = p.adjust(P_kruskal, method = "BH"))
+
+fwrite(result3_all,
+       file.path(OUT_DIR, "Result3_NREM_all_clusters.tsv"),
+       sep = "\t")
+
+fwrite(result3_best,
+       file.path(OUT_DIR, "Result3_NREM_best_cluster.tsv"),
        sep = "\t")
