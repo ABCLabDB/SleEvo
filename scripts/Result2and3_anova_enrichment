@@ -38,9 +38,12 @@ PROJECT_DIR <- getwd()
 
 DATA_DIR  <- file.path(PROJECT_DIR, "data", "Fasta")
 META_FILE <- file.path(PROJECT_DIR, "data", "Result1", "species_sleep_metadata.txt")
-OUT_DIR   <- file.path(PROJECT_DIR, "data", "Result2")
 
-dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
+OUT_DIR_R2 <- file.path(PROJECT_DIR, "data", "Result2")
+OUT_DIR_R3 <- file.path(PROJECT_DIR, "data", "Result3")
+
+dir.create(OUT_DIR_R2, recursive = TRUE, showWarnings = FALSE)
+dir.create(OUT_DIR_R3, recursive = TRUE, showWarnings = FALSE)
 
 
 ## =========================================================
@@ -105,8 +108,8 @@ run_phylo_association <- function(
     clusters <- cutree(hc, k)
 
     df <- data.frame(
-      Species  = names(clusters),
-      Cluster  = factor(clusters),
+      Species   = names(clusters),
+      Cluster   = factor(clusters),
       Phenotype = use_meta[[phenotype_col]][
         match(names(clusters), use_meta$Species_name_ensembl)
       ]
@@ -149,12 +152,8 @@ result2_best <- result2_all |>
   ungroup() |>
   mutate(adj.P = p.adjust(P_anova, method = "BH"))
 
-fwrite(result2_all,
-       file.path(OUT_DIR, "Result2_TotalSleep_all_clusters.tsv"),
-       sep = "\t")
-
 fwrite(result2_best,
-       file.path(OUT_DIR, "Result2_TotalSleep_best_cluster.tsv"),
+       file.path(OUT_DIR_R2, "Total_sleep_time_Anova_Result.tsv"),
        sep = "\t")
 
 
@@ -178,10 +177,6 @@ result3_best <- result3_all |>
   ungroup() |>
   mutate(adj.P = p.adjust(P_kruskal, method = "BH"))
 
-fwrite(result3_all,
-       file.path(OUT_DIR, "Result3_NREM_all_clusters.tsv"),
-       sep = "\t")
-
 fwrite(result3_best,
-       file.path(OUT_DIR, "Result3_NREM_best_cluster.tsv"),
+       file.path(OUT_DIR_R3, "NREM_ratio_Anova_Result.tsv"),
        sep = "\t")
