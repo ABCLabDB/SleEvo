@@ -21,7 +21,7 @@ data/Fasta/
 
 File naming format:
 
--<GENE>_muscle.fasta
+[GENE]_muscle.fasta
 
 Each FASTA file contains CDS alignments across species.
 These files were generated using a custom ortholog selection
