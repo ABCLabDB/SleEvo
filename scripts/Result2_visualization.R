@@ -310,3 +310,97 @@ for (i in seq_len(nrow(stat))) {
     file.path(FIG_DIR_BOX, paste0(gene, "_boxplot.pdf")),
     plot = p, width = 10, height = 4
   )
+
+
+  ## =========================================================
+## Figure 2E. Phylogenetic signal across genes
+##
+## This section visualizes phylogenetic signal statistics
+## (Blomberg’s K and Moran’s I) for circadian genes.
+##
+## Input:
+##  - Permutation-based phylogenetic signal results
+##
+## Output:
+##  - Line / point plot summarizing signal strength per gene
+##
+## Used for:
+##  - Figure 2E
+## =========================================================
+
+SIGNAL_FILE <- file.path(
+  PROJECT_DIR,
+  "data",
+  "Result2",
+  "Phylogenetic_Signal_Data_permutation.tsv"
+)
+
+FIG_DIR_SIGNAL <- file.path(
+  PROJECT_DIR,
+  "figures",
+  "Result2",
+  "Phylogenetic_Signal"
+)
+
+dir.create(FIG_DIR_SIGNAL, recursive = TRUE, showWarnings = FALSE)
+
+
+## -----------------------------------------
+## Load and reshape data
+## -----------------------------------------
+signal_df <- fread(SIGNAL_FILE) |> as.data.frame()
+signal_df[is.na(signal_df)] <- 0
+
+colnames(signal_df)[c(2, 6)] <- c("Blomberg’s K", "Moran’s I")
+
+signal_long <- signal_df |>
+  dplyr::select(Gene, `Blomberg’s K`, `Moran’s I`) |>
+  tidyr::pivot_longer(
+    cols = c(`Blomberg’s K`, `Moran’s I`),
+    names_to = "Signal",
+    values_to = "Value"
+  )
+
+
+## -----------------------------------------
+## Plot
+## -----------------------------------------
+p_signal <- ggplot(signal_long,
+                   aes(x = Gene, y = Value, color = Signal)) +
+
+  geom_line(aes(group = Signal),
+            linewidth = 1.2, alpha = 0.4, color = "grey60") +
+
+  geom_point(size = 3, alpha = 0.9) +
+
+  geom_smooth(method = "lm", se = TRUE,
+              linewidth = 1.5, color = "#95be8d") +
+
+  scale_color_manual(
+    values = c(
+      "Blomberg’s K" = "#7593af",
+      "Moran’s I"    = "#d69e49"
+    )
+  ) +
+
+  theme_bw(base_size = 12) +
+
+  labs(
+    x = NULL,
+    y = "Phylogenetic signal score",
+    color = "Phylogenetic signal"
+  ) +
+
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "top",
+    legend.title = element_text(size = 10)
+  )
+
+
+ggsave(
+  file.path(FIG_DIR_SIGNAL, "Figure2C_Phylogenetic_Signal.pdf"),
+  plot = p_signal,
+  width = 6,
+  height = 3.5
+)
