@@ -9,24 +9,7 @@ to species-level sleep traits, including total sleep time and NREM sleep ratio.
 
 
 ## Repository structure
-Sleep_Evolution/
-├── data/
-│ ├── Fasta/ # MUSCLE-aligned CDS FASTA files (gene-wise)
-│ ├── Result1/ # Species-level sleep metadata
-│ ├── Result2/ # Total sleep time association results
-│ ├── Result3/ # NREM sleep ratio association results
-│ └── README.md
-│
-├── scripts/
-│ ├── 00_setup.R
-│ ├── Result2_phylogenetic_tree_plot.R
-│ ├── Result2and3_anova_enrichment.R
-│ └── README.md
-│
-├── figures/
-│ └── Result2/ # Phylogenetic tree figures (optional)
-│
-└── README.md
+
 
 
 ## Overview of analyses
