@@ -1,0 +1,135 @@
+############################################################
+# Result2: Phylogenetic clustering vs sleep phenotype
+#
+# - Input: MUSCLE-aligned CDS FASTA (gene-wise)
+# - Method:
+#   1) Genetic distance (dist.dna)
+#   2) NJ tree → cophenetic distance
+#   3) Hierarchical clustering (average linkage)
+#   4) Cluster-wise association with total sleep time
+#
+# - Output:
+#   Gene-wise optimal cluster number (2–12)
+#   with ANOVA / Kruskal statistics
+############################################################
+
+## ===============================
+## 1. Libraries
+## ===============================
+library(ape)
+library(data.table)
+library(Biostrings)
+library(dplyr)
+library(nortest)
+
+## ===============================
+## 2. User-defined paths
+## ===============================
+DATA_DIR <- "DATA/CDS_MUSCLE"     # not included in repo
+META_FILE <- "DATA/species_sleep_metadata.txt"
+OUT_DIR  <- "results/Result2"
+
+dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
+
+## ===============================
+## 3. Load metadata
+## ===============================
+metadata <- fread(META_FILE) |> as.data.frame()
+
+metadata$Species_symbol_name_ensembl <- metadata$Species_symbol_name_ensembl |>
+  gsub(" ", "_", x = _) |>
+  tolower()
+
+metadata <- metadata |> 
+  filter(!is.na(Total_sleep_time_per_day))
+
+rownames(metadata) <- NULL
+
+## ===============================
+## 4. FASTA list
+## ===============================
+fasta_files <- list.files(DATA_DIR, pattern = "_muscle.fasta$")
+genes <- sub("_muscle.fasta$", "", fasta_files)
+
+## ===============================
+## 5. Main analysis loop
+## ===============================
+final_result <- list()
+
+for (g in genes) {
+
+  message("Processing gene: ", g)
+
+  fasta_path <- file.path(DATA_DIR, paste0(g, "_muscle.fasta"))
+  cds <- readDNAStringSet(fasta_path)
+
+  names(cds) <- sapply(strsplit(names(cds), ":"), `[`, 2)
+
+  keep <- intersect(names(cds), metadata$Species_symbol_name_ensembl)
+  cds <- cds[names(cds) %in% keep]
+
+  names(cds) <- metadata$Species_name_ensembl[
+    match(names(cds), metadata$Species_symbol_name_ensembl)
+  ]
+
+  use_meta <- metadata[
+    match(names(cds), metadata$Species_name_ensembl),
+  ]
+
+  if (nrow(use_meta) < 5) next  # safety check
+
+  dna <- as.DNAbin(cds)
+  dm  <- dist.dna(dna, as.matrix = TRUE, pairwise.deletion = TRUE)
+  tree <- njs(dm)
+
+  cophen_dm <- cophenetic.phylo(tree)
+  hc <- hclust(as.dist(cophen_dm), method = "average")
+
+  gene_res <- list()
+
+  for (k in 2:12) {
+
+    clusters <- cutree(hc, k)
+
+    df <- data.frame(
+      Species = names(clusters),
+      Cluster = factor(clusters),
+      Sleep   = use_meta$Total_sleep_time_per_day[
+        match(names(clusters), use_meta$Species_name_ensembl)
+      ]
+    )
+
+    aov_fit <- aov(Sleep ~ Cluster, data = df)
+    aov_sum <- summary(aov_fit)[[1]]
+
+    gene_res[[k]] <- data.frame(
+      Gene        = g,
+      Cluster    = k,
+      F_value    = aov_sum$`F value`[1],
+      P_anova    = aov_sum$`Pr(>F)`[1],
+      P_kruskal  = kruskal.test(Sleep ~ Cluster, df)$p.value,
+      Shapiro_p  = shapiro.test(residuals(aov_fit))$p.value
+    )
+  }
+
+  final_result[[g]] <- do.call(rbind, gene_res)
+}
+
+## ===============================
+## 6. Summarise & adjust P-values
+## ===============================
+final_df <- do.call(rbind, final_result)
+
+final_best <- final_df |>
+  group_by(Gene) |>
+  slice_max(F_value, n = 1, with_ties = FALSE) |>
+  ungroup() |>
+  mutate(adj.P = p.adjust(P_anova, method = "BH"))
+
+fwrite(final_df,
+       file.path(OUT_DIR, "Result2_all_clusters.tsv"),
+       sep = "\t")
+
+fwrite(final_best,
+       file.path(OUT_DIR, "Result2_best_cluster_per_gene.tsv"),
+       sep = "\t")
