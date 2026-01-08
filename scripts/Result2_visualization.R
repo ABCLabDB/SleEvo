@@ -71,11 +71,8 @@ SNP_SITE_FILE <- file.path(PROJECT_DIR, "data", "Result2",
                            "Total_Sleep_Time_SNP.tsv")
 SEQ_MATRIX_DIR <- file.path(PROJECT_DIR, "data", "Result2",
                             "NucleotideMatrix")
-
-HEATMAP_DATA_FILE <- file.path(
-  PROJECT_DIR, "data", "Result2", "Heatmap",
-  "Supplementary_Table", "Total_sleep.tsv"
-)
+HEATMAP_DATA_FILE <- file.path(PROJECT_DIR, "data", "Heatmap",
+                               "Total_sleep_time.tsv")
 
 FIG_DIR_TREE   <- file.path(PROJECT_DIR, "figures", "Result2", "PhyloTree")
 FIG_DIR_BOX    <- file.path(PROJECT_DIR, "figures", "Result2", "Boxplot")
