@@ -18,7 +18,7 @@ library(ggrepel)
 PROJECT_DIR <- getwd()
 
 AA_FILE <- file.path(PROJECT_DIR,
-                     "data/Result2/AminoAcid_Mutation_DF.tsv")
+                     "data/Result2/Total_sleep_time_AA_Mutation_Data.tsv")
 
 FIG_DIR <- file.path(PROJECT_DIR,
                      "figures/Result2/AminoAcid")
