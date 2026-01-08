@@ -4,13 +4,25 @@
 # Visualization of evolutionary association between
 # circadian genes and total sleep time across species.
 #
-# Figures generated:
-#   Figure 2A: Phylogenetic trees
-#   Figure 2B: Box / strip plots of sleep phenotypes
-#   Figure 2E: Phylogenetic signal across genes
-#   Figure 2F: SNP-centered nucleotide visualization
+# This script generates all main figures for Result2:
 #
-# Run from repository root:
+#  Figure 2A. Phylogenetic tree visualization
+#    - Gene-wise dendrograms based on CDS similarity
+#    - Branch colors indicate majority sleep phenotype
+#
+#  Figure 2B. Box / strip plot of sleep phenotypes
+#    - Comparison of total sleep time between
+#      evolutionarily matched Long_sleep vs Short_sleep groups
+#
+#  Figure 2E. Phylogenetic signal across genes
+#    - Blomberg’s K and Moran’s I statistics
+#
+#  Figure 2F. SNP-centered nucleotide visualization
+#    - Local nucleotide variation around sleep-associated SNPs
+#
+# All paths are relative to the project root.
+#
+# Required working directory:
 #   setwd("Sleep_Evolution")
 ############################################################
 
