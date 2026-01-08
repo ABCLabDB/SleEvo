@@ -20,6 +20,8 @@
 #  Figure 2F. SNP-centered nucleotide visualization
 #    - Local nucleotide variation around sleep-associated SNPs
 #
+#  Figure 2H. Selection signature heatmap
+#
 # All paths are relative to the project root.
 #
 # Required working directory:
@@ -47,6 +49,10 @@ library(ggpubr)
 library(patchwork)
 library(RColorBrewer)
 
+library(pheatmap)
+library(Cairo)
+library(grid)
+library(gridExtra)
 
 ## =========================================================
 ## 2. Project paths
@@ -66,16 +72,23 @@ SNP_SITE_FILE <- file.path(PROJECT_DIR, "data", "Result2",
 SEQ_MATRIX_DIR <- file.path(PROJECT_DIR, "data", "Result2",
                             "NucleotideMatrix")
 
+HEATMAP_DATA_FILE <- file.path(
+  PROJECT_DIR, "data", "Result2", "Heatmap",
+  "Supplementary_Table", "Total_sleep.tsv"
+)
+
 FIG_DIR_TREE   <- file.path(PROJECT_DIR, "figures", "Result2", "PhyloTree")
 FIG_DIR_BOX    <- file.path(PROJECT_DIR, "figures", "Result2", "Boxplot")
 FIG_DIR_SIGNAL <- file.path(PROJECT_DIR, "figures", "Result2",
                             "Phylogenetic_Signal")
 FIG_DIR_SNP    <- file.path(PROJECT_DIR, "figures", "Result2", "SNP")
+FIG_DIR_HEAT   <- file.path(PROJECT_DIR, "figures", "Result2", "Heatmap")
 
 dir.create(FIG_DIR_TREE,   recursive = TRUE, showWarnings = FALSE)
 dir.create(FIG_DIR_BOX,    recursive = TRUE, showWarnings = FALSE)
 dir.create(FIG_DIR_SIGNAL, recursive = TRUE, showWarnings = FALSE)
 dir.create(FIG_DIR_SNP,    recursive = TRUE, showWarnings = FALSE)
+dir.create(FIG_DIR_HEAT, recursive = TRUE, showWarnings = FALSE)
 
 
 ## =========================================================
@@ -430,3 +443,81 @@ for (gene in unique(ts_sites$Gene)) {
            final_plot, width = 8, height = 12, dpi = 300)
   }
 }
+
+
+## =========================================================
+## Figure 2H. Selection signature heatmap
+## =========================================================
+
+merge_signDF <- fread(HEATMAP_DATA_FILE) |> as.data.frame()
+
+sig_genes <- stat$Gene
+merge_signDF <- merge_signDF |>
+  filter(Gene %in% sig_genes) |>
+  arrange(desc(Cluster), Gene)
+
+rownames(merge_signDF) <- merge_signDF$Gene
+
+mat <- merge_signDF |>
+  select(Gene, Ps, π, `Tajima's D`, `dN/dS`)
+rownames(mat) <- mat$Gene
+mat <- mat[, -1]
+
+
+## ---------------------------------------------------------
+## Heatmaps
+## ---------------------------------------------------------
+
+heatmap_Tajima <- pheatmap(
+  t(mat[, "Tajima's D", drop = FALSE]),
+  cluster_rows = FALSE, cluster_cols = FALSE,
+  cellwidth = 22, cellheight = 20,
+  color = colorRampPalette(c("#053061", "white", "#67001f"))(100),
+  border_color = "gray80",
+  main = "Tajima's D",
+  show_colnames = TRUE, show_rownames = FALSE,
+  silent = TRUE
+)
+
+heatmap_dNdS <- pheatmap(
+  t(mat[, "dN/dS", drop = FALSE]),
+  cluster_rows = FALSE, cluster_cols = FALSE,
+  cellwidth = 22, cellheight = 20,
+  color = colorRampPalette(c("#2471A3", "white", "#C0392B"))(100),
+  border_color = "gray80",
+  main = "dN/dS",
+  show_colnames = TRUE, show_rownames = FALSE,
+  silent = TRUE
+)
+
+heatmap_pi <- pheatmap(
+  t(mat[, "π", drop = FALSE]),
+  cluster_rows = FALSE, cluster_cols = FALSE,
+  cellwidth = 22, cellheight = 20,
+  color = colorRampPalette(c("white", "#E67E22", "#B03A2E"))(100),
+  border_color = "gray80",
+  main = "Nucleotide diversity (π)",
+  show_colnames = TRUE, show_rownames = FALSE,
+  silent = TRUE
+)
+
+
+## ---------------------------------------------------------
+## Save Figure 2H
+## ---------------------------------------------------------
+
+CairoPDF(
+  file.path(FIG_DIR_HEAT, "Figure2H_Selection_Heatmap.pdf"),
+  width = 14, height = 8
+)
+
+grid.arrange(
+  grobs = list(
+    heatmap_Tajima[[4]],
+    heatmap_dNdS[[4]],
+    heatmap_pi[[4]]
+  ),
+  nrow = 3
+)
+
+dev.off()
