@@ -29,7 +29,7 @@ META_FILE <- file.path(PROJECT_DIR,
                        "data/Result1/species_sleep_metadata.txt")
 
 PERM_FILE <- file.path(PROJECT_DIR,
-                       "data/Result2/clustering.permutation200.Sleep_real.tsv")
+                       "data/Result2/clustering.permutation200.Sleep_real.tsv") #이거 수정해야 함
 
 SNP_FILE <- file.path(PROJECT_DIR,
                       "data/Result2/ALL_SNP.tsv")
@@ -38,7 +38,7 @@ SEQ_DIR <- file.path(PROJECT_DIR,
                      "data/Result2/NucleotideMatrix")
 
 OUT_FILE <- file.path(PROJECT_DIR,
-                      "data/Result2/AminoAcid_Mutation_DF.tsv")
+                      "data/Result2/Total_sleep_time_AA_Mutation_Data.tsv")
 
 
 ## =========================================================
