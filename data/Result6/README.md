@@ -1,34 +1,39 @@
-## RNA-seq normalization and phenotype-specific expression matrices
+## Result6: Phenotype-specific RNA-seq matrices and DEG analysis
 
-Gene-level read counts were generated using featureCounts and processed
-separately for each sleep phenotype:
-
-- Total sleep time
-- NREM ratio
-- Sleep timing per day
-- Sleep frequency
-
-Only species with available phenotype annotations were included
-for each phenotype-specific matrix.
+This directory contains phenotype-specific expression matrices,
+metadata tables, and linear model-based DEG results.
 
 ---
 
-### 1. Species-specific preprocessing
+## File structure
 
+For each sleep phenotype:
+
+- `*_Count.tsv`  
+  Log2-transformed FPKM expression matrix (Gene × Sample)
+
+- `*_Metadata.tsv`  
+  Sample-level metadata used for modeling
+
+- `*_DEGs.tsv`  
+  Differentially expressed genes identified by linear modeling
+
+Phenotypes included:
+
+- Total_sleep_time
+- NREM_ratio
+- Sleep_frequency
+- Sleep_timing
+
+---
+
+## Expression matrix construction
+
+Gene-level counts were generated using featureCounts.
 For each species:
 
-- Raw featureCounts output was loaded.
-- Gene IDs were filtered using ortholog mapping to ensure
-  cross-species alignment.
-- Only samples present in phenotype-specific metadata were retained.
-- Gene length information (basepairs) was extracted.
-
----
-
-### 2. DESeq2-based normalization
-
-A DESeq2 dataset was constructed using a null design (~1),
-as no differential testing was performed at this stage:
+1. Raw counts were loaded.
+2. DESeq2 size-factor normalization was performed:
 
 ```r
 dds <- DESeqDataSetFromMatrix(
@@ -40,46 +45,60 @@ dds <- DESeqDataSetFromMatrix(
 dds <- DESeq(dds)
 
 mcols(dds)$basepairs <- gene_length_vector
-
 fpkm_matrix <- fpkm(dds)
 ```
 
-This step performs:
-
-- Library size normalization (size factors)
-- Length correction using gene basepair information
-- Conversion to FPKM values
-
----
-
-### 3. Cross-species matrix integration
-
-Species-specific FPKM matrices were inserted into a unified
-gene × sample matrix aligned by ortholog ID.
-
-Only samples with valid expression values were retained.
-
----
-
-### 4. Log transformation
-
-Final expression values were transformed as:
+3. FPKM values were merged across species
+   using ortholog-aligned gene IDs.
+4. Expression values were transformed as:
 
 ```r
 log2(FPKM + 1)
 ```
 
-This stabilizes variance and reduces skewness for
-downstream linear modeling.
+The resulting matrix was saved as `*_Count.tsv`.
 
 ---
 
-### Output
+## DEG identification
 
-For each sleep phenotype:
+Differential expression was evaluated using a linear model
+applied gene-by-gene:
 
-- Log2-transformed FPKM expression matrix (Gene × Sample)
-- Cleaned phenotype-specific metadata (Sample × Covariates)
+```r
+lm_fit <- lm(Expression ~ Group + Species:Sequencer,
+             data = data_to_plot)
+```
 
-These matrices are used for downstream regression
-and comparative cross-species analyses.
+Model terms:
+
+- **Group**: sleep phenotype category
+  (e.g., short vs long sleep)
+- **Species:Sequencer**: interaction term to control for
+  species-specific sequencing platform effects
+
+For each gene:
+
+- The coefficient of `Group` was extracted
+- P-values were obtained from the linear model
+- Multiple testing correction was performed using FDR
+
+```r
+FDR <- p.adjust(p_value, method = "BH")
+```
+
+Genes with FDR < 0.05 were reported in `*_DEGs.tsv`.
+
+---
+
+## Statistical rationale
+
+- DESeq2 was used only for normalization.
+- Linear modeling was used for phenotype association testing.
+- Sequencing platform effects were controlled via
+  species-specific interaction terms.
+- Multiple testing correction was applied using
+  Benjamini–Hochberg FDR.
+
+This framework enables cross-species transcriptomic
+association analysis for sleep phenotypes.
