@@ -40,6 +40,26 @@ generation and does not automatically save plots by default.
 
 ---
 
+### Permutation-based cluster association test (sleep timing & sleep frequency)
+
+To validate the association between phylogenetic clusters and categorical sleep traits,
+we performed an empirical permutation test.
+
+For each gene:
+
+1. Species were clustered using hierarchical clustering (average linkage)
+   on T92 genetic distance.
+2. Cochran–Armitage test statistic was computed between cluster labels
+   and phenotype categories.
+3. Cluster labels were randomly permuted (N = 1,000,000 iterations).
+4. Empirical p-value was calculated as:
+
+   P = (|T_perm| >= |T_obs| + 1) / (N + 1)
+
+All analyses were performed in R (DescTools package).
+
+---
+
 ## Result5 — Sleep frequency–associated analyses
 
 ### Result5_SNP_Cochran_sleep_frequency.R
