@@ -81,22 +81,30 @@ Output:
 ### Indel identification workflow (external tools)
 
 To complement SNP analyses in Result5, indel variants were identified
-using external command-line tools:
+using external command-line tools.
+
+Tool versions:
+- bcftools v1.10.2
+- Jvarkit (Git commit dea54f1a2)
+
+Workflow:
 
 1. Multiple sequence alignments (FASTA) were converted to VCF format
-   using `jvarkit msa2vcf --ignore-n-bases`.
+   using:
+   `jvarkit msa2vcf --ignore-n-bases`
 
 2. Indel variants were extracted using:
-   `bcftools view -v indels`.
+   `bcftools view -v indels`
 
 3. Variant statistics and site-level annotations were generated using:
-   `bcftools stats` and `bcftools query`.
+   `bcftools stats` and `bcftools query`
 
 4. Indels were classified as insertions or deletions based on
-   relative sequence lengths of REF (human reference) and ALT alleles.
+   the relative sequence lengths of the REF (human reference)
+   and ALT alleles.
 
-This workflow is documented for reproducibility but relies on
-standard bioinformatics tools rather than custom R implementations.
+This workflow documents the exact software versions and parameters
+used to ensure reproducibility of the indel identification step.
 
 ---
 
