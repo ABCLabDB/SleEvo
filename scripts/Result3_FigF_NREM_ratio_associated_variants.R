@@ -1,17 +1,17 @@
 ############################################################
-# Result6_SNP_Profile_Visualization.R
+# Result3_FigF_NREM_ratio_associated_variants.R
 #
 # SNP-centered nucleotide profile and phenotype association
 # for NREM ratio–associated circadian genes.
 #
 # Input:
 #   data/Metadata/species_sleep_metadata.txt
-#   data/Result6/NREM_Ratio_SNP.tsv
+#   data/Result3/NREM_Ratio_SNP.tsv
 #   data/Result3/NREM_key_12_optimal_Kruskal.tsv
 #   data/NucleotideMatrix/*.tsv
 #
 # Output:
-#   figures/Result6/SNP_Profile/
+#   figures/Result3/SNP_Profile/
 #
 # Project root required:
 #   Sleep_Evolution/
