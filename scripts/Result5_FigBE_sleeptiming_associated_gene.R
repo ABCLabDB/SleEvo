@@ -25,7 +25,7 @@ suppressPackageStartupMessages({
 })
 
 # ----------------------------------------------------------
-# 1. Load metadata  (첫번째 그림 경로)
+# 1. Load metadata  
 # ----------------------------------------------------------
 
 metadata <- fread(
@@ -46,7 +46,7 @@ metadata$Type <- ifelse(
 )
 
 # ----------------------------------------------------------
-# 2. Load Cochran result  (세번째 그림 경로)
+# 2. Load Cochran result 
 # ----------------------------------------------------------
 
 perm_test <- fread(
@@ -59,7 +59,7 @@ knee <- perm_test %>%
 target_genes <- knee$Gene
 
 # ----------------------------------------------------------
-# 3. Fasta directory  (두번째 그림 경로)
+# 3. Fasta directory  
 # ----------------------------------------------------------
 
 FASTA_DIR <- "data/Fasta/"
