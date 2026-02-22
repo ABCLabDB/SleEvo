@@ -1,0 +1,195 @@
+Run	BioProject	Tissue	Sex	Species	Total sleep time per day (hr)	Platform	Instrument	LibrarySelection	Type
+SRR6307204	PRJNA419061	blood		African elephant	3.3	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+SRR13705738	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep
+SRR13705739	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep
+SRR13705740	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep
+SRR13705741	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep
+SRR13705742	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep
+SRR13705745	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep
+SRR13705746	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep
+SRR13705747	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep
+SRR13705748	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep
+SRR13705749	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep
+SRR10677982	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677983	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677984	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677985	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677986	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677987	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677988	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677989	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677990	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677991	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677992	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677993	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677994	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677995	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677996	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10677997	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678000	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678001	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678010	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678011	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678012	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678013	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678014	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678015	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678016	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678017	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678018	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678019	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678020	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678021	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678031	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678032	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678033	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678034	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678035	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678036	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678037	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678040	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR10678041	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR16249198	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR16249199	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR16249200	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+SRR16249201	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep
+ERR3294132	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294133	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294134	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294135	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294136	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294137	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294138	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294139	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294156	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294157	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294158	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294159	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294160	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294161	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294162	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294163	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294188	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294189	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294190	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294191	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294192	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294193	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294194	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294195	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294196	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294197	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294198	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294199	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294200	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294201	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294202	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294203	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294300	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294301	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294302	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294303	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294304	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294305	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294306	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294307	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294324	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294325	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294326	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294327	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294328	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294329	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294330	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294331	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294332	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294333	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294334	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294335	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294336	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294337	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294338	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294339	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294356	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294357	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294358	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294359	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294360	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294361	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294362	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294363	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294460	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294461	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294462	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294463	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294464	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294467	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294476	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294477	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294478	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294479	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294480	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294481	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294482	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294483	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294484	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294485	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294486	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294487	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294488	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294489	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294490	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294491	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294508	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294509	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294510	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294511	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294512	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294513	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294514	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+ERR3294515	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep
+SRR18059454	PRJNA807711	blood	female	Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR18059455	PRJNA807711	blood	female	Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR18059456	PRJNA807711	blood	female	Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20988133	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20988134	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20988135	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20988137	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20988138	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20988139	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20988140	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20993198	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20993199	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20993200	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20993201	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20993202	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20993203	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20993204	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep
+SRR20210894	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210895	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210896	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210897	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210898	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210899	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210900	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210901	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210902	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210903	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210904	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210905	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210906	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210907	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210908	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210909	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210910	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210911	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR20210912	PRJNA858827	blood		Opossum	19.4	ILLUMINA	Illumina NovaSeq 6000	cDNA	long sleep
+SRR495397	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep
+SRR495398	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep
+SRR495399	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep
+SRR495400	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep
+SRR495401	PRJNA164679	blood	female	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep
+SRR495402	PRJNA164679	blood	female	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep
+SRR495403	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep
+SRR495404	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep
+SRR495405	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep
+SRR495406	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep

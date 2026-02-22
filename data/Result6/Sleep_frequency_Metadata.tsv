@@ -1,0 +1,306 @@
+	Run	BioProject	Tissue	Sex	Species	Total sleep time per day (hr)	Platform	Instrument	LibrarySelection	Type	Sleep_Times	Sleep_Timing
+1	SRR6307194	PRJNA419061	blood		African elephant	3.3	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	More than two	Sleep at daytime
+2	SRR6307195	PRJNA419061	blood		African elephant	3.3	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	More than two	Sleep at daytime
+3	SRR6307196	PRJNA419061	blood		African elephant	3.3	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	More than two	Sleep at daytime
+5	SRR6307199	PRJNA419061	blood		African elephant	3.3	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	More than two	Sleep at daytime
+6	SRR6307204	PRJNA419061	blood		African elephant	3.3	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	More than two	Sleep at daytime
+7	SRR13705738	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep	More than two	Sleep at night
+8	SRR13705739	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep	More than two	Sleep at night
+9	SRR13705740	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep	More than two	Sleep at night
+10	SRR13705741	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep	More than two	Sleep at night
+11	SRR13705742	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep	More than two	Sleep at night
+12	SRR13705743	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep	More than two	Sleep at night
+13	SRR13705744	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep	More than two	Sleep at night
+14	SRR13705745	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep	More than two	Sleep at night
+15	SRR13705746	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep	More than two	Sleep at night
+16	SRR13705747	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep	More than two	Sleep at night
+17	SRR13705748	PRJNA701734	blood		Arabian camel	1.7	ILLUMINA	Illumina HiSeq 4000	RANDOM	short sleep	More than two	Sleep at night
+19	SRR10677982	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+20	SRR10677983	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+21	SRR10677984	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+22	SRR10677985	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+23	SRR10677986	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+24	SRR10677987	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+25	SRR10677988	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+26	SRR10677989	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+27	SRR10677990	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+28	SRR10677991	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+29	SRR10677992	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+30	SRR10677993	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+31	SRR10677994	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+32	SRR10677995	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+33	SRR10677996	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+34	SRR10677997	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+35	SRR10678000	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+36	SRR10678001	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+37	SRR10678010	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+38	SRR10678011	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+39	SRR10678012	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+40	SRR10678013	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+41	SRR10678014	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+42	SRR10678015	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+43	SRR10678016	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+44	SRR10678017	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+45	SRR10678018	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+46	SRR10678019	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+47	SRR10678020	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+48	SRR10678021	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+49	SRR10678031	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+50	SRR10678032	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+51	SRR10678033	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+52	SRR10678034	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+53	SRR10678035	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+54	SRR10678036	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+55	SRR10678037	PRJNA595370	blood	female	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+56	SRR10678040	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+57	SRR10678041	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+58	SRR16249198	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+59	SRR16249199	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+60	SRR16249200	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+61	SRR16249201	PRJNA595370	blood	male	Armadillo	17.4	ILLUMINA	NextSeq 500	cDNA	long sleep	More than two	Sleep at daytime
+62	ERR3294132	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+63	ERR3294133	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+64	ERR3294134	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+65	ERR3294135	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+66	ERR3294136	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+67	ERR3294137	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+68	ERR3294138	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+69	ERR3294139	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+70	ERR3294156	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+71	ERR3294157	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+72	ERR3294158	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+73	ERR3294159	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+74	ERR3294160	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+75	ERR3294161	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+76	ERR3294162	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+77	ERR3294163	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+78	ERR3294188	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+79	ERR3294189	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+80	ERR3294190	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+81	ERR3294191	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+82	ERR3294192	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+83	ERR3294193	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+84	ERR3294194	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+85	ERR3294195	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+86	ERR3294196	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+87	ERR3294197	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+88	ERR3294198	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+89	ERR3294199	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+90	ERR3294200	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+91	ERR3294201	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+92	ERR3294202	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+93	ERR3294203	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+94	ERR3294300	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+95	ERR3294301	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+96	ERR3294302	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+97	ERR3294303	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+98	ERR3294304	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+99	ERR3294305	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+100	ERR3294306	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+101	ERR3294307	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+102	ERR3294324	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+103	ERR3294325	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+104	ERR3294326	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+105	ERR3294327	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+106	ERR3294328	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+107	ERR3294329	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+108	ERR3294330	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+109	ERR3294331	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+110	ERR3294332	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+111	ERR3294333	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+112	ERR3294334	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+113	ERR3294335	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+114	ERR3294336	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+115	ERR3294337	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+116	ERR3294338	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+117	ERR3294339	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+118	ERR3294356	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+119	ERR3294357	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+120	ERR3294358	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+121	ERR3294359	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+122	ERR3294360	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+123	ERR3294361	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+124	ERR3294362	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+125	ERR3294363	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+126	ERR3294460	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+127	ERR3294461	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+128	ERR3294462	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+129	ERR3294463	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+130	ERR3294464	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+131	ERR3294465	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+132	ERR3294466	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+133	ERR3294467	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+134	ERR3294476	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+135	ERR3294477	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+136	ERR3294478	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+137	ERR3294479	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+138	ERR3294480	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+139	ERR3294481	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+140	ERR3294482	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+141	ERR3294483	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+142	ERR3294484	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+143	ERR3294485	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+144	ERR3294486	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+145	ERR3294487	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+146	ERR3294488	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+147	ERR3294489	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+148	ERR3294490	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+149	ERR3294491	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+150	ERR3294508	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+151	ERR3294509	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+152	ERR3294510	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+153	ERR3294511	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+154	ERR3294512	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+155	ERR3294513	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+156	ERR3294514	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+157	ERR3294515	PRJEB32022	blood	male	Cow	4	ILLUMINA	Illumina HiSeq 2500	cDNA	short sleep	Once	Sleep at night
+158	SRR18059454	PRJNA807711	blood	female	Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+159	SRR18059455	PRJNA807711	blood	female	Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+160	SRR18059456	PRJNA807711	blood	female	Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+162	SRR20988134	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+163	SRR20988135	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+164	SRR20988137	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+165	SRR20988138	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+166	SRR20988139	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+167	SRR20988140	PRJNA867673	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+169	SRR20993199	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+170	SRR20993200	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+171	SRR20993201	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+172	SRR20993202	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+173	SRR20993203	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+174	SRR20993204	PRJNA867700	blood		Goat	5.4	ILLUMINA	Illumina HiSeq 4000	POLYA	short sleep	Once	Sleep at night
+218	SRR495397	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep	Once	Sleep at daytime
+219	SRR495398	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep	Once	Sleep at daytime
+220	SRR495399	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep	Once	Sleep at daytime
+221	SRR495400	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep	Once	Sleep at daytime
+222	SRR495401	PRJNA164679	blood	female	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep	Once	Sleep at daytime
+223	SRR495402	PRJNA164679	blood	female	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep	Once	Sleep at daytime
+224	SRR495403	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep	Once	Sleep at daytime
+225	SRR495404	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep	Once	Sleep at daytime
+226	SRR495405	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep	Once	Sleep at daytime
+227	SRR495406	PRJNA164679	blood	male	Horse	2.9	ILLUMINA	Illumina HiSeq 2000	cDNA	short sleep	Once	Sleep at daytime
+240	SRR17278628	PRJNA790829	blood		Dog	0.712871287	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+241	SRR17278629	PRJNA790829	blood		Dog	0.712871287	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+242	SRR17278630	PRJNA790829	blood		Dog	0.712871287	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+243	SRR17278632	PRJNA790829	blood		Dog	0.712871287	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+244	SRR17278633	PRJNA790829	blood		Dog	0.712871287	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+245	SRR17278634	PRJNA790829	blood		Dog	0.712871287	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+246	SRR17278635	PRJNA790829	blood		Dog	0.712871287	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+247	SRR13899251	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+248	SRR13899252	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+252	SRR13899256	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+253	SRR13899257	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+254	SRR13899259	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+255	SRR13899260	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+256	SRR13899261	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+257	SRR13899263	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+258	SRR13899264	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+259	SRR13899266	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+260	SRR13899267	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+261	SRR13899268	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+262	SRR13899269	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+263	SRR13899271	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+264	SRR13899272	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+265	SRR13899273	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+266	SRR13899274	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+267	SRR13899275	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+268	SRR13899276	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+269	SRR13899277	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+270	SRR13899278	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+271	SRR13899281	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+272	SRR13899282	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+273	SRR13899283	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+274	SRR13899285	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+275	SRR13899286	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+276	SRR13899287	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+277	SRR13899288	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+278	SRR13899289	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+279	SRR13899290	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+281	SRR13899292	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+282	SRR13899293	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+283	SRR13899296	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+284	SRR13899297	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+285	SRR13899298	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+286	SRR13899299	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+287	SRR13899300	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+288	SRR13899302	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+289	SRR13899303	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+290	SRR13899304	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+291	SRR13899306	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+292	SRR13899307	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+293	SRR13899308	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+294	SRR13899309	PRJNA707872	blood	female	Ferret	0.677348609	ILLUMINA	Illumina HiSeq 2500	cDNA	low ratio	More than two	Sleep at daytime
+464	SRR24772313	PRJNA977995	blood	male	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+465	SRR24772314	PRJNA977995	blood	female	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+466	SRR24772315	PRJNA977995	blood	female	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+467	SRR24772319	PRJNA977995	blood	female	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+468	SRR24772330	PRJNA977995	blood	male	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+469	SRR24772341	PRJNA977995	blood	male	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+470	SRR24772352	PRJNA977995	blood	male	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+471	SRR24772363	PRJNA977995	blood	male	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+472	SRR24772369	PRJNA977995	blood	female	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+473	SRR24772370	PRJNA977995	blood	female	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+474	SRR24772371	PRJNA977995	blood	female	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+475	SRR24772372	PRJNA977995	blood	male	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+476	SRR24772373	PRJNA977995	blood	male	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+477	SRR24772374	PRJNA977995	blood	male	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+478	SRR24772375	PRJNA977995	blood	male	Zebra finch	0.985003408	ILLUMINA	Illumina NovaSeq 6000	POLYA	high ratio	More than two	Sleep at night
+479	SRR13449229	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+480	SRR13449230	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+481	SRR13449233	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+482	SRR13449234	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+483	SRR13449237	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+484	SRR13449238	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+485	SRR13449243	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+486	SRR13449244	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+487	SRR13449263	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+488	SRR13449264	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+489	SRR13449265	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+490	SRR13449266	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+491	SRR13449269	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+492	SRR13449270	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+493	SRR13449273	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+494	SRR13449274	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+495	SRR13449275	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+496	SRR13449276	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+497	SRR13449277	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+498	SRR13449278	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+499	SRR13449283	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+500	SRR13449284	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+501	SRR13449291	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+502	SRR13449292	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+503	SRR13449293	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+504	SRR13449294	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+505	SRR13449297	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+506	SRR13449298	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+507	SRR13449309	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+508	SRR13449310	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+509	SRR13449315	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+510	SRR13449316	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+511	SRR13449321	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+512	SRR13449322	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+513	SRR13449325	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+514	SRR13449326	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+515	SRR13449331	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+516	SRR13449332	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+517	SRR13449341	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+518	SRR13449342	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+519	SRR13449355	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+520	SRR13449356	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+521	SRR13449369	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+522	SRR13449370	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+523	SRR13449383	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+524	SRR13449384	PRJNA692626	blood		Pig	0.736263736	ILLUMINA	Illumina NovaSeq 6000	cDNA	low ratio	More than two	Sleep at daytime
+1100	SRR26499300	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
+228	SRR26499301	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
+310	SRR26499306	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
+4100	SRR26499307	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
+525	SRR26499309	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
+610	SRR26499310	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
+710	SRR26499313	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
+810	SRR26499314	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
+910	SRR26499319	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
+1010	SRR26499320	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
+1110	SRR26499321	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
+1210	SRR26499322	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
+1310	SRR26499323	PRJNA1022793	blood		Human		ILLUMINA	Illumina NovaSeq 6000	cDNA		Once	Sleep at anytime
