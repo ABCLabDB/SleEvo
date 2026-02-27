@@ -259,27 +259,69 @@ sleep_freq_meta <- species_metadata %>%
     )
   )
 
-freq_summary <- sleep_freq_meta %>%
-  count(Class, Order, Number_of_sleep_times_per_day)
+bar_data <- sleep_freq_meta %>%
+  count(Class, Order, Number_of_sleep_times_per_day) %>%
+  rename(Count = n)
 
-supfig3 <- ggplot(
-  freq_summary,
-  aes(
-    x = Number_of_sleep_times_per_day,
-    y = n,
-    fill = Number_of_sleep_times_per_day
+
+bar_data <- sleep_freq_meta %>%
+  count(Class, Order, Number_of_sleep_times_per_day) %>%
+  rename(Count = n) %>%
+  mutate(Species_Label = ifelse(Count == 1,
+                                sleep_freq_meta$Species_name_ensembl[match(paste(Class, Order, Number_of_sleep_times_per_day), 
+                                                                           paste(sleep_freq_meta$Class, sleep_freq_meta$Order, sleep_freq_meta$Number_of_sleep_times_per_day))],
+                                NA))
+
+
+p <- ggplot(bar_data, aes(y = reorder(Order, Count), 
+                          x = ifelse(Number_of_sleep_times_per_day == "Once", -Count, Count), 
+                          fill = Number_of_sleep_times_per_day)) +
+  geom_bar(stat = "identity", width = 0.4) +  
+  scale_fill_manual(values = c("Once" = "#0072B2", "More than twice" = "#E69F00")) +
+  scale_x_continuous(labels = abs) +  # X축 값을 절대값으로 표시
+  theme_minimal() +
+  theme(axis.text.y = element_text(size = 11),
+        axis.text.x = element_text(size = 11),
+        axis.title.y = element_blank(),
+        legend.text = element_text(size = 10),
+        legend.title = element_text(size = 12)) +
+  labs(title = "Distribution of Sleep Frequency Across Taxonomy Order Level",
+       x = "Number of Species",
+       fill = "Sleep Frequency") +
+  geom_point(data = bar_data, 
+             aes(x = ifelse(Number_of_sleep_times_per_day == "Once", -Count, Count), 
+                 y = reorder(Order, Count), 
+                 fill = Number_of_sleep_times_per_day),
+             shape = 21, size = 9, stroke = 0, inherit.aes = FALSE)+
+  geom_text(aes(label = Count, 
+                hjust = ifelse(Number_of_sleep_times_per_day == "Once", 0.6, 0.4)),
+            fontface = "bold",
+            size = 4) +  # 한 번 자는 경우 왼쪽 정렬
+  facet_grid(Class ~ ., scales = "free_y", space = "free_y")
+
+bar_data_labels <- bar_data %>% filter(!is.na(Species_Label))
+bar_data_labels <- bar_data_labels %>%
+  mutate(
+    x_pos = ifelse(Number_of_sleep_times_per_day == "Once", -Count - 0.5, Count + 0.5),
+    hjust_pos = ifelse(Number_of_sleep_times_per_day == "Once", 1, 0)
   )
-) +
-  geom_col() +
-  facet_wrap(~ Class, scales = "free_y") +
-  labs(
-    x = "Sleep frequency",
-    y = "Number of species",
-    fill = "Sleep frequency"
-  )
+
+
+supfig3 <- p + geom_text(data = bar_data_labels, 
+                    aes(x = x_pos,  # 🔹 X 위치 조정
+                        y = reorder(Order, Count), 
+                        label = Species_Label), 
+                    hjust = ifelse(bar_data_labels$Number_of_sleep_times_per_day == "Once", 1, 0),  # 🔹 aes() 밖에서 설정
+                    vjust = 0.5, 
+                    size = 4, 
+                    fontface = "bold",
+                    color = "black") +
+  theme(strip.text.y = element_text(size = 11, angle = 0, hjust = 0.5, vjust = 0.5)) +
+  theme(panel.border = element_rect(color = "black", fill = NA, size = 2)) +
+  theme(strip.background = element_rect(fill = "gray90", color = "black",size = 1)) +
+  geom_vline(xintercept = 0, color = "black", size = 1.2)
 
 supfig3
-
 
 ############################################################
 # Supplementary Figure 4
