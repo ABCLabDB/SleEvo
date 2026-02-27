@@ -324,29 +324,101 @@ supfig3 <- p + geom_text(data = bar_data_labels,
 supfig3
 
 ############################################################
-# Supplementary Figure 4
-# Sleep timing patterns
+# Supplementary Figure 4A
+# Sleep timing patterns across all species
 ############################################################
 sleep_timing_meta <- species_metadata %>%
   filter(!is.na(Sleep_timing_per_day)) %>%
   mutate(
     Sleep_timing_per_day = factor(
       Sleep_timing_per_day,
-      levels = c("Sleep at night", "Sleep at daytime", "Sleep at anytime")
+      levels = c("Sleep at night",
+                 "Sleep at daytime",
+                 "Sleep at anytime")
     )
   )
 
+# Count and compute percentages
 timing_summary_all <- sleep_timing_meta %>%
-  count(Sleep_timing_per_day)
+  count(Sleep_timing_per_day) %>%
+  mutate(
+    percentage = n / sum(n) * 100,
+    label = paste0(n, " (", round(percentage, 1), "%)")
+  )
 
-supfig4_all <- ggpie(
-  timing_summary_all,
-  x = "n",
-  label = "Sleep_timing_per_day",
-  title = "Sleep timing across species"
+# Custom color palette (match figure style)
+timing_colors <- c(
+  "Sleep at night"   = "#2b9bb3",
+  "Sleep at daytime" = "#67b531",
+  "Sleep at anytime" = "#d9d9d9"
 )
 
+supfig4_all <- ggplot(timing_summary_all,
+                      aes(x = "", y = n,
+                          fill = Sleep_timing_per_day)) +
+  geom_col(width = 1, color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(label = label),
+            position = position_stack(vjust = 0.5),
+            size = 5) +
+  scale_fill_manual(values = timing_colors) +
+  labs(
+    title = paste0("Sleep timing patterns for a total of ",
+                   sum(timing_summary_all$n),
+                   " species"),
+    fill = "Sleep Timing per day"
+  ) +
+  theme_void(base_size = 13) +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(face = "bold")
+  )
+
 supfig4_all
+
+
+############################################################
+# Supplementary Figure 4B
+# Sleep timing patterns in primates
+############################################################
+timing_summary_primates <- sleep_timing_meta %>%
+  filter(Order == "Primates") %>%
+  count(Sleep_timing_per_day) %>%
+  mutate(
+    percentage = n / sum(n) * 100,
+    label = paste0(n, " (", round(percentage, 1), "%)")
+  )
+
+timing_colors_primate <- c(
+  "Sleep at night"   = "#7a8c7a",   # muted green
+  "Sleep at daytime" = "#d8d2a8"    # pale beige
+)
+
+supfig4_primates <- ggplot(timing_summary_primates,
+                           aes(x = "", y = n,
+                               fill = Sleep_timing_per_day)) +
+  geom_col(width = 1, color = "white") +
+  coord_polar(theta = "y") +
+  
+  geom_text(aes(label = label),
+            position = position_stack(vjust = 0.5),
+            size = 5) +
+  
+  scale_fill_manual(values = timing_colors_primate) +
+  
+  labs(
+    title = "Sleep timing patterns in primates",
+    fill = "Sleep Timing per day"
+  ) +
+  
+  theme_void(base_size = 13) +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(face = "bold")
+  )
+
+supfig4_primates
+
 
 
 ############################################################
