@@ -488,8 +488,8 @@ primates_sleep_pattern <- ggplot(df_plot, aes(x = x_jitter, y = y_jitter)) +
   
   labs(
     title = "",
-    x = "Sleep Frequency",
-    y = "Sleep Timing",
+    x = "Sleep frequency",
+    y = "Sleep timing",
     fill = "Species"
   )
 
@@ -515,7 +515,7 @@ p <- ggplot(data = timing_times_Meta) +
     color = "black", linewidth = 0.3
   ) +
   scale_fill_manual(values = custom_colors) +
-  labs(x = "", y = "", fill = "Diurnality") +
+  labs(x = "", y = "", fill = "Sleep timing") +
   scale_y_continuous(labels = percent_format(accuracy = 1)) +
   theme_minimal(base_size = 14) +
   theme(
