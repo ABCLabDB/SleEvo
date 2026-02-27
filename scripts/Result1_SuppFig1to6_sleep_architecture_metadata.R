@@ -136,39 +136,114 @@ nrem_meta <- species_metadata %>%
   filter(!is.na(Percentage_of_NREM_time_per_day)) %>%
   mutate(
     NREM_ratio = round(Percentage_of_NREM_time_per_day, 2),
-    Group = case_when(
-      Species_name_ensembl == "Homo_sapiens" ~ "Human",
-      Order == "Primates" ~ "Primates",
-      Class == "Aves" ~ "Aves",
-      TRUE ~ "Others"
-    )
+    Taxonomy_Class = Class
+  ) %>%
+  arrange(desc(NREM_ratio)) %>%
+  mutate(
+    Species_name_ensembl = fct_inorder(Species_name_ensembl)
   )
 
+
 avg_nrem_all <- mean(nrem_meta$NREM_ratio, na.rm = TRUE)
+
 avg_nrem_primates <- nrem_meta %>%
   filter(Order == "Primates") %>%
-  summarize(m = mean(NREM_ratio, na.rm = TRUE)) %>%
+  summarise(m = mean(NREM_ratio, na.rm = TRUE)) %>%
   pull(m)
 
 avg_nrem_aves <- nrem_meta %>%
   filter(Class == "Aves") %>%
-  summarize(m = mean(NREM_ratio, na.rm = TRUE)) %>%
+  summarise(m = mean(NREM_ratio, na.rm = TRUE)) %>%
   pull(m)
 
-supfig2 <- ggbarplot(
-  nrem_meta,
-  x = "Species_name_ensembl",
-  y = "NREM_ratio",
-  fill = "Group",
-  sort.val = "desc",
-  x.text.angle = 60
-) +
-  geom_hline(yintercept = avg_nrem_all, linetype = "dashed", color = "red") +
-  geom_hline(yintercept = avg_nrem_primates, linetype = "dashed", color = "#f1b321") +
-  geom_hline(yintercept = avg_nrem_aves, linetype = "dashed", color = "#194a7a") +
-  labs(y = "NREM sleep ratio", fill = "Group")
+class_colors <- c(
+  "Mammalia" = "#1f4e79",
+  "Aves" = "#e6b800",
+  "Actinopteri" = "#bfbfbf",
+  "Insecta" = "#e07a3f",
+  "Lepidosauria" = "#5b7f75",
+  "Sarcopterygii" = "#e8d8a9"
+)
 
-supfig2
+
+supfig2 <- ggplot(nrem_meta,
+                  aes(x = Species_name_ensembl)) +
+  
+  # 100% scaffold background
+  geom_col(aes(y = 1),
+           fill = "#e6e6e6",
+           width = 0.6) +
+  
+  # Colored bars up to actual NREM ratio
+  geom_col(aes(y = NREM_ratio,
+               fill = Taxonomy_Class),
+           width = 0.6) +
+  
+  # Top points (legend suppressed)
+  geom_point(aes(y = NREM_ratio,
+                 color = Taxonomy_Class),
+             size = 6,
+             show.legend = FALSE) +
+  
+  # Global average
+  geom_hline(yintercept = avg_nrem_all,
+             linetype = "dashed",
+             color = "red",
+             linewidth = 1) +
+  
+  # Primate average
+  geom_hline(yintercept = avg_nrem_primates,
+             linetype = "dashed",
+             color = "#f1b321",
+             linewidth = 1) +
+  
+  # Aves average
+  geom_hline(yintercept = avg_nrem_aves,
+             linetype = "dashed",
+             color = "#194a7a",
+             linewidth = 1) +
+  
+  # Annotations
+  annotate("text",
+           x = length(unique(nrem_meta$Species_name_ensembl)) * 0.85,
+           y = avg_nrem_all + 0.03,
+           label = paste0("All species mean = ",
+                          round(avg_nrem_all, 2), "%"),
+           color = "red",
+           size = 4) +
+  
+  annotate("text",
+           x = length(unique(nrem_meta$Species_name_ensembl)) * 0.85,
+           y = avg_nrem_primates + 0.03,
+           label = paste0("Primates mean = ",
+                          round(avg_nrem_primates, 2), "%"),
+           color = "#f1b321",
+           size = 4) +
+  
+  annotate("text",
+           x = length(unique(nrem_meta$Species_name_ensembl)) * 0.85,
+           y = avg_nrem_aves + 0.03,
+           label = paste0("Aves mean = ",
+                          round(avg_nrem_aves, 2), "%"),
+           color = "#194a7a",
+           size = 4) +
+  
+  scale_fill_manual(values = class_colors) +
+  scale_color_manual(values = class_colors) +
+  
+  labs(
+    y = "NREM Sleep Ratio (%)",
+    x = NULL,
+    fill = "Taxonomy Class"
+  ) +
+  
+  coord_cartesian(ylim = c(0, 1)) +
+  
+  theme_classic(base_size = 12) +
+  theme(
+    axis.text.x = element_text(angle = 60, hjust = 1),
+    legend.position = "top"
+  )
 
 
 ############################################################
