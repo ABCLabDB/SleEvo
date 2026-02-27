@@ -426,16 +426,17 @@ supfig4_primates
 # Association between sleep timing and sleep frequency
 # in primates (Mouse lemur highlighted)
 ############################################################
-timing_times_Meta <- species_Metadata[!is.na(species_Metadata$Sleep_timing_per_day) & !is.na(species_Metadata$Number_of_sleep_times_per_day), ]
+timing_times_Meta <- species_metadata[!is.na(species_metadata$Sleep_timing_per_day) & !is.na(species_metadata$Number_of_sleep_times_per_day), ]
 timing_times_Meta$Sleep_Timing <- factor(timing_times_Meta$Sleep_timing_per_day)
 timing_times_Meta$Number_of_sleep_times_per_day <- factor(timing_times_Meta$Number_of_sleep_times_per_day)
 rownames(timing_times_Meta) <- NULL
 
-fisher.test(timing_times_Meta$Number_of_sleep_times_per_day, timing_times_Meta$Sleep_Timing)
+
+CochranArmitageTest(table(timing_times_Meta$Number_of_sleep_times_per_day, timing_times_Meta$Sleep_Timing))
 
 Primates <- timing_times_Meta[which(timing_times_Meta$Order =="Primates"),]
 
-set.seed(42)  
+set.seed(123)  
 
 df_plot <- Primates %>%
   select(Species_name_ensembl, Species_symbol_name_ensembl,
