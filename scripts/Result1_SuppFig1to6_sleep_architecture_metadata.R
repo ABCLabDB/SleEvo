@@ -28,7 +28,8 @@ required_packages <- c(
   "ggpubr",
   "DescTools",
   "ggmosaic",
-  "scales"
+  "scales",
+  "forcats"
 )
 
 invisible(lapply(required_packages, library, character.only = TRUE))
@@ -48,43 +49,81 @@ species_metadata <- fread(
 ############################################################
 tst_meta <- species_metadata
 
-longest_species <- tst_meta %>%
-  filter(Total_sleep_time_per_day == max(Total_sleep_time_per_day, na.rm = TRUE)) %>%
-  pull(Species_name_ensembl)
-
-shortest_species <- tst_meta %>%
-  filter(Total_sleep_time_per_day == min(Total_sleep_time_per_day, na.rm = TRUE)) %>%
-  pull(Species_name_ensembl)
-
-tst_meta <- tst_meta %>%
+tst_meta <- species_metadata %>%
   mutate(
     Sleep_Time = round(Total_sleep_time_per_day, 1),
-    Group = case_when(
-      Species_name_ensembl %in% longest_species ~ "Longest Sleep",
-      Species_name_ensembl %in% shortest_species ~ "Shortest Sleep",
-      Order == "Primates" & Species_name_ensembl != "Homo_sapiens" ~ "Primates",
-      Species_name_ensembl == "Homo_sapiens" ~ "Human",
-      TRUE ~ "Others"
-    )
+    Taxonomy_Class = Class  # modify if column name differs
+  ) %>%
+  arrange(desc(Sleep_Time)) %>%
+  mutate(
+    Species_name_ensembl = fct_inorder(Species_name_ensembl)
   )
 
-avg_sleep_all <- mean(tst_meta$Sleep_Time, na.rm = TRUE)
-avg_sleep_primates <- tst_meta %>%
-  filter(Order == "Primates") %>%
-  summarize(m = mean(Sleep_Time, na.rm = TRUE)) %>%
-  pull(m)
 
-supfig1 <- ggbarplot(
-  tst_meta,
-  x = "Species_name_ensembl",
-  y = "Sleep_Time",
-  fill = "Group",
-  sort.val = "desc",
-  x.text.angle = 60
-) +
-  geom_hline(yintercept = avg_sleep_all, linetype = "dashed", color = "red") +
-  geom_hline(yintercept = avg_sleep_primates, linetype = "dashed", color = "#f1b321") +
-  labs(y = "Total sleep time (hours)", fill = "Group")
+avg_sleep_all <- mean(tst_meta$Sleep_Time, na.rm = TRUE)
+class_colors <- c(
+  "Mammalia" = "#1f4e79",
+  "Aves" = "#e6b800",
+  "Actinopteri" = "#bfbfbf",
+  "Insecta" = "#e07a3f",
+  "Lepidosauria" = "#5b7f75",
+  "Sarcopterygii" = "#e8d8a9"
+)
+
+supfig1 <- ggplot(tst_meta,
+                  aes(x = Species_name_ensembl,
+                      y = Sleep_Time)) +
+  
+  # Background scaffold (fixed 24h reference)
+  geom_col(aes(y = 24),
+           fill = "#e6e6e6",
+           width = 0.6) +
+  
+  # Colored bar representing actual sleep time
+  geom_col(aes(y = Sleep_Time,
+               fill = Taxonomy_Class),
+           width = 0.6) +
+  
+  # Overlay colored points (taxonomy class)
+  geom_point(aes(y = Sleep_Time,
+                 color = Taxonomy_Class),
+             size = 5,
+             show.legend = FALSE) +
+  
+  # Global average sleep time
+  geom_hline(yintercept = avg_sleep_all,
+             linetype = "dashed",
+             color = "red",
+             linewidth = 1) +
+  
+  # Annotation for average line
+  annotate("text",
+           x = length(unique(tst_meta$Species_name_ensembl)) * 0.85,
+           y = avg_sleep_all + 0.6,
+           label = paste0("Average Total Sleep Time = ",
+                          round(avg_sleep_all, 2), " h"),
+           size = 4) +
+  
+  # Apply taxonomy color scale
+  scale_fill_manual(values = class_colors) +
+  scale_color_manual(values = class_colors) +
+  
+  # Axis labels and legend title
+  labs(
+    y = "Total Sleep Time (hours per day)",
+    x = NULL,
+    color = "Taxonomy Class"
+  ) +
+  
+  # Fix y-axis to biological maximum range
+  coord_cartesian(ylim = c(0, 24)) +
+  
+  # Clean theme for publication
+  theme_classic(base_size = 12) +
+  theme(
+    axis.text.x = element_text(angle = 60, hjust = 1),
+    legend.position = "top"
+  )
 
 supfig1
 
