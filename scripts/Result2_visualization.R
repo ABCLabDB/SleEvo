@@ -445,7 +445,7 @@ p_signal <- ggplot(signal_long,
         legend.position = "top") +
   labs(y = "Phylogenetic signal score", x = NULL)
 
-ggsave(file.path("/disk4/bijsy/2.Sleep/Figure/Result2/Figure2_C.Phylogenetic_Signal/",
+ggsave(file.path(FIG_DIR_SIGNAL,
                  "Figure2E_Phylogenetic_Signal.pdf"),
        p_signal, width = 6, height = 3.5)
 
