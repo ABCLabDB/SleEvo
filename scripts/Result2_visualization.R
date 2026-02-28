@@ -46,6 +46,7 @@ library(ggplot2)
 library(ggrepel)
 library(ggdendro)
 library(ggpubr)
+library(ggseqlogo)
 library(patchwork)
 library(RColorBrewer)
 
