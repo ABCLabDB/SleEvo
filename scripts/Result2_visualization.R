@@ -134,14 +134,6 @@ signal_df <- fread(SIGNAL_FILE) |> as.data.frame()
 signal_df[is.na(signal_df)] <- 0
 colnames(signal_df)[c(2, 6)] <- c("Blomberg’s K", "Moran’s I")
 
-signal_long <- signal_df |>
-  dplyr::select(Gene, `Blomberg’s K`, `Moran’s I`) |>
-  tidyr::pivot_longer(
-    cols = c(`Blomberg’s K`, `Moran’s I`),
-    names_to = "Signal",
-    values_to = "Value"
-  )
-
 ts_sites <- fread(SNP_SITE_FILE) |> as.data.frame()
 
 
@@ -417,26 +409,45 @@ for (i in seq_len(nrow(stat))) {
 ## =========================================================
 ## Figure 2E. Phylogenetic signal across genes
 ## =========================================================
+signal_sig <- signal_df %>%
+  filter(`P.K` <= 0.05,
+         `P.I` <= 0.05)
+
+signal_top20 <- signal_sig %>%
+  arrange(Gene) %>%
+  slice_head(n = 20)
+
+signal_long <- signal_top20 |>
+  dplyr::select(Gene, `Blomberg’s K`, `Moran’s I`) |>
+  tidyr::pivot_longer(
+    cols = c(`Blomberg’s K`, `Moran’s I`),
+    names_to = "Signal",
+    values_to = "Value"
+  )
 
 p_signal <- ggplot(signal_long,
                    aes(x = Gene, y = Value, color = Signal)) +
   geom_line(aes(group = Signal),
-            linewidth = 1.2, alpha = 0.4, color = "grey60") +
+            linewidth = 1.2, alpha = 0.4, color = "grey70") +
   geom_point(size = 3) +
   geom_smooth(method = "lm", se = TRUE,
               linewidth = 1.5, color = "#95be8d") +
-  scale_color_manual(values = c(
-    "Blomberg’s K" = "#7593af",
-    "Moran’s I"    = "#d69e49"
-  )) +
+  scale_color_manual(
+    name = "Phylogenetic signal",
+    values = c(
+      "Blomberg’s K" = "#7593af",
+      "Moran’s I"    = "#d69e49"
+    )
+  ) +
   theme_bw(base_size = 12) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+  theme(axis.text.x = element_text(size = 10,angle = 45, hjust = 1),
         legend.position = "top") +
   labs(y = "Phylogenetic signal score", x = NULL)
 
-ggsave(file.path(FIG_DIR_SIGNAL,
+ggsave(file.path("/disk4/bijsy/2.Sleep/Figure/Result2/Figure2_C.Phylogenetic_Signal/",
                  "Figure2E_Phylogenetic_Signal.pdf"),
        p_signal, width = 6, height = 3.5)
+
 
 
 ## =========================================================
