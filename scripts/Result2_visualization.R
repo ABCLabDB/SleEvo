@@ -236,83 +236,179 @@ for (i in seq_len(nrow(stat))) {
 ## =========================================================
 
 for (i in seq_len(nrow(stat))) {
-
+  
   gene <- stat$Gene[i]
   k    <- stat$Cluster[i]
   if (k == 2) next
-
+  
   fasta_path <- file.path(DATA_FASTA, paste0(gene, "_muscle.fasta"))
   if (!file.exists(fasta_path)) next
-
+  
   cds <- readDNAStringSet(fasta_path)
   names(cds) <- sapply(strsplit(names(cds), ":"), `[`, 2)
   names(cds) <- str_to_title(names(cds))
-
-  keep <- intersect(names(cds), meta$Species_symbol_name_ensembl)
-  cds  <- cds[names(cds) %in% keep]
-
+  
+  keep <- intersect(tolower(names(cds)), meta$Species_symbol_name_ensembl)
+  cds  <- cds[tolower(names(cds)) %in% keep]
+  
   names(cds) <- meta$Species_name_ensembl[
-    match(names(cds), meta$Species_symbol_name_ensembl)
+    match(tolower(names(cds)), meta$Species_symbol_name_ensembl)
   ]
-
+  
   use_meta <- meta[match(names(cds), meta$Species_name_ensembl), ]
-
+  
   dna <- as.DNAbin(cds)
   hc <- hclust(as.dist(cophenetic.phylo(
     njs(dist.dna(dna, as.matrix = TRUE, pairwise.deletion = TRUE))
   )), method = "average")
-
+  
   clusters <- cutree(hc, k = k)
-
+  
   class_assign <- rep(NA, length(clusters))
   names(class_assign) <- names(clusters)
-
+  
   class_assign[names(clusters) %in% top_species]    <- "Long_sleep"
   class_assign[names(clusters) %in% bottom_species] <- "Short_sleep"
-
+  
   sleep_df <- use_meta
   sleep_df$Infer_Class <- "Others"
   sleep_df$Infer_Class[sleep_df$Species_name_ensembl %in%
                          names(class_assign[class_assign == "Long_sleep"])] <- "Long_sleep"
   sleep_df$Infer_Class[sleep_df$Species_name_ensembl %in%
                          names(class_assign[class_assign == "Short_sleep"])] <- "Short_sleep"
-
+  
   sleep_df$Real_Class <- "Others"
   sleep_df$Real_Class[sleep_df$Species_name_ensembl %in% top_species]    <- "Long_sleep"
   sleep_df$Real_Class[sleep_df$Species_name_ensembl %in% bottom_species] <- "Short_sleep"
-
+  
   plot_df <- sleep_df |>
     filter(Infer_Class == Real_Class,
            Infer_Class %in% c("Long_sleep", "Short_sleep"))
-
+  
   if (nrow(plot_df) < 4) next
-
+  
+  group_means <- plot_df |>
+    group_by(Infer_Class) |>
+    summarise(mean_sleep = mean(Total_sleep_time_per_day, na.rm = TRUE),
+              .groups = "drop")
+  
+  overall_mean <- mean(plot_df$Total_sleep_time_per_day, na.rm = TRUE)
+  
+  # jitter 좌표
   plot_df$jitter_x <- as.numeric(factor(plot_df$Infer_Class)) +
     runif(nrow(plot_df), -0.25, 0.25)
-
-  p <- ggplot(plot_df) +
+  
+  p <- ggplot() +
+    
+    # 박스플롯
     geom_boxplot(
-      aes(x = Infer_Class, y = Total_sleep_time_per_day,
+      data = plot_df,
+      aes(x = Infer_Class,
+          y = Total_sleep_time_per_day,
           fill = Infer_Class),
-      width = 0.5, outlier.shape = NA
+      color = "black",
+      linewidth = 0.9,
+      width = 0.5,
+      outlier.shape = NA
     ) +
+    
+    # 점
     geom_point(
-      aes(x = jitter_x, y = Total_sleep_time_per_day,
+      data = plot_df,
+      aes(x = jitter_x,
+          y = Total_sleep_time_per_day,
           color = Infer_Class),
-      size = 4, alpha = 0.6
+      size = 5,
+      alpha = 0.5
     ) +
+    
+    # 라벨
     geom_text_repel(
-      aes(x = jitter_x, y = Total_sleep_time_per_day,
+      data = plot_df,
+      aes(x = jitter_x,
+          y = Total_sleep_time_per_day,
           label = Species_name_ensembl),
-      size = 3
+      color = "black",
+      size = 4,
+      max.overlaps = 4,
+      box.padding = 0.5,
+      point.padding = 0.25,
+      segment.color = "gray60",
+      seed = 42
     ) +
+    
+    # Long_sleep mean
+    geom_hline(
+      yintercept = group_means$mean_sleep[group_means$Infer_Class == "Long_sleep"],
+      color = sleep_colors["Long_sleep"],
+      linetype = "dashed",
+      linewidth = 1
+    ) +
+    annotate(
+      "text",
+      x = 2.3,
+      y = group_means$mean_sleep[group_means$Infer_Class == "Long_sleep"] + 1,
+      label = sprintf("Long_sleep mean: %.2f h",
+                      group_means$mean_sleep[group_means$Infer_Class == "Long_sleep"]),
+      color = sleep_colors["Long_sleep"],
+      size = 4,
+      fontface = "italic"
+    ) +
+    
+    # Short_sleep mean
+    geom_hline(
+      yintercept = group_means$mean_sleep[group_means$Infer_Class == "Short_sleep"],
+      color = sleep_colors["Short_sleep"],
+      linetype = "dashed",
+      linewidth = 1
+    ) +
+    annotate(
+      "text",
+      x = 0.7,
+      y = group_means$mean_sleep[group_means$Infer_Class == "Short_sleep"] + 1,
+      label = sprintf("Short_sleep mean: %.2f h",
+                      group_means$mean_sleep[group_means$Infer_Class == "Short_sleep"]),
+      color = sleep_colors["Short_sleep"],
+      size = 4,
+      fontface = "italic"
+    ) +
+    
+    # 전체 평균
+    geom_hline(
+      yintercept = overall_mean,
+      color = "gray40",
+      linetype = "dashed",
+      linewidth = 1
+    ) +
+    annotate(
+      "text",
+      x = 0.7,
+      y = overall_mean + 1,
+      label = sprintf("Overall mean: %.2f h", overall_mean),
+      color = "gray30",
+      size = 4,
+      fontface = "italic"
+    ) +
+    
     scale_fill_manual(values = sleep_colors) +
     scale_color_manual(values = sleep_colors) +
+    
+    labs(
+      x = "",
+      y = "Sleep duration"
+    ) +
+    
     theme_minimal(base_size = 14) +
-    labs(title = gene,
-         x = "Evolutionary sleep class",
-         y = "Total sleep time (hours/day)")
-
+    theme(
+      legend.position = "none",
+      panel.grid.minor = element_blank(),
+      panel.grid.major.x = element_blank(),
+      panel.grid.major.y = element_line(color = "gray85", linewidth = 0.3),
+      plot.title = element_text(hjust = 0.5)
+    ) +
+    
+    coord_cartesian(ylim = c(0, 23.5))
+  
   ggsave(file.path(FIG_DIR_BOX, paste0(gene, "_boxplot.pdf")),
          p, width = 10, height = 4)
 }
