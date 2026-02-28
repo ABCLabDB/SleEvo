@@ -658,7 +658,7 @@ merge_signDF <- merge_signDF |>
 rownames(merge_signDF) <- merge_signDF$Gene
 
 mat <- merge_signDF |>
-  select(Gene, Ps, π, `Tajima's D`, `dN/dS`)
+  dplyr::select(Gene, Ps, Pi, TajimasD, dN_dS)
 rownames(mat) <- mat$Gene
 mat <- mat[, -1]
 
@@ -668,7 +668,7 @@ mat <- mat[, -1]
 ## ---------------------------------------------------------
 
 heatmap_Tajima <- pheatmap(
-  t(mat[, "Tajima's D", drop = FALSE]),
+  t(mat[, "TajimasD", drop = FALSE]),
   cluster_rows = FALSE, cluster_cols = FALSE,
   cellwidth = 22, cellheight = 20,
   color = colorRampPalette(c("#053061", "white", "#67001f"))(100),
@@ -679,7 +679,7 @@ heatmap_Tajima <- pheatmap(
 )
 
 heatmap_dNdS <- pheatmap(
-  t(mat[, "dN/dS", drop = FALSE]),
+  t(mat[, "dN_dS", drop = FALSE]),
   cluster_rows = FALSE, cluster_cols = FALSE,
   cellwidth = 22, cellheight = 20,
   color = colorRampPalette(c("#2471A3", "white", "#C0392B"))(100),
@@ -690,7 +690,7 @@ heatmap_dNdS <- pheatmap(
 )
 
 heatmap_pi <- pheatmap(
-  t(mat[, "π", drop = FALSE]),
+  t(mat[, "Pi", drop = FALSE]),
   cluster_rows = FALSE, cluster_cols = FALSE,
   cellwidth = 22, cellheight = 20,
   color = colorRampPalette(c("white", "#E67E22", "#B03A2E"))(100),
