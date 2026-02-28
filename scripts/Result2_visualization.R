@@ -470,17 +470,16 @@ group_colors <- c(
 )
 
 for (gene in unique(ts_sites$Gene)) {
-
+  
   seq_file <- file.path(SEQ_MATRIX_DIR, paste0(gene, ".tsv"))
   if (!file.exists(seq_file)) next
-
+  
   aln_df <- fread(seq_file) |> as.data.frame()
   rownames(aln_df) <- aln_df[,1]
   aln_df <- aln_df[,-1]
-
+  
   aln_df <- aln_df[, grepl("V|CDS", colnames(aln_df)), drop = FALSE]
-  rownames(aln_df) <- str_to_title(rownames(aln_df))
-
+  
   aln_df$Total_sleep <- meta$Total_sleep_time_per_day[
     match(rownames(aln_df), meta$Species_symbol_name_ensembl)
   ]
@@ -490,42 +489,45 @@ for (gene in unique(ts_sites$Gene)) {
   aln_df$Species <- meta$Species_name_ensembl[
     match(rownames(aln_df), meta$Species_symbol_name_ensembl)
   ]
-
+  
   aln_df <- aln_df |>
     filter(!is.na(Total_sleep),
            Sleep_Type %in% c("Long_sleep", "Short_sleep"))
-
-  for (pos in ts_sites$Real_Position[ts_sites$Gene == gene]) {
-
+  
+  for (pos in ts_sites$Column_Index[ts_sites$Gene == gene]) {
+    
     all_pos <- setdiff(colnames(aln_df),
                        c("Species", "Total_sleep", "Sleep_Type"))
     if (!pos %in% all_pos) next
-
+    
     idx <- which(all_pos == pos)
     window_pos <- all_pos[pmax(1, idx - 4):pmin(length(all_pos), idx + 4)]
-
+    
     plot_df <- aln_df |>
-      select(Species, all_of(window_pos), Total_sleep, Sleep_Type) |>
-      pivot_longer(cols = all_of(window_pos),
+      dplyr::select(Species, all_of(window_pos), Total_sleep, Sleep_Type) |>
+      tidyr::pivot_longer(cols = all_of(window_pos),
                    names_to = "Position",
                    values_to = "Base")
-
+    
     plot_df$Position <- factor(plot_df$Position, levels = window_pos)
-
+    
     plot_df <- plot_df |>
       mutate(
         FillColor = ifelse(Position == pos, base_colors[Base], "white"),
         FontColor = ifelse(Position == pos, "white", "black")
       )
-
+    
     species_order <- plot_df |>
       filter(Position == pos) |>
       arrange(Sleep_Type, Base, Total_sleep) |>
       pull(Species)
-
+    
     plot_df$Species <- factor(plot_df$Species,
                               levels = rev(unique(species_order)))
-
+    
+    # -------------------------
+    # SNP alignment heatmap
+    # -------------------------
     p_snp <- ggplot(plot_df,
                     aes(x = Position, y = Species)) +
       geom_tile(aes(fill = FillColor), width = 0.3) +
@@ -537,7 +539,10 @@ for (gene in unique(ts_sites$Gene)) {
       theme_minimal() +
       theme(axis.title = element_blank(),
             panel.grid = element_blank())
-
+    
+    # -------------------------
+    # Sleep type side panel
+    # -------------------------
     p_trait <- ggplot(
       distinct(plot_df, Species, Sleep_Type),
       aes(x = 1, y = Species, color = Sleep_Type)
@@ -546,17 +551,95 @@ for (gene in unique(ts_sites$Gene)) {
       scale_color_manual(values = group_colors) +
       theme_void() +
       theme(legend.position = "none")
-
-    final_plot <- p_trait + p_snp +
-      plot_layout(widths = c(0.2, 4)) +
+    
+    # -------------------------
+    # Base-specific boxplot at focal SNP
+    # -------------------------
+    box_df <- plot_df |>
+      filter(Position == pos) |>
+      dplyr::select(Species, Base, Total_sleep) |>
+      filter(!is.na(Base))
+    
+    p_box <- ggplot(box_df,
+                    aes(x = Base,
+                        y = Total_sleep,
+                        fill = Base)) +
+      geom_boxplot(width = 0.5,
+                   outlier.shape = NA,
+                   color = "black",
+                   linewidth = 0.8) +
+      geom_jitter(aes(color = Base),
+                  width = 0.15,
+                  size = 3,
+                  alpha = 0.6) +
+      scale_fill_manual(values = base_colors) +
+      scale_color_manual(values = base_colors) +
+      theme_minimal(base_size = 12) +
+      labs(
+        x = "Nucleotide type",
+        y = "Total sleep time (hours/day)",
+        title = paste(gene, "in", pos, "region")
+      ) +
+      theme(legend.position = "right")
+    
+    # -------------------------
+    # Sequence logo for window
+    # -------------------------
+    custom_scheme <- make_col_scheme(
+      chars = names(base_colors),
+      cols  = base_colors
+    )
+    
+    seq_mat <- aln_df[, pos, drop = FALSE]
+    
+    p_logo <- ggseqlogo(
+      seq_mat,
+      method = "bits",
+      col_scheme = custom_scheme
+    ) +
+      theme_void() +
+      labs(title = "Sequence logo")
+    
+    # -------------------------
+    # Combine SNP alignment panels
+    # -------------------------
+    alignment_plot <- p_trait + p_snp +
+      plot_layout(widths = c(0.3, 4)) +
       plot_annotation(
         title = paste(gene, "SNP", pos),
         theme = theme(plot.title = element_text(face = "bold"))
       )
-
-    ggsave(file.path(FIG_DIR_SNP,
-                     paste0(gene, "_", pos, "_SNP.pdf")),
-           final_plot, width = 8, height = 12, dpi = 300)
+    
+    # Save SNP alignment figure
+    ggsave(
+      file.path(FIG_DIR_SNP,
+                paste0(gene, "_", pos, "_SNP_alignment.pdf")),
+      alignment_plot,
+      width = 10,
+      height = 12,
+      dpi = 300
+    )
+    
+    # -------------------------
+    # Combine logo + boxplot
+    # -------------------------
+    logo_box_plot <- p_logo / p_box +
+      plot_layout(heights = c(1, 2)) +
+      plot_annotation(
+        title = paste(gene, "Functional effect at", pos),
+        theme = theme(plot.title = element_text(face = "bold"))
+      )
+    
+    # Save new boxplot + logo figure
+    ggsave(
+      file.path(FIG_DIR_SNP,
+                paste0(gene, "_", pos, "_Boxplot_Logo.pdf")),
+      logo_box_plot,
+      width = 8,
+      height = 8,
+      dpi = 300
+    )
+    
   }
 }
 
