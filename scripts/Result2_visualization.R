@@ -676,6 +676,7 @@ heatmap_Tajima <- pheatmap(
   border_color = "gray80",
   main = "Tajima's D",
   show_colnames = TRUE, show_rownames = FALSE,
+  angle_col = 90, 
   silent = TRUE
 )
 
@@ -687,6 +688,7 @@ heatmap_dNdS <- pheatmap(
   border_color = "gray80",
   main = "dN/dS",
   show_colnames = TRUE, show_rownames = FALSE,
+  angle_col = 90, 
   silent = TRUE
 )
 
@@ -698,6 +700,7 @@ heatmap_pi <- pheatmap(
   border_color = "gray80",
   main = "Nucleotide diversity (π)",
   show_colnames = TRUE, show_rownames = FALSE,
+  angle_col = 90, 
   silent = TRUE
 )
 
