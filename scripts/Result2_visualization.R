@@ -653,7 +653,8 @@ merge_signDF <- fread(HEATMAP_DATA_FILE) |> as.data.frame()
 sig_genes <- stat$Gene
 merge_signDF <- merge_signDF |>
   filter(Gene %in% sig_genes) |>
-  arrange(desc(Cluster), Gene)
+  arrange(Gene) |>           # alphabetical order
+  slice_head(n = 20)         # first 20 genes only
 
 rownames(merge_signDF) <- merge_signDF$Gene
 
