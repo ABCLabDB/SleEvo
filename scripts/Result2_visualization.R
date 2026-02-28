@@ -447,7 +447,7 @@ p_signal <- ggplot(signal_long,
 
 ggsave(file.path(FIG_DIR_SIGNAL,
                  "Figure2E_Phylogenetic_Signal.pdf"),
-       p_signal, width = 6, height = 3.5)
+       p_signal, width = 7, height = 3.5)
 
 
 
