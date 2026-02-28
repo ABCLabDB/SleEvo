@@ -121,7 +121,7 @@ meta$Type[meta$Species_name_ensembl %in% top_species]    <- "Long_sleep"
 ## =========================================================
 
 stat <- fread(STAT_FILE) |> as.data.frame() |>
-  filter(P_anova < 0.05)
+  filter(adj.P < 0.05)
 
 stat$Cluster <- as.numeric(stat$Cluster)
 
@@ -135,8 +135,8 @@ signal_df[is.na(signal_df)] <- 0
 colnames(signal_df)[c(2, 6)] <- c("Blomberg’s K", "Moran’s I")
 
 signal_long <- signal_df |>
-  select(Gene, `Blomberg’s K`, `Moran’s I`) |>
-  pivot_longer(
+  dplyr::select(Gene, `Blomberg’s K`, `Moran’s I`) |>
+  tidyr::pivot_longer(
     cols = c(`Blomberg’s K`, `Moran’s I`),
     names_to = "Signal",
     values_to = "Value"
@@ -156,22 +156,22 @@ sleep_colors <- c(
 )
 
 color_tree_by_sleep <- function(dend, sleep_info) {
-
+  
   assign_color <- function(d) {
-
+    
     if (is.leaf(d)) {
       st <- sleep_info[labels(d)]
       attr(d, "Type") <- st
       attr(d, "edgePar") <- list(col = sleep_colors[st], lwd = 3)
       return(d)
     }
-
+    
     d[[1]] <- assign_color(d[[1]])
     d[[2]] <- assign_color(d[[2]])
-
+    
     types <- na.omit(c(attr(d[[1]], "Type"), attr(d[[2]], "Type")))
     maj <- if (length(types) == 0) NA else names(sort(table(types), TRUE))[1]
-
+    
     attr(d, "Type") <- maj
     attr(d, "edgePar") <- list(
       col = ifelse(is.na(maj), "grey70", sleep_colors[maj]),
@@ -179,39 +179,50 @@ color_tree_by_sleep <- function(dend, sleep_info) {
     )
     d
   }
-
+  
   assign_color(dend)
 }
 
 for (i in seq_len(nrow(stat))) {
-
+  
   gene <- stat$Gene[i]
   k    <- stat$Cluster[i]
   if (k == 2) next
-
+  
   fasta_path <- file.path(DATA_FASTA, paste0(gene, "_muscle.fasta"))
   if (!file.exists(fasta_path)) next
-
+  
   cds <- readDNAStringSet(fasta_path)
   names(cds) <- sapply(strsplit(names(cds), ":"), `[`, 2)
-
+  
   keep <- intersect(names(cds), meta$Species_symbol_name_ensembl)
   cds  <- cds[names(cds) %in% keep]
-
+  
   names(cds) <- meta$Species_name_ensembl[
     match(names(cds), meta$Species_symbol_name_ensembl)
   ]
-
+  
   use_meta <- meta[match(names(cds), meta$Species_name_ensembl), ]
-
+  
   dna  <- as.DNAbin(cds)
   tree <- njs(dist.dna(dna, as.matrix = TRUE, pairwise.deletion = TRUE))
   dend <- as.dendrogram(hclust(as.dist(cophenetic.phylo(tree)), "average"))
-
+  
   dend_colored <- color_tree_by_sleep(
     dend, setNames(use_meta$Type, use_meta$Species_name_ensembl)
   )
-
+  
+  leaf_types  <- use_meta$Type[match(labels(dend_colored),
+                                     use_meta$Species_name_ensembl)]
+  leaf_colors <- sleep_colors[leaf_types]
+  leaf_colors[is.na(leaf_colors)] <- "grey70"
+    
+  dend_colored <- dend_colored %>%
+    set("labels_cex", 0.8) %>%
+    set("leaves_pch", 19) %>%        # ● solid circle
+    set("leaves_col", leaf_colors) %>%
+    set("leaves_cex", 1.5)
+  
   pdf(file.path(FIG_DIR_TREE, paste0(gene, "_phylo_tree.pdf")), 12, 6)
   plot(dend_colored, main = gene)
   legend("topright", names(sleep_colors),
