@@ -29,7 +29,7 @@ META_FILE <- file.path(PROJECT_DIR,
                        "data/Result1/species_sleep_metadata.txt")
 
 PERM_FILE <- file.path(PROJECT_DIR,
-                       "data/Result2/clustering.permutation200.Sleep_real.tsv") #이거 수정해야 함
+                       "data/Result2/Total_sleep_time_Anova_Result.tsv") #이거 수정해야 함
 
 SNP_FILE <- file.path(PROJECT_DIR,
                       "data/Result2/ALL_SNP.tsv")
