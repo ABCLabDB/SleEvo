@@ -23,12 +23,12 @@ library(tidyr)
 # 2. Define File Paths (Modify if Needed)
 ############################
 
-META_FILE <- "/disk4/bijsy/2.Sleep/2.Result/1.Result1/METADATA_fixedVersion.txt"
-FASTA_DIR <- "/disk4/bijsy/Evolution/0.DATA/2.OUT/3.CDS/1.Muscle/"
-NUCLEOTIDE_DIR <- "/disk4/bijsy/1.Important/2.Result/1.DATA/4.correlation_Result/nucleotideDF/"
-PERM_FILE <- "/disk4/bijsy/2.Sleep/Figure/UPGMA_Bootstrapping/Evolution/Supplementary_table7.tsv"
-SNP_FILE <- "/disk4/bijsy/2.Sleep/Figure/UPGMA_Bootstrapping/Evolution/Supplementary_table10.tsv"
-OUTPUT_FILE <- "/disk4/bijsy/2.Sleep/Figure/UPGMA_Bootstrapping/Evolution/Supplementary_table11.tsv"
+META_FILE <- "/data/Result1/species_sleep_metadata.txt"
+FASTA_DIR <- "/data/Fasta/"
+NUCLEOTIDE_DIR <- "/data/Circadian_gene_Nucelotide_Matrix/"
+PERM_FILE <- "/data/Result3/NREM_ratio_Anova_Result.tsv"
+SNP_FILE <- "/data/Result3/NREM_ratio_SNP.tsv"
+OUTPUT_FILE <- "/data/Result3/NREM_ratio_AminoAcid_mutation.tsv"
 
 
 ############################
