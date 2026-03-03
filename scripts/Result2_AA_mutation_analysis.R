@@ -9,9 +9,9 @@
 ############################################################
 
 
-## =========================================================
-## 1. Libraries
-## =========================================================
+############################
+# 1. Load Required Libraries
+############################
 
 library(data.table)
 library(dplyr)
@@ -29,10 +29,10 @@ META_FILE <- file.path(PROJECT_DIR,
                        "data/Result1/species_sleep_metadata.txt")
 
 PERM_FILE <- file.path(PROJECT_DIR,
-                       "data/Result2/Total_sleep_time_Anova_Result.tsv") #이거 수정해야 함
+                       "data/Result2/Total_sleep_time_Anova_Result.tsv")
 
 SNP_FILE <- file.path(PROJECT_DIR,
-                      "data/Result2/ALL_SNP.tsv")
+                      "data/Result2/Total_Sleep_Time.tsv")
 
 SEQ_DIR <- file.path(PROJECT_DIR,
                      "data/Result2/NucleotideMatrix")
@@ -41,130 +41,281 @@ OUT_FILE <- file.path(PROJECT_DIR,
                       "data/Result2/Total_sleep_time_AA_Mutation_Data.tsv")
 
 
-## =========================================================
-## 3. Load metadata
-## =========================================================
+############################
+# 3. Load Metadata
+############################
 
-meta <- fread(META_FILE) |> as.data.frame()
-meta$Species_symbol_name_ensembl <- meta$Species_symbol_name_ensembl |>
-  gsub(" ", "_", x = _) |>
-  tolower()
+metadata <- as.data.frame(fread(META_FILE))
 
+# Standardize species naming
+metadata$Species_symbol_name_ensembl <- gsub(" ", "_", metadata$Species_symbol_name_ensembl)
+metadata$Species_symbol_name_ensembl <- tolower(metadata$Species_symbol_name_ensembl)
 
-## =========================================================
-## 4. Significant genes & SNPs
-## =========================================================
+meta <- metadata
 
-perm_test <- fread(PERM_FILE) |> as.data.frame()
-sig_genes <- perm_test$gene.idx[perm_test$P.fisher < 0.05]
+############################
+# 4. Load SNP List
+############################
 
-all_snp <- fread(SNP_FILE) |> as.data.frame()
-all_snp <- all_snp |> filter(grepl("CDS", Column_Index))
-sleep_genes <- intersect(unique(all_snp$Gene), sig_genes)
+all_SNP <- as.data.frame(fread(SNP_FILE))
+sleep_gene <- unique(all_SNP$Gene)
 
+############################
+# 5. Identify Corresponding CDS Alignment Files
+############################
 
-## =========================================================
-## 5. Utility functions
-## =========================================================
+seqMatrix <- list.files(NUCLEOTIDE_DIR, ".tsv")
+seqMatrix <- sapply(strsplit(seqMatrix, ".", fixed = TRUE), function(x) x[1])
+seqMatrix <- seqMatrix[which(seqMatrix %in% sleep_gene)]
 
-get_codons <- function(cds_row) {
-  seq <- as.character(unlist(cds_row))
-  sapply(seq(seq_len(length(seq) - 2), by = 3),
-         function(i) paste(seq[i:(i + 2)], collapse = ""))
+############################
+# 6. Define Helper Functions
+############################
+
+# Extract codons from CDS sequence
+get_codons <- function(human_CDS) {
+  seq <- as.character(unlist(human_CDS[1, ]))
+  codons <- sapply(seq(1, length(seq) - 2, by = 3),
+                   function(i) paste(seq[i:(i+2)], collapse = ""))
+  return(codons)
 }
 
-translate_codons <- function(codons) {
-  as.character(translate(DNAStringSet(codons)))
+# Translate codon sequence into amino acids
+translate_codons <- function(codon_seq) {
+  return(translate(DNAStringSet(codon_seq)))
 }
 
+############################
+# 7. Identify Amino Acid Mutations
+############################
 
-get_aa_properties <- function() {
-  data.frame(
-    Amino_Acid = c("A","R","N","D","C","E","Q","G","H","I",
-                   "L","K","M","F","P","S","T","W","Y","V","*"),
-    Chemical_Property = c("Non-polar","Basic","Polar","Acidic","Polar",
-                          "Acidic","Polar","Non-polar","Basic","Non-polar",
-                          "Non-polar","Basic","Non-polar","Non-polar",
-                          "Non-polar","Polar","Polar","Non-polar",
-                          "Polar","Non-polar","Stop")
+aminoAcid_Mutation_DF <- c()
+
+for(i in 1:length(sleep_gene)){
+  
+  # Load nucleotide alignment matrix
+  a <- as.data.frame(
+    fread(paste0(NUCLEOTIDE_DIR, seqMatrix[i], ".tsv"))
   )
-}
-
-
-## =========================================================
-## 6. Main analysis
-## =========================================================
-
-aa_mutation_df <- list()
-
-for (gene in sleep_genes) {
-
-  seq_file <- file.path(SEQ_DIR, paste0(gene, ".tsv"))
-  if (!file.exists(seq_file)) next
-
-  aln <- fread(seq_file) |> as.data.frame()
-  rownames(aln) <- aln[,1]
-  aln <- aln[,-1]
-
-  cds <- aln[, grepl("CDS", colnames(aln)), drop = FALSE]
-  rownames(cds) <- str_to_title(rownames(cds))
-
-  human_cds <- cds["Homo_sapiens", , drop = FALSE]
-  orig_codons <- get_codons(human_cds)
-  orig_aa <- translate_codons(orig_codons)
-
-  snp_positions <- all_snp$Column_Index[all_snp$Gene == gene]
-
-  for (pos in snp_positions) {
-
-    if (!pos %in% colnames(cds)) next
-
-    mutated_cds <- human_cds
-    mutated_cds[1, pos] <- setdiff(unique(cds[,pos]), human_cds[1,pos])[1]
-
-    mut_codons <- get_codons(mutated_cds)
-    mut_aa <- translate_codons(mut_codons)
-
-    diff_idx <- which(orig_codons != mut_codons)
-    if (length(diff_idx) == 0) next
-
-    aa_mutation_df[[length(aa_mutation_df) + 1]] <-
-      data.frame(
-        Gene = gene,
-        Codon_Position = diff_idx,
-        Original_Codon = orig_codons[diff_idx],
-        Mutated_Codon = mut_codons[diff_idx],
-        Original_Amino_Acid = orig_aa[diff_idx],
-        Mutated_Amino_Acid = mut_aa[diff_idx],
-        Mutation_Type = ifelse(orig_aa[diff_idx] == mut_aa[diff_idx],
-                               "Synonymous", "Non-synonymous"),
-        Full_Length = length(orig_aa)
+  
+  rownames(a) <- a$V1
+  a <- a[,-1]
+  
+  # Extract CDS region
+  cds_region <- a[,which(grepl("CDS",colnames(a)))]
+  
+  # Extract human CDS
+  human_CDS <- cds_region[which(rownames(cds_region) == "homo_sapiens"),]
+  
+  # Get original codons and amino acids
+  original_codons <- get_codons(human_CDS)
+  original_aa <- translate_codons(original_codons)
+  
+  # Attach sleep phenotype
+  cds_region <- cbind(
+    cds_region,
+    meta$Total_sleep_time_per_day[
+      match(rownames(cds_region),
+            meta$Species_symbol_name_ensembl)
+    ]
+  )
+  colnames(cds_region)[length(cds_region)] <- "Total_Sleep_Time"
+  
+  # Extract SNP positions for this gene
+  snp_cds_Region <- cds_region[,which(colnames(cds_region) %in% c(all_SNP$Column_Index,"Total_Sleep_Time"))]
+  
+  ############################################
+  # Summarize nucleotide effects
+  ############################################
+  
+  nucleotide_cols <- colnames(snp_cds_Region)[grepl("CDS_", colnames(snp_cds_Region))]
+  results_list <- list()
+  
+  for (nucleotide_Position in nucleotide_cols) {
+    
+    tmp <- snp_cds_Region[, c(nucleotide_Position, "Total_Sleep_Time")]
+    
+    summary_df <- tmp %>%
+      group_by(!!sym(nucleotide_Position)) %>%
+      summarise(
+        Mean_TST = mean(Total_Sleep_Time, na.rm = TRUE),
+        Sample_Count = n()
+      ) %>%
+      rename(Nucleotide = !!sym(nucleotide_Position)) %>%
+      mutate(Position = nucleotide_Position)
+    
+    results_list[[nucleotide_Position]] <- summary_df
+  }
+  
+  results_df <- as.data.frame(bind_rows(results_list))
+  
+  # Remove ambiguous or singleton categories
+  results_df <- results_df[results_df$Nucleotide != "-", ]
+  results_df <- results_df[results_df$Nucleotide != "N", ]
+  results_df <- results_df[results_df$Sample_Count > 1, ]
+  
+  ############################################
+  # Identify extreme sleep categories
+  ############################################
+  
+  filtered_results <- results_df %>%
+    group_by(Position) %>%
+    filter(Mean_TST == max(Mean_TST) |
+           Mean_TST == min(Mean_TST)) %>%
+    mutate(Category = ifelse(
+      Mean_TST == max(Mean_TST), "long", "short"
+    )) %>%
+    ungroup() %>%
+    as.data.frame()
+  
+  
+  ############################################
+  # Compare amino acid mutations (short vs long)
+  ############################################
+  
+  for(category_type in c("short", "long")){
+    
+    snp_df <- filtered_results[
+      filtered_results$Category %in% category_type, ]
+    
+    snp_df <- snp_df[
+      !duplicated(snp_df[, c("Position", "Mean_TST")]), ]
+    
+    snp_position <- snp_df$Position
+    snp_new_base <- snp_df$Nucleotide
+    
+    codon_positions_raw <-
+      which(colnames(human_CDS) %in% snp_position) / 3
+    
+    snp_df$Codon_Position <-
+      floor(codon_positions_raw) +
+      ifelse(codon_positions_raw %% 1 > 0, 1, 0)
+    
+    snp_df$Codon_In_Position <-
+      ifelse(codon_positions_raw %% 1 == 0, 3,
+             ifelse(codon_positions_raw %% 1 <= 0.34, 1, 2))
+    
+    mutated_CDS <- human_CDS
+    mutated_CDS[1, snp_position] <- snp_new_base
+    
+    mutated_codons <- get_codons(mutated_CDS)
+    mutated_aa <- translate_codons(mutated_codons)
+    
+    mutation_results <- data.frame(
+      Original_Codon = original_codons,
+      Mutated_Codon = mutated_codons,
+      Original_Amino_Acid = as.character(original_aa),
+      Mutated_Amino_Acid = as.character(mutated_aa),
+      Mutation_Type = ifelse(
+        original_aa == mutated_aa,
+        "Synonymous", "Non-synonymous"
       )
+    )
+    
+    filtered_mutations <-
+      mutation_results[
+        mutation_results$Original_Codon !=
+          mutation_results$Mutated_Codon, ]
+    
+    filtered_mutations <-
+      cbind(filtered_mutations,
+            snp_df[match(
+              rownames(filtered_mutations),
+              snp_df$Codon_Position),])
+    
+    if(nrow(filtered_mutations) > 0){
+      filtered_mutations$Gene <- sleep_gene[i]
+      filtered_mutations$Full_Length <- length(original_aa)
+      aminoAcid_Mutation_DF <-
+        rbind(aminoAcid_Mutation_DF,
+              filtered_mutations)
+    }
   }
 }
 
-aa_mutation_df <- bind_rows(aa_mutation_df)
+
+############################
+# 8. Amino Acid Chemical Property Analysis
+############################
+
+get_amino_acid_properties <- function() {
+  data.frame(
+    Amino_Acid = c("A","R","N","D","C","E","Q","G","H","I",
+                   "L","K","M","F","P","S","T","W","Y","V","*"),
+    Chemical_Property = c("Non-polar","Basic","Polar","Acidic",
+                          "Polar","Acidic","Polar","Non-polar",
+                          "Basic","Non-polar","Non-polar",
+                          "Basic","Non-polar","Non-polar",
+                          "Non-polar","Polar","Polar",
+                          "Non-polar","Polar","Non-polar","Stop")
+  )
+}
+
+analyze_mutation_effects <- function(mutation_df) {
+  
+  aa_properties <- get_amino_acid_properties()
+  
+  mutation_df <- mutation_df %>%
+    left_join(aa_properties,
+              by = c("Original_Amino_Acid"="Amino_Acid")) %>%
+    rename(Original_Chemical_Property = Chemical_Property)
+  
+  mutation_df <- mutation_df %>%
+    left_join(aa_properties,
+              by = c("Mutated_Amino_Acid"="Amino_Acid")) %>%
+    rename(Mutated_Chemical_Property = Chemical_Property)
+  
+  mutation_df <- mutation_df %>%
+    mutate(Property_Change =
+             ifelse(Original_Chemical_Property ==
+                      Mutated_Chemical_Property,
+                    "Unchanged","Changed"))
+  
+  return(mutation_df)
+}
+
+############################
+# 9. Filter Non-synonymous Mutations
+############################
+
+mutation_results <- analyze_mutation_effects(aminoAcid_Mutation_DF)
+mutation_results <- mutation_results[
+  grepl("Non-synonymous",
+        mutation_results$Mutation_Type), ]
 
 
-## =========================================================
-## 7. Annotate chemical properties
-## =========================================================
+############################
+# 10. Add Chromosome Annotation
+############################
 
-aa_prop <- get_aa_properties()
+gene_Library <- as.data.frame(fread(GENE_LIBRARY_FILE))
+gene_Library <- gene_Library[,c(1:4)]
 
-aa_mutation_df <- aa_mutation_df |>
-  left_join(aa_prop, by = c("Original_Amino_Acid" = "Amino_Acid")) |>
-  rename(Original_Chemical_Property = Chemical_Property) |>
-  left_join(aa_prop, by = c("Mutated_Amino_Acid" = "Amino_Acid")) |>
-  rename(Mutated_Chemical_Property = Chemical_Property) |>
-  mutate(Property_Change =
-           ifelse(Original_Chemical_Property ==
-                    Mutated_Chemical_Property,
-                  "Unchanged", "Changed"))
+mutation_results$Chr <-
+  gene_Library$Chr[
+    match(mutation_results$Gene,
+          gene_Library$Gene_symbol)
+  ]
+
+mutation_results$Position <-
+  sapply(strsplit(mutation_results$Position,
+                  "CDS_", fixed = TRUE),
+         function(x) x[2])
 
 
-## =========================================================
-## 8. Save
-## =========================================================
+############################
+# 11. Export Final Table
+############################
 
-fwrite(aa_mutation_df, OUT_FILE, sep = "\t")
+mutation_results <- mutation_results[
+  ,c(13,18,9,6,1:5,7,10,11,15:17)]
+
+fwrite(mutation_results,
+       OUTPUT_FILE,
+       sep = "\t",
+       col.names = TRUE,
+       quote = FALSE)
+
+############################################################
+# End of Script
+############################################################
