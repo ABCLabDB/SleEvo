@@ -1,11 +1,16 @@
 ############################################################
-# Script: Result3_visualization.R
+# Script: Result3 – Phylogenetic & Evolutionary Analysis
 # Description:
 #   A: Phylogenetic dendrogram (NREM ratio)
 #   B: Phylogenetic signal visualization
-#   C: Evolutionary pressure scatter plot
+#   C: Evolutionary pressure scatter plot (dN/dS vs Tajima's D)
 #   D: Manhattan plot of NREM-associated SNPs
-# Logic unchanged. Data loading centralized.
+#   E: Gene-level SNP nucleotide logo and boxplot visualization
+# 
+# Notes:
+#   - Logic unchanged across sections.
+#   - All datasets are centrally loaded at the top of the script.
+#   - Each section independently generates publication-ready figures.
 ############################################################
 
 ############################
@@ -27,6 +32,7 @@ library(grid)
 library(ggrepel)
 library(qqman)
 library(scales)
+library(ggseqlogo)
 
 ############################
 # 2. Define File Paths (Modify as Needed)
@@ -470,6 +476,194 @@ ggsave(paste0(OUTPUT_SIGNAL,"Figure4E.pdf"),
 
 ggsave(paste0(OUTPUT_SIGNAL,"Figure4E.jpg"),
        P1, width = 10, height = 4, dpi = 300)
+
+
+############################################################
+# =====================  Result3 E  ========================
+#        SNP Plot for each Gene's nucleotide region
+############################################################
+
+SNP_INFO_DIR <- "/disk4/bijsy/1.Important/2.Result/1.DATA/4.correlation_Result/nucleotideDF/"
+SNP_OUTPUT_DIR <- "/disk4/bijsy/2.Sleep/Figure/Result3/SupplementaryFigure14_SNP/Boxplot/"
+
+## Load TST SNP data
+all_SNP <- as.data.frame(fread(SNP_FILE))
+all_SNP <- all_SNP[which(grepl("CDS",all_SNP$Column_Index)),]
+all_SNP <- all_SNP[which(all_SNP$p.adj < 0.05),]
+
+sleep_gene <- unique(all_SNP$Gene)
+
+## Load metadata again (logic unchanged)
+metadata <- as.data.frame(fread(META_FILE))
+
+DATA.DIR <- FASTA_DIR
+
+metadata$Species_symbol_name_ensembl <- gsub(" ", "_",metadata$Species_symbol_name_ensembl)
+metadata$Species_symbol_name_ensembl <- tolower(metadata$Species_symbol_name_ensembl)
+colnames(metadata)[13] <- "Sleep_Timing"
+
+meta <- metadata
+
+phenotype <- colnames(meta)[c(8,11:13)]
+meta <- meta[order(meta$Percentage_of_NREM_time_per_day),
+             c(1,2,3,which(colnames(meta)==phenotype[2]))]
+
+if(length(which(is.na(meta$Percentage_of_NREM_time_per_day))) > 0){
+  meta <- meta[-which(is.na(meta$Percentage_of_NREM_time_per_day)),]
+}
+
+rownames(meta) <- NULL
+
+setwd(SNP_INFO_DIR)
+seqMatrix <- list.files(getwd(),".tsv")
+
+# Nucleotide color scheme
+custom_color <- c(
+  "A" = "#ff6361",
+  "T" = "#58508d",
+  "G" = "#74a892",
+  "C" = "#ffa600",
+  "-" = "#e0e0e0",
+  "N" = "#404040"
+)
+
+custom_color_scheme <- make_col_scheme(
+  chars = c("A", "T", "G", "C", "-", "N"),
+  groups = c("A", "T", "G", "C", "-", "N"),
+  cols = c("#ff6361", "#58508d", "#74a892", "#ffa600", "#e0e0e0", "#404040")
+)
+
+for(i in 1:length(sleep_gene)){
+  
+  aln_df <- as.data.frame(fread(paste0(sleep_gene[i],".tsv")))
+  rownames(aln_df) <- aln_df[,1]
+  aln_df <- aln_df[,-1]
+  aln_df <- aln_df[, -((ncol(aln_df)-15):ncol(aln_df))]
+  
+  rownames(aln_df) <-
+    metadata$Species_name_ensembl[
+      match(rownames(aln_df),
+            metadata$Species_symbol_name_ensembl)
+    ]
+  
+  use_meta <- metadata[
+    match(rownames(aln_df),
+          metadata$Species_name_ensembl),
+  ]
+  
+  new_aln_DF <- cbind(
+    aln_df,
+    use_meta$Percentage_of_NREM_time_per_day[
+      match(rownames(aln_df),
+            use_meta$Species_name_ensembl)
+    ]
+  )
+  
+  colnames(new_aln_DF)[ncol(new_aln_DF)] <- "Percentage_of_NREM_time_per_day"
+  
+  if(length(which(is.na(use_meta$Percentage_of_NREM_time_per_day))) > 0 ){
+    new_aln_DF <- new_aln_DF[-which(is.na(use_meta$Percentage_of_NREM_time_per_day)),]
+    use_meta <- use_meta[-which(is.na(use_meta$Percentage_of_NREM_time_per_day)),]
+  }
+  
+  rownames(use_meta) <- NULL
+  
+  new_aln_DF <- new_aln_DF[
+    ,which(colnames(new_aln_DF) %in%
+             c(all_SNP$Column_Index[
+               which(all_SNP$Gene == sleep_gene[i])
+             ],
+             "Percentage_of_NREM_time_per_day"))
+  ]
+  
+  if(ncol(new_aln_DF) == 2){
+    dna_string_set  <- DNAStringSet(new_aln_DF[,1])
+    dna_string_set@ranges@NAMES <- rownames(new_aln_DF)
+  } else{
+    sequences <- apply(
+      new_aln_DF[,-ncol(new_aln_DF)],
+      1,
+      function(x) paste(x, collapse = "")
+    )
+    dna_string_set  <- DNAStringSet(sequences)
+  }
+  
+  IDX <- which(colnames(new_aln_DF) %in%
+                 all_SNP$Column_Index[
+                   which(all_SNP$Gene %in% sleep_gene[i])
+                 ])
+  
+  real_name <- colnames(new_aln_DF)
+  
+  for(k in 1:length(IDX)){
+    
+    dna_strings <- as.character(dna_string_set)
+    
+    extracted_data <- data.frame(
+      sequence = sapply(dna_strings,
+                        function(seq) substr(seq, IDX[k], IDX[k])),
+      name = names(dna_string_set),
+      stringsAsFactors = FALSE
+    )
+    
+    sorted_data <- extracted_data[order(extracted_data$sequence), ]
+    
+    if(length(which(grepl("NA",sorted_data$name))) > 0){
+      sorted_data <- sorted_data[-which(grepl("NA",sorted_data$name)),]
+    }
+    
+    sorted_data$Sleep_Time <-
+      meta$Percentage_of_NREM_time_per_day[
+        match(sorted_data$name,
+              meta$Species_name_ensembl)
+      ]
+    
+    sorted_data$sequence_presence <- as.factor(sorted_data$sequence)
+    
+    logo_plot <-
+      ggseqlogo(
+        as.character(sorted_data$sequence_presence),
+        method = "probability",
+        col_scheme = custom_color_scheme
+      ) +
+      theme_minimal()
+    
+    boxplot_snp <-
+      ggplot(sorted_data,
+             aes(x = sequence,
+                 y = Sleep_Time,
+                 fill = sequence)) +
+      geom_boxplot(color = "black",
+                   size=0.6,
+                   width = 0.5,
+                   outlier.shape = NA) +
+      geom_jitter(aes(color = sequence),
+                  width = 0.15,
+                  alpha = 0.6,
+                  size = 2.5) +
+      scale_fill_manual(values = custom_color) +
+      scale_color_manual(values = custom_color) +
+      theme_minimal()
+    
+    combined_plot1 <-
+      grid.arrange(logo_plot,
+                   boxplot_snp,
+                   ncol = 2,
+                   widths = c(0.2,0.8))
+    
+    ggsave(paste0(SNP_OUTPUT_DIR,
+                  sleep_gene[i],"_",
+                  real_name[k],".jpg"),
+           plot = combined_plot1,
+           width = 8, height = 4, dpi = 300)
+    
+    ggsave(paste0(SNP_OUTPUT_DIR,
+                  sleep_gene[i],"_",
+                  real_name[k],".pdf"),
+           plot = combined_plot1,
+           width = 8, height = 4, dpi = 300)
+  }
+}
 
 ############################################################
 # End of Script
