@@ -376,7 +376,9 @@ make_per1_plot <- function(){
   mut <- fread(PATHS$MUTATION) |> as.data.frame()
   per1 <- mut |> filter(Gene=="PER1",
                         Mutation_Type=="Non-synonymous")
-  
+
+  per1$Position <- paste0("Chr",per1$Chromosome,":",sapply(strsplit(per1$Position, "CDS_", fixed = T),function(x) x[2]))
+
   protein_Gene <- per1 %>%
     mutate(
       mutation_label = paste0(Original_Amino_Acid, Codon_Position, Mutated_Amino_Acid," (",Position,")"),
