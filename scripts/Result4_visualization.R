@@ -68,17 +68,31 @@ make_lollipop <- function(){
               logP=-log10(P.cochran)) |>
     arrange(desc(logP)) |>
     slice_head(n=50)
-
-  p <- ggplot(df,aes(reorder(Gene,-logP),logP))+
-    geom_segment(aes(xend=Gene,y=0,yend=logP),
-                 size=4,color="#008585")+
-    geom_point(size=4,color="#008585")+
-    geom_hline(yintercept=-log10(0.05),
-               linetype="dashed",color="red")+
-    theme_classic()+
-    theme(axis.text.x=element_text(angle=90,hjust=1))+
-    labs(x="",y="-log10(P)")
-
+  
+  threshold <- -log10(0.05)
+  
+  df$color <- ifelse(df$logP > threshold, "#008585", "grey90")
+  df$Significant <- ifelse(df$logP > threshold, "Sleep timing related", "Not significant")
+  
+  p <- ggplot(df, aes(x = reorder(Gene, -logP), y = logP, color = Significant)) +
+    geom_segment(aes(x = reorder(Gene, -logP), xend = reorder(Gene, -logP), y = 0, yend = logP), size = 6.4) +
+    geom_point(size = 6) +
+    geom_hline(yintercept = threshold, linetype = "dashed", color = "red",size=1.5) +
+    scale_color_manual(values = c("Sleep timing related" = "#008585", "Not significant" = "grey90")) +
+    labs(
+      x = "",
+      y = "-log10(P.value)",
+      color = "Significance"
+    ) +
+    theme_classic(base_size = 12) + #theme_minimal(base_size = 12)
+    theme(
+      legend.position = "top",
+      axis.text.x = element_text(angle = 90, hjust = 1, vjust = 1, size = 14,face = "italic"),
+      axis.line.x = element_line(size = 1, color = "black"),
+      axis.line.y = element_line(size = 1, color = "black"),
+      panel.border = element_blank()
+    )
+  
   ggsave(file.path(PATHS$OUT,"Figure4A_lollipop.pdf"),
          p,width=14,height=4)
 }
