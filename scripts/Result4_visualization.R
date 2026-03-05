@@ -7,7 +7,6 @@
 #   Figure4C  : Evolution quadrant plot
 #   Figure4D  : Manhattan plot
 #   Figure4E  : PER1 amino acid landscape
-#   SuppFig12 : SNP heatmap window plot
 #
 # Project root required:
 #   Sleep_Evolution/
@@ -453,35 +452,7 @@ make_per1_plot <- function(){
 }
 
 ############################################################
-# 8. Supplementary Figure — SNP Heatmap
-############################################################
-
-make_snp_heatmap <- function(){
-
-  TS <- fread(PATHS$MANHATTAN) |> as.data.frame()
-  TS <- TS |> filter(P<0.05)
-
-  files <- list.files(PATHS$NUC_DIR,
-                      pattern=".tsv",
-                      full.names=TRUE)
-
-  for(f in files){
-
-    gene_name <- tools::file_path_sans_ext(basename(f))
-    aln <- fread(f) |> as.data.frame()
-
-    if(!gene_name %in% TS$Gene) next
-
-    p <- ggplot()+theme_void()
-
-    ggsave(file.path(PATHS$OUT,
-                     paste0(gene_name,"_SNP.pdf")),
-           p,width=6,height=4)
-  }
-}
-
-############################################################
-# 9. Run All
+# 8. Run All
 ############################################################
 
 make_lollipop()
@@ -494,7 +465,7 @@ make_snp_heatmap()
 message("All Result4 figures generated successfully.")
 
 ############################################################
-# 10. Main Execution Block
+# 9. Main Execution Block
 ############################################################
 
 main <- function(){
@@ -508,7 +479,6 @@ main <- function(){
   make_evolution_plot()
   make_manhattan()
   make_per1_plot()
-  make_snp_heatmap()
 
   message("All Result4 figures generated successfully.")
 }
