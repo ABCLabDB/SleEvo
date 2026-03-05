@@ -315,17 +315,55 @@ make_evolution_plot <- function(){
 ############################################################
 
 make_manhattan <- function(){
-
-  df <- fread(PATHS$MANHATTAN) |> as.data.frame()
-  df$logP <- -log10(df$P)
-
-  p <- ggplot(df,aes(BP,logP,color=factor(CHR)))+
-    geom_point(size=1.5)+
-    geom_hline(yintercept=-log10(0.05),
-               linetype="dashed",color="red")+
-    theme_classic()+
-    theme(legend.position="none")
-
+  
+  df <- fread(PATHS$MANHATTAN) |> as.data.table()
+  df$CHR <- as.numeric(df$CHR)
+  df[, Label := ifelse(-log10(P) > 3, SNP, NA_character_)]
+  
+  don <- df %>%
+    group_by(CHR) %>%
+    summarise(chr_len = max(BP)) %>%
+    mutate(tot = cumsum(chr_len) - chr_len) %>%
+    dplyr::select(-chr_len) %>%
+    left_join(df, by = "CHR") %>%
+    arrange(CHR, BP) %>%
+    mutate(
+      BPcum = BP + tot,
+      is_annotate = ifelse(!is.na(Label), "yes", "no")
+    )
+  
+  axisdf <- don %>%
+    group_by(CHR) %>%
+    summarise(center = (min(BPcum) + max(BPcum)) / 2)
+  
+  n_chr <- length(unique(don$CHR))
+  chr_colors <- rep(c("#1e3d58","#43b0f1"), 7)
+  
+  P1 <- ggplot(don, aes(x = BPcum, y = -log10(P))) +
+    geom_point(aes(color = as.factor(CHR)), alpha = 0.8, size = 1.5) +
+    scale_color_manual(values = chr_colors) +
+    scale_x_continuous(label = axisdf$CHR, breaks = axisdf$center) +
+    scale_y_continuous(expand = c(0, 0), limits = c(0, max(-log10(don$P)) + 1)) +
+    geom_hline(yintercept = -log10(0.05), color = "red", linetype = "dashed", size = 1.5) +
+    geom_text_repel(
+      data = subset(don, -log10(P) > -log10(0.05) & Gene %in% c("CAVIN3", "ATF5","PER1","CRY2")), #& Gene %in% c("ARNTL", "PPARA")
+      aes(label = SNP),  # 여기!
+      size = 4,
+      max.overlaps = 10
+    ) +
+    theme_classic() +
+    theme(
+      legend.position = "none",
+      panel.border = element_blank(),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor.x = element_blank(),
+      axis.line.x = element_blank(),
+      axis.text.x = element_text(angle = 0, size = 10, face = "bold"),
+      axis.title.x = element_text(size = 12),
+      axis.title.y = element_text(size = 12)
+    ) +
+    labs(x = "Chromosome", y = expression(-log[10](P)))
+  
   ggsave(file.path(PATHS$OUT,"Figure4D_Manhattan.pdf"),
          p,width=8,height=4)
 }
