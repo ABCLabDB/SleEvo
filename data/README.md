@@ -28,6 +28,10 @@ MUSCLE-aligned CDS FASTA files are required per gene for phylogenetic and visual
 
 Each file contains CDS alignments across species (e.g. from an ortholog selection and MUSCLE alignment pipeline).
 
+**Alignment provenance**
+
+The aligned CDS FASTA files provided in `data/Fasta/` correspond to the final filtered alignment set used in the manuscript. Multiple sequence alignments were generated using MUSCLE v5 and subsequently filtered using GUIDANCE2. 
+
 ---
 
 ## Nucleotide matrices
@@ -108,6 +112,10 @@ Phenotype-specific expression matrices, metadata, and DEG results. See **[data/R
 | Input  | `*_Count.tsv`, `*_Metadata.tsv` (and optionally `*_DEGs.tsv`) |
 | Output | Figures from `Result6_visualization_DEG_boxplot.R` are saved under `figures/Result6/` |
 
+**RNA-seq data provenance**
+
+Raw RNA-seq data were processed as described in the Methods section (adapter trimming, alignment, sorting, and gene-level quantification). The count matrices provided in this directory correspond to the finalized processed datasets used for differential expression and regression analyses in the manuscript. These files enable full reproduction of transcriptomic-level statistical analyses without requiring reprocessing of raw FASTQ files.
+
 ---
 
 ## Heatmap data — `data/Heatmap/`
@@ -121,5 +129,13 @@ Summary matrices used by visualization scripts:
 | `Sleep_timing.tsv`       | Result4 scripts    |
 | `Number_of_sleep_times.tsv` | Optional / referenced as needed |
 
+**Evolutionary statistics provenance**
+
+Summary statistics reflecting evolutionary pressure, including nucleotide diversity (π), Tajima’s D, and dN/dS ratios, were calculated using MEGA-CC v10.2.6 as described in the Methods section. The values provided in this directory correspond to the finalized outputs used for figure generation in the manuscript.
+
+---
 Exact column names and formats are defined by the scripts that read these files (see [scripts/README.md](../scripts/README.md)).
 
+## Reproducibility note
+
+This repository is designed for manuscript-level reproducibility. All aligned sequences, nucleotide matrices, association result tables, and processed RNA-seq count matrices correspond to the finalized datasets used in the published analyses. Software versions and statistical procedures are described in the Methods section. Permutation-based analyses were performed with fixed random seeds to ensure reproducibility.
