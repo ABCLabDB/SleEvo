@@ -52,6 +52,12 @@ Scripts are modular and can be run independently provided the required inputs ex
 - **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result2/TST_key_12_optimal_Kruskal.tsv`, `data/Result2/Phylogenetic_Signal_Data_permutation.tsv`, `data/Result2/Total_Sleep_Time_SNP.tsv`, `data/Result2/NucleotideMatrix/<Gene>.tsv`, `data/Fasta/`, `data/Heatmap/Total_sleep_time.tsv`.
 - **Output:** `figures/Result2/PhyloTree/`, `figures/Result2/Boxplot/`, `figures/Result2/Phylogenetic_Signal/`, `figures/Result2/SNP/`, `figures/Result2/Heatmap/`.
 
+### Result2_sleep_duration_variants.R
+
+- **Purpose:** Identifies nucleotide positions significantly associated with total sleep time across species using ANOVA. Exports significant SNP sites (Supplementary Table 4).
+- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result2/Total_sleep_time_Anova_Result.tsv`, `data/Circadian_gene_Nucleotide_Matrix/<Gene>.tsv`, optional `data/Result1/circadian_Gene_list.tsv`.
+- **Output:** `data/Result2/Total_sleep_time_SNP.tsv`.
+
 ### Result2_AA_mutation_analysis.R
 
 - **Purpose:** Amino-acid mutation analysis for sleep-associated SNPs.
@@ -70,9 +76,39 @@ Scripts are modular and can be run independently provided the required inputs ex
 - **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result3/NREM_key_12_optimal_Kruskal.tsv`, `data/Result3/NREM_ratio_Anova_Result.tsv`, `data/Result3/NREM_ratio_phylogeneticsignal.tsv`, `data/Result3/NREM_ratio_SNP.tsv`, `data/Result3/NREM_ratio_AminoAcid_mutation.tsv`, `data/Fasta/`, `data/Circadian_gene_Nucleotide_Matrix/`, `data/Heatmap/NREM_ratio.tsv`.
 - **Output:** `figures/Result3/`.
 
+### Result3_nrem_ratio_variants.R
+
+- **Purpose:** Identifies nucleotide positions associated with NREM ratio across species using non-parametric and parametric tests depending on sample size. Produces SNP table (Supplementary Table 10).
+- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result3/NREM_ratio_Anova_Result.tsv`, `data/Circadian_gene_Nucleotide_Matrix/<Gene>.tsv`, optional `data/Result1/circadian_Gene_list.tsv`.
+- **Output:** `data/Result3/NREM_ratio_SNP.tsv` (or `NREM_Ratio_SNP.tsv` as in script).
+
+### Result3_AA_mutation_analysis.R
+
+- **Purpose:** Identifies non-synonymous mutations associated with NREM ratio from significant SNP sites; compares codons to human reference; annotates amino acid property changes. Exports mutation table and can generate protein domain mutation plot (Figure 3F).
+- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result3/NREM_ratio_Anova_Result.tsv`, `data/Result3/NREM_ratio_SNP.tsv`, `data/Fasta/`, `data/Circadian_gene_Nucleotide_Matrix/<Gene>.tsv`.
+- **Output:** `data/Result3/NREM_ratio_AminoAcid_mutation.tsv` (Supplementary Table 11), optional `figures/Result3/` protein domain plot.
+
+### Result3_ARNTL2_variants_LD.R
+
+- **Purpose:** LD-like co-evolution heatmap: visualizes correlation (r²) among non-synonymous NREM-associated SNPs for ARNTL2.
+- **Input:** `data/Result3/NREM_ratio_Anova_Result.tsv`, `data/Result3/NREM_ratio_SNP.tsv`, `data/Result3/NREM_ratio_AminoAcid_mutation.tsv`, `data/Result1/species_sleep_metadata.txt`, `data/Circadian_gene_Nucleotide_Matrix/ARNTL2.tsv`, optional `data/Result1/circadian_Gene_list.tsv`.
+- **Output:** Heatmap displayed in R session (save manually if needed).
+
 ---
 
 ## Result4 — Sleep timing
+
+### Result4_Sleeptiming_optimal_cluster_group.R
+
+- **Purpose:** Determines optimal cluster number and assigns species to sleep-timing phenotype groups (e.g. less_sleep / more_sleep) using genetic distance and model-based clustering (e.g. mclust). Produces the cluster solution used by Cochran enrichment.
+- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Fasta/*_muscle.fasta`.
+- **Output:** `data/Result4/Sleeptiming_optimal_K.tsv` (or `Sleep_Timing_optimal_K.tsv`).
+
+### Result4_Cochran_enrichment.R
+
+- **Purpose:** Cochran–Armitage (and chi-square for multiallelic sites) enrichment between sleep timing categories and SNP/cluster; produces the sleep timing association table used by visualization.
+- **Input:** `data/Result4/Sleeptiming_optimal_K.tsv`, alignment and metadata as used in Result4 pipeline.
+- **Output:** `data/Result4/Sleeptiming_Cochran_Result.tsv`.
 
 ### Result4_visualization.R
 
