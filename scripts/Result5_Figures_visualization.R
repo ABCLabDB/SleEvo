@@ -178,7 +178,7 @@ for(i in seq_len(nrow(knee))){
   dm  <- dist.dna(dna, model="T92", pairwise.deletion=TRUE)
   tree <- nj(dm)
   hc   <- hclust(as.dist(cophenetic(tree)), method="average")
-  dend <- as.dendrogram(tree)
+  dend <- as.dendrogram(hc)
 
   sleep_info <- setNames(
     use_meta$Group,
