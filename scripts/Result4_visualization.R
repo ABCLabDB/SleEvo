@@ -373,22 +373,80 @@ make_manhattan <- function(){
 ############################################################
 
 make_per1_plot <- function(){
-
+  
   mut <- fread(PATHS$MUTATION) |> as.data.frame()
   per1 <- mut |> filter(Gene=="PER1",
                         Mutation_Type=="Non-synonymous")
-
-  if(nrow(per1)==0) return(NULL)
-
+  
+  protein_Gene <- per1 %>%
+    mutate(
+      mutation_label = paste0(Original_Amino_Acid, Codon_Position, Mutated_Amino_Acid," (",Position,")"),
+      y = ifelse(Sleep_Timing == "Sleep at night", 1.1, 1),
+      # 아래: jitter 적용
+      yend = ifelse(Sleep_Timing == "Sleep at night",
+                    runif(n(), min = 1.3, max = 1.38),
+                    runif(n(), min = 0.65, max = 0.75)),
+      label_y = yend  # 텍스트 위치도 동일하게 사용
+    )
+  
+  domain_df <- data.frame(
+    Domain = c("PAS", "PAS", "PAC", "CRY binding","LXXLL"),
+    start = c(208, 348, 422, 1149, 1043),
+    end   = c(275, 414, 465, 1290, 1047),
+    fill = c("#74a892", "#74a892", "#008585", "#c7522a", "#e5c185")
+  )
+  
   full_length <- unique(per1$Full_Length)
-
-  p <- ggplot(per1,
-              aes(Codon_Position,1))+
-    geom_segment(aes(xend=Codon_Position,
-                     y=1,yend=1.2))+
-    geom_point(size=3,color="#2c6e49")+
-    theme_void()
-
+  
+  p <- ggplot() +
+    geom_rect(aes(xmin = 1, xmax = full_length, ymin = 1, ymax = 1.1),
+              fill = "#ffffff", color = "black") +
+    
+    geom_rect(data = domain_df,
+              aes(xmin = start, xmax = end, ymin = 1, ymax = 1.1, fill = Domain),
+              color = "black", alpha = 0.8) +
+    
+    geom_segment(data = protein_Gene,
+                 aes(x = Codon_Position, xend = Codon_Position, y = y, yend = yend),
+                 color = "black") +
+    
+    geom_point(
+      data = protein_Gene,
+      aes(x = Codon_Position, y = yend, color = Sleep_Timing),
+      size = 3
+    ) +
+    
+    geom_text_repel(
+      data = protein_Gene,
+      aes(x = Codon_Position, y = yend, label = mutation_label),
+      nudge_y = 0,
+      direction = "y",
+      size = 3.5,
+      fontface = "bold",
+      box.padding = 0.2,
+      point.padding = 0.2,
+      segment.color = NA,max.overlaps = 10
+    ) +
+    
+    scale_fill_manual(values = setNames(domain_df$fill, domain_df$Domain)) +
+    
+    # 나머지 설정 동일
+    scale_x_continuous(breaks = seq(0, full_length, by = 50), limits = c(0, full_length + 10)) +
+    coord_cartesian(ylim = c(0.6, 1.5)) +
+    theme_minimal() +
+    theme(
+      axis.text.y = element_blank(),
+      axis.title.y = element_blank(),
+      axis.ticks.y = element_blank(),
+      panel.grid = element_blank(),
+      axis.title.x = element_text(face = "bold"),
+      plot.title = element_text(hjust = 0.5, face = "bold")
+    ) +
+    labs(
+      x = "",
+      title = "Non-synonymous mutation in PER1"
+    )
+  
   ggsave(file.path(PATHS$OUT,
                    "Figure4E_PER1_AminoAcid.pdf"),
          p,width=8,height=3)
