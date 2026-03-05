@@ -80,6 +80,18 @@ Scripts are modular and can be run independently provided the required inputs ex
 - **Input:** `data/Result4/Sleeptiming_Cochran_Result.tsv`, `Sleeptiming_Manhattan_Dataset.tsv`, `Sleeptiming_AA_Mutation.tsv`, `data/Result1/species_sleep_metadata.txt`, `data/Fasta/`, `data/Heatmap/Sleep_timing.tsv`, `data/Circadian_gene_Nucleotide_Matrix/`.
 - **Output:** `figures/Result4/`.
 
+### SNP association testing strategy
+
+For sleep timing, species were categorized into three groups: **Sleep at daytime**, **Sleep at night**, and **Sleep at anytime**.
+
+Because the number of phenotype categories exceeded two, two different statistical tests were applied depending on the allelic structure of each variant site.
+
+- **Biallelic sites:** The Cochran–Armitage trend test was applied to evaluate the association between allele frequency and sleep timing categories.
+
+- **Triallelic or multiallelic sites:** A chi-square test of independence was applied to assess the association between genotype counts and sleep timing categories.
+
+This approach allows appropriate statistical testing across variant sites with different allelic complexities while preserving statistical power for biallelic variants.
+
 ---
 
 ## Result5 — Sleep frequency
