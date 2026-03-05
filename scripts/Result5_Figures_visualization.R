@@ -85,11 +85,11 @@ p_lollipop <- ggplot(
       element_text(angle = 90,
                    hjust = 1,
                    vjust = 1,
-                   size = 12)
+                   size = 12, face = "italic)
   ) +
   labs(x = NULL,
        y = expression(-log[10](P)),
-       color = "Significance")
+       color = "")
 
 ggsave(
   file.path(OUT_DIR, "Figure5A_Lollipop.pdf"),
