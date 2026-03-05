@@ -264,16 +264,48 @@ make_trees <- function(){
 ############################################################
 
 make_evolution_plot <- function(){
-
+  
   evo <- fread(PATHS$EVOLUTION) |> as.data.frame()
   evo <- evo |> filter(Gene %in% sig_genes$gene.idx)
-
-  p <- ggplot(evo,aes(dN_dS,TajimasD))+
-    geom_point(size=4,color="#476066")+
-    geom_vline(xintercept=1,linetype="dashed")+
-    geom_hline(yintercept=0,linetype="dashed")+
-    theme_classic()
-
+  
+  evolution_score_DF1 <- evo %>%
+    mutate(
+      dN_dS_Group = ifelse(dN_dS > 1, "dN/dS > 1", "dN/dS <= 1"),
+      TajimasD_Group = ifelse(TajimasD > 0, "Tajima's D > 0", "Tajima's D <= 0")
+    )
+  
+  p <- ggplot(evolution_score_DF1, aes(x = dN_dS, y = TajimasD)) +
+    
+    geom_rect(aes(xmin = -Inf, xmax = 1, ymin = 0, ymax = Inf), fill = NA, color = "#ab5852", linetype = "solid",size=1.5) +  # dN/dS <= 1 & Tajima's D > 0
+    geom_rect(aes(xmin = 1, xmax = Inf, ymin = 0, ymax = Inf), fill = NA, color = "#7593af", linetype = "solid",size=1.5) +  # dN/dS > 1 & Tajima's D > 0
+    geom_rect(aes(xmin = -Inf, xmax = 1, ymin = -Inf, ymax = 0), fill = NA, color = "#d69e49", linetype = "solid",size=1.5) +  # dN/dS <= 1 & Tajima's D <= 0
+    geom_rect(aes(xmin = 1, xmax = Inf, ymin = -Inf, ymax = 0), fill = NA, color = "#eadaa0", linetype = "solid",size=1.5) +  # dN/dS > 1 & Tajima's D <= 0
+    
+    geom_point(aes(color = interaction(dN_dS_Group, TajimasD_Group)), size = 6.5) +
+    
+    geom_text(aes(label = Gene), size = 5, vjust = -0.5, check_overlap = TRUE) +
+    
+    geom_hline(yintercept = 0, linetype = "dashed", color = "gray", size=1) +  # y = 0 기준선
+    geom_vline(xintercept = 1, linetype = "dashed", color = "gray", size=1) +  # x = 1 기준선
+    scale_color_manual(
+      values = c(
+        "dN/dS > 1.Tajima's D > 0" = "#7593af",
+        "dN/dS > 1.Tajima's D <= 0" = "#eadaa0",
+        "dN/dS <= 1.Tajima's D > 0" = "#ab5852",
+        "dN/dS <= 1.Tajima's D <= 0" = "#d69e49"
+      ),
+      name = "Type"
+    ) +
+    labs(
+      title = "",
+      x = "dN/dS",
+      y = "Tajima's D"
+    ) +
+    theme_minimal() +
+    theme(title = element_text(size = 16),
+          axis.title = element_text(size = 16),
+          legend.key.size = unit(0.4, "cm"), legend.text = element_text(size = 10), legend.title = element_text(size = 11))
+  
   ggsave(file.path(PATHS$OUT,"Figure4C_Evolution.pdf"),
          p,width=6,height=4)
 }
