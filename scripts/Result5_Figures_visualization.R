@@ -185,23 +185,53 @@ for(i in seq_len(nrow(knee))){
     use_meta$Species_name_ensembl
   )
 
-  assign_branch_color <- function(d){
-    if(is.leaf(d)){
-      sp <- labels(d)
-      attr(d, "edgePar") <-
-        list(col = custom_colors[sleep_info[sp]],
-             lwd = 3)
+  assign_branch_color_by_mode <- function(d) {
+    if (is.leaf(d)) {
+      sleep_type <- sleep_info[labels(d)]
+      attr(d, "Group") <- sleep_type
+      if (!is.na(sleep_type)) {
+        attr(d, "edgePar") <- list(col = custom_colors[sleep_type], lwd = 4)
+      } else {
+        attr(d, "edgePar") <- list(col = "gray70", lwd = 4)
+      }
       return(d)
     }
-    d[[1]] <- assign_branch_color(d[[1]])
-    d[[2]] <- assign_branch_color(d[[2]])
+    
+    d[[1]] <- assign_branch_color_by_mode(d[[1]])
+    d[[2]] <- assign_branch_color_by_mode(d[[2]])
+    
+    left <- attr(d[[1]], "Group")
+    right <- attr(d[[2]], "Group")
+    all_types <- na.omit(c(left, right))
+    
+    if (length(all_types) == 0) {
+      majority_type <- NA
+      branch_color <- "gray70"
+    } else {
+      majority_type <- names(sort(table(all_types), decreasing = TRUE))[1]
+      branch_color <- custom_colors[majority_type]
+    }
+    
+    attr(d, "Group") <- majority_type
+    attr(d, "edgePar") <- list(col = branch_color, lwd = 4)
+    
     return(d)
   }
 
-  dend_colored <- assign_branch_color(dend)
-  labels_colors(dend_colored) <-
-    custom_colors[sleep_info[labels(dend_colored)]]
+  dend_colored <- assign_branch_color_by_mode(dend)
+  
+  label_colors <- sleep_info[labels(dend_colored)]  
+  label_colors <- custom_colors[label_colors] 
+  label_colors[is.na(label_colors)] <- "gray70"  
+  
+  labels_colors(dend_colored) <- label_colors
 
+  ggd <- dend_colored %>%
+    set("labels_cex", 1) %>%
+    set("leaves_pch", 19) %>%
+    set("leaves_col", meta_for_color$color) %>%
+    set("leaves_cex", 2.5)
+  
   pdf(
     file.path(
       OUT_DIR,
@@ -211,7 +241,7 @@ for(i in seq_len(nrow(knee))){
     height = 5
   )
 
-  plot(dend_colored)
+  plot(ggd)
   legend("topright",
          legend = names(custom_colors),
          fill = custom_colors,
@@ -222,7 +252,7 @@ for(i in seq_len(nrow(knee))){
   # ---- Mosaic ----
 
   clusters <- cutree(hc, k = k)
-
+  
   df <- data.frame(
     Species = names(clusters),
     Cluster = clusters
@@ -231,48 +261,65 @@ for(i in seq_len(nrow(knee))){
       use_meta[,c("Species_name_ensembl","Group")],
       by=c("Species"="Species_name_ensembl")
     )
-
+  
   cluster_majority <- df %>%
     group_by(Cluster) %>%
     summarise(
       Majority = names(which.max(table(Group))),
       .groups="drop"
     )
-
+  
   df <- df %>%
     left_join(cluster_majority, by="Cluster")
-
+  
   df_tbl <- as.data.frame(
     table(df$Group, df$Majority)
   )
-
+  
   df_tbl <- df_tbl %>%
     group_by(Var1) %>%
-    mutate(
-      prop = Freq/sum(Freq),
-      label = paste0(Freq," (",round(prop*100,1),"%)")
-    ) %>%
-    ungroup()
-
-  p_mosaic <- ggplot(df_tbl) +
+    mutate(prop = Freq / sum(Freq)) %>%
+    ungroup() %>%
+    mutate(label = paste0(Freq, " Species\n(", round(prop*100, 1), "%)"),
+           MatchStatus = ifelse(Var1 == Var2, "Evolution\ncorrelated", "Other effects"))
+  
+  p <- ggplot(df_tbl) +
     geom_mosaic(
       aes(x = product(Var1),
           fill = Var2,
           weight = Freq),
-      color="black"
+      color = "black", linewidth = 0.3
     ) +
-    geom_mosaic_text(
-      aes(x = product(Var1),
-          fill = Var2,
-          weight = Freq,
-          label = label),
-      size = 4,
-      fontface = "bold"
-    ) +
-    scale_fill_manual(values=custom_colors) +
-    theme_minimal(base_size=14) +
-    theme(legend.position="top")
-
+    scale_fill_manual(values = c("#476066", "#b8cdab")) +
+    labs(x = "", y = "") +
+    theme_minimal(base_size = 14)+
+    theme(legend.position = "top")
+  
+  gb <- ggplot_build(p)
+  panel_data <- gb$data[[1]]
+  
+  hex_to_var <- setNames(df_tbl$Var2, unique(panel_data$fill))
+  label_df <- panel_data %>%
+    mutate(
+      Var1 = x__Var1,
+      Var2 = x__fill__Var2,
+      x = (xmin + xmax) / 2,
+      y = (ymin + ymax) / 2
+    ) %>%
+    left_join(df_tbl, by = c("Var1", "Var2"))
+  
+  label_df <- label_df %>%
+    mutate(highlight = ifelse(Var1 == Var2, "Match", "Mismatch"))
+  
+  p_mosaic <- p + geom_text(
+    data = label_df,
+    aes(x = x, y = y, label = label.y),
+    inherit.aes = FALSE,
+    size = 4.5,
+    fontface = "bold",
+    color = "black"
+  )
+  
   ggsave(
     file.path(
       OUT_DIR,
@@ -282,4 +329,3 @@ for(i in seq_len(nrow(knee))){
     width=7,
     height=5
   )
-}
