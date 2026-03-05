@@ -157,7 +157,7 @@ colnames(meta)[1] <- "idx"
 ############################################################
 # Load optimal cluster information
 ############################################################
-max.purity.df <- as.data.frame(fread("/disk4/bijsy/2.Sleep/2.Result/6.Result6/1.Data/Sleep_Timing_optimal_K.tsv"))
+max.purity.df <- as.data.frame(fread("/data/Result4/Sleeptiming_optimal_K.tsv"))
 colnames(max.purity.df)[1:4] <- c("Gene", "best.Cluster","purity.score","p_value")
 max.purity.df$best.Cluster <- paste0("cluster_",max.purity.df$best.Cluster)
 
