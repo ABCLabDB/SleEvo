@@ -101,34 +101,160 @@ make_lollipop <- function(){
 # 4. Figure4B — Phylogenetic Tree
 ############################################################
 
-build_tree <- function(gene){
-
-  fasta_file <- file.path(PATHS$FASTA_DIR,paste0(gene,"_muscle.fasta"))
-  if(!file.exists(fasta_file)) return(NULL)
-
-  cds <- readDNAStringSet(fasta_file)
-  names(cds) <- str_to_title(sapply(strsplit(names(cds),":"),`[`,2))
-
-  keep <- intersect(names(cds), meta$Species_symbol_name_ensembl)
-  cds <- cds[names(cds)%in%keep]
-
-  dna <- as.DNAbin(cds)
-  tree <- nj(dist.dna(dna,model="T92"))
-  dend <- as.dendrogram(as.hclust(tree))
-
-  return(dend)
-}
-
 make_trees <- function(){
-
-  for(gene in sig_genes$gene.idx){
-
-    dend <- build_tree(gene)
-    if(is.null(dend)) next
-
-    pdf(file.path(PATHS$OUT,paste0(gene,"_SleepTimingTree.pdf")),
-        width=12,height=5)
-    plot(dend)
+  
+  perm_test <- cochran
+  knee <- perm_test |> filter(P.cochran < 0.05)
+  
+  custom_colors <- c(
+    "Sleep at night" = "#2c6e49",
+    "Sleep at anytime" = "grey85",
+    "Sleep at daytime" = "#d68c45"
+  )
+  
+  meta_timing <- meta[-which(is.na(meta$Sleep_timing_per_day)),]
+  meta_timing$Species_symbol_name_ensembl <- tolower(meta_timing$Species_symbol_name_ensembl)
+  
+  meta_timing$Type <- "Sleep at anytime"
+  meta_timing$Type[meta_timing$Sleep_timing_per_day == "Sleep at night"] <- "Sleep at night"
+  meta_timing$Type[meta_timing$Sleep_timing_per_day == "Sleep at daytime"] <- "Sleep at daytime"
+  
+  for(i in 1:nrow(knee)){
+    
+    k <- knee$gene.cluster.idx[i]
+    
+    if(k == 2) next
+    
+    gene <- knee$gene.idx[i]
+    
+    fasta_file <- file.path(PATHS$FASTA_DIR,
+                            paste0(gene,"_muscle.fasta"))
+    
+    if(!file.exists(fasta_file)) next
+    
+    cds_muscle <- readDNAStringSet(fasta_file)
+    
+    cds_muscle@ranges@NAMES <- sapply(
+      strsplit(cds_muscle@ranges@NAMES, ":"), `[`,2
+    )
+    
+    name <- intersect(cds_muscle@ranges@NAMES,
+                      meta_timing$Species_symbol_name_ensembl)
+    
+    cds_muscle <- cds_muscle[
+      cds_muscle@ranges@NAMES %in% name
+    ]
+    
+    cds_muscle@ranges@NAMES <- meta_timing$Species_name_ensembl[
+      match(cds_muscle@ranges@NAMES,
+            meta_timing$Species_symbol_name_ensembl)
+    ]
+    
+    use_meta <- meta_timing[
+      match(cds_muscle@ranges@NAMES,
+            meta_timing$Species_name_ensembl),]
+    
+    rownames(use_meta) <- NULL
+    
+    dna_Muscle <- as.DNAbin(cds_muscle)
+    
+    dm <- dist.dna(
+      dna_Muscle,
+      as.matrix = TRUE,
+      pairwise.deletion = TRUE,
+      model = "T92"
+    )
+    
+    tree <- njs(dm)
+    
+    dm <- cophenetic.phylo(tree)
+    
+    average.dm <- hclust(as.dist(dm), method="average")
+    
+    dend <- as.dendrogram(average.dm)
+    
+    meta_for_color <- use_meta[,c("Species_name_ensembl","Type")]
+    
+    meta_for_color <- meta_for_color |>
+      mutate(color = custom_colors[Type])
+    
+    meta_for_color <- meta_for_color[
+      match(labels(dend),
+            meta_for_color$Species_name_ensembl),]
+    
+    labels_colors(dend) <- meta_for_color$color
+    
+    sleep_info <- setNames(
+      meta_for_color$Type,
+      meta_for_color$Species_name_ensembl
+    )
+    
+    assign_branch_color_by_mode <- function(d) {
+      if (is.leaf(d)) {
+        sleep_type <- sleep_info[labels(d)]
+        attr(d, "Type") <- sleep_type
+        if (!is.na(sleep_type)) {
+          attr(d, "edgePar") <- list(col = custom_colors[sleep_type], lwd = 4)
+        } else {
+          attr(d, "edgePar") <- list(col = "gray70", lwd = 4)
+        }
+        return(d)
+      }
+      
+      d[[1]] <- assign_branch_color_by_mode(d[[1]])
+      d[[2]] <- assign_branch_color_by_mode(d[[2]])
+      
+      left <- attr(d[[1]], "Type")
+      right <- attr(d[[2]], "Type")
+      all_types <- na.omit(c(left, right))
+      
+      if (length(all_types) == 0) {
+        majority_type <- NA
+        branch_color <- "gray70"
+      } else {
+        majority_type <- names(sort(table(all_types), decreasing = TRUE))[1]
+        branch_color <- custom_colors[majority_type]
+      }
+      
+      attr(d, "Type") <- majority_type
+      attr(d, "edgePar") <- list(col = branch_color, lwd = 4)
+      
+      return(d)
+    }
+    
+    dend_colored <- assign_branch_color_by_mode(dend)
+    
+    label_colors <- sleep_info[labels(dend_colored)]
+    label_colors <- custom_colors[label_colors]
+    label_colors[is.na(label_colors)] <- "gray70"
+      
+    labels_colors(dend_colored) <- label_colors
+    
+    ggd <- dend_colored |>
+      set("labels_cex", 0.8) |>
+      set("leaves_pch", 19) |>
+      set("leaves_col", meta_for_color$color) |>
+      set("leaves_cex", 2.5)
+    
+    pdf(
+      file.path(PATHS$OUT,
+                paste0(gene,"_SleepTimingTree.pdf")),
+      width = 16,
+      height = 5
+    )
+    
+    par(mar = c(10,4,2,2))
+    
+    plot(ggd)
+    
+    legend(
+      "topright",
+      legend = unique(meta_for_color$Type),
+      fill = unique(meta_for_color$color),
+      title = "Sleep Type",
+      cex = 0.8
+    )
+    
     dev.off()
   }
 }
