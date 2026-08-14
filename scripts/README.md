@@ -1,208 +1,158 @@
-# Scripts overview 
+# Sleep Evolution (SleEvo)
 
-R scripts for phylogenetic and statistical analyses of sleep-related traits. All paths are relative to the **project root** (the folder containing `data/`, `scripts/`, and `figures/`).
+Analysis and figure code for evolutionary associations between circadian genes and sleep phenotypes across species.
 
-**Run `00_setup.R` first** to install and load core packages. Then run scripts in an order consistent with data dependencies (see recommended order below).
+**`Result*` numbers** organize analyses and data by **sleep phenotype** (metadata, total sleep time, NREM ratio, sleep timing, sleep frequency, RNA-seq DEG).
 
----
+**`Fig*` scripts** generate the **main manuscript figures**, grouped by biological theme (not by Result number):
 
-## Recommended run order
-
-1. **00_setup.R** — install/load packages.
-2. **Result2and3_anova_enrichment.R** — produces Result2 and Result3 association tables (requires `data/Fasta/`, `data/Result1/species_sleep_metadata.txt`).
-3. Other Result2/Result3 analyses and visualizations as needed (some require precomputed permutation/SNP files in `data/Result2/` and `data/Result3/`).
-4. **Result4_visualization.R**, **Result5_***, **Result6_visualization_DEG_boxplot.R** — require corresponding input data under `data/Result4/`, `data/Result5/`, and `data/Result6/` as described in [data/README.md](../data/README.md).
-
-Scripts are modular and can be run independently provided the required inputs exist.
+| Figure | Theme | Primary phenotypes |
+|--------|--------|--------------------|
+| **Fig3** | Sleep duration & NREM ratio | Total sleep time, NREM ratio |
+| **Fig4** | Sleep timing & sleep frequency | Sleep timing, sleep frequency |
+| **Fig5** | Cross-validation | Human constraint / GWAS / transcriptomics |
 
 ---
 
-## Setup
+## Repository structure
 
-### 00_setup.R
+All paths are relative to the **project root** (the folder that contains `data/`, `scripts/`, and `Result/`).
 
-- **Purpose:** Install (if missing) and load packages used across analyses.
-- **Packages:** `data.table`, `dplyr`, `ggplot2`, `ggpubr`, `DescTools`.
-- **Run from:** Project root.
+```
+SleEvo/
+├── data/                          # Inputs & intermediate analysis tables
+│   ├── Circadian_gene_Nucleotide_Matrix/
+│   ├── Cross_validation/          # Fig5 tables (TableS22–S28, LOEUF, etc.)
+│   ├── Fasta/                     # MUSCLE-aligned CDS FASTA
+│   ├── Heatmap/
+│   ├── Result1/ … Result6/        # Phenotype-organized analysis inputs
+│   └── README.md
+│
+├── Result/                        # Main figure outputs (from Fig* scripts)
+│   ├── Fig3/
+│   ├── Fig4/
+│   └── Fig5/
+│
+├── scripts/
+│   ├── 00_setup.R
+│   ├── Fig3_*.R … Fig5_*.R        # Main figure generation (preferred)
+│   ├── Result*_*.R                # Phenotype analysis pipelines
+│   ├── Supplementary_Fig1to6_*.R
+│   ├── 99.previous/               # Older Result* visualization scripts
+│   └── README.md
+│
+└── README.md
+```
 
----
-
-## Result1 — Sleep architecture metadata
-
-### Result1_SuppFig1to6_sleep_architecture_metadata.R
-
-- **Purpose:** Generate Supplementary Figures 1–6 (total sleep time, NREM ratio, sleep frequency, sleep timing, primate timing–frequency, global timing–frequency mosaic).
-- **Input:** `data/Result1/species_sleep_metadata.txt`.
-- **Output:** Figures displayed in R session (save manually or adapt script).
-- **See:** [data/README.md](../data/README.md).
-
----
-
-## Result2 & Result3 — Clustering and association
-
-### Result2and3_anova_enrichment.R
-
-- **Purpose:** Phylogenetic clustering of MUSCLE-aligned CDS (genetic distance → NJ tree → cophenetic distance → hierarchical clustering) and association with sleep phenotypes (ANOVA / Kruskal–Wallis).
-- **Input:** `data/Fasta/*_muscle.fasta`, `data/Result1/species_sleep_metadata.txt`.
-- **Output:** `data/Result2/Total_sleep_time_Anova_Result.tsv`, `data/Result3/NREM_ratio_Anova_Result.tsv`.
-
-### Result2_visualization.R
-
-- **Purpose:** Result2 figures: phylogenetic trees (2A), box/strip plots (2B), phylogenetic signal (2E), SNP-centered nucleotide view (2F), selection heatmap (2H).
-- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result2/TST_key_12_optimal_Kruskal.tsv`, `data/Result2/Phylogenetic_Signal_Data_permutation.tsv`, `data/Result2/Total_Sleep_Time_SNP.tsv`, `data/Result2/NucleotideMatrix/<Gene>.tsv`, `data/Fasta/`, `data/Heatmap/Total_sleep_time.tsv`.
-- **Output:** `figures/Result2/PhyloTree/`, `figures/Result2/Boxplot/`, `figures/Result2/Phylogenetic_Signal/`, `figures/Result2/SNP/`, `figures/Result2/Heatmap/`.
-
-### Result2_sleep_duration_variants.R
-
-- **Purpose:** Identifies nucleotide positions significantly associated with total sleep time across species using ANOVA. Exports significant SNP sites (Supplementary Table 4).
-- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result2/Total_sleep_time_Anova_Result.tsv`, `data/Circadian_gene_Nucleotide_Matrix/<Gene>.tsv`, optional `data/Result1/circadian_Gene_list.tsv`.
-- **Output:** `data/Result2/Total_sleep_time_SNP.tsv`.
-
-### Result2_AA_mutation_analysis.R
-
-- **Purpose:** Amino-acid mutation analysis for sleep-associated SNPs.
-- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result2/clustering.permutation200.Sleep_real.tsv`, `data/Result2/ALL_SNP.tsv`, `data/Result2/NucleotideMatrix/<Gene>.tsv`.
-- **Output:** `data/Result2/Total_sleep_time_AA_Mutation_Data.tsv`.
-
-### Result2_AA_PML_visualization.R
-
-- **Purpose:** PML amino-acid mutation visualization (e.g. Figure 2I/2J).
-- **Input:** `data/Result2/Total_sleep_time_AA_Mutation_Data.tsv`.
-- **Output:** `figures/Result2/AminoAcid/PML_Mutation.pdf`.
-
-### Result3_visualization.R
-
-- **Purpose:** Result3 figures: NREM phylogenetic tree (3A), phylogenetic signal (3C), heatmap (3D), Manhattan (3E), ARNTL2 mutation map.
-- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result3/NREM_key_12_optimal_Kruskal.tsv`, `data/Result3/NREM_ratio_Anova_Result.tsv`, `data/Result3/NREM_ratio_phylogeneticsignal.tsv`, `data/Result3/NREM_ratio_SNP.tsv`, `data/Result3/NREM_ratio_AminoAcid_mutation.tsv`, `data/Fasta/`, `data/Circadian_gene_Nucleotide_Matrix/`, `data/Heatmap/NREM_ratio.tsv`.
-- **Output:** `figures/Result3/`.
-
-### Result3_nrem_ratio_variants.R
-
-- **Purpose:** Identifies nucleotide positions associated with NREM ratio across species using non-parametric and parametric tests depending on sample size. Produces SNP table (Supplementary Table 10).
-- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result3/NREM_ratio_Anova_Result.tsv`, `data/Circadian_gene_Nucleotide_Matrix/<Gene>.tsv`, optional `data/Result1/circadian_Gene_list.tsv`.
-- **Output:** `data/Result3/NREM_ratio_SNP.tsv` (or `NREM_Ratio_SNP.tsv` as in script).
-
-### Result3_AA_mutation_analysis.R
-
-- **Purpose:** Identifies non-synonymous mutations associated with NREM ratio from significant SNP sites; compares codons to human reference; annotates amino acid property changes. Exports mutation table and can generate protein domain mutation plot (Figure 3F).
-- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result3/NREM_ratio_Anova_Result.tsv`, `data/Result3/NREM_ratio_SNP.tsv`, `data/Fasta/`, `data/Circadian_gene_Nucleotide_Matrix/<Gene>.tsv`.
-- **Output:** `data/Result3/NREM_ratio_AminoAcid_mutation.tsv` (Supplementary Table 11), optional `figures/Result3/` protein domain plot.
-
-### Result3_ARNTL2_variants_LD.R
-
-- **Purpose:** LD-like co-evolution heatmap: visualizes correlation (r²) among non-synonymous NREM-associated SNPs for ARNTL2.
-- **Input:** `data/Result3/NREM_ratio_Anova_Result.tsv`, `data/Result3/NREM_ratio_SNP.tsv`, `data/Result3/NREM_ratio_AminoAcid_mutation.tsv`, `data/Result1/species_sleep_metadata.txt`, `data/Circadian_gene_Nucleotide_Matrix/ARNTL2.tsv`, optional `data/Result1/circadian_Gene_list.tsv`.
-- **Output:** Heatmap displayed in R session (save manually if needed).
+- **Data formats:** [data/README.md](data/README.md)
+- **Script details:** [scripts/README.md](scripts/README.md)
 
 ---
 
-## Result4 — Sleep timing
+## How Result* relates to Fig*
 
-### Result4_Sleeptiming_optimal_cluster_group.R
+- **Result1–6** = analysis modules / data folders by phenotype (and supporting tables).
+- **Fig3–5** = publication figure panels. They **reuse** Result* outputs (and related tables) but are organized by the figure story:
 
-- **Purpose:** Determines optimal cluster number and assigns species to sleep-timing phenotype groups (e.g. less_sleep / more_sleep) using genetic distance and model-based clustering (e.g. mclust). Produces the cluster solution used by Cochran enrichment.
-- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Fasta/*_muscle.fasta`.
-- **Output:** `data/Result4/Sleeptiming_optimal_K.tsv` (or `Sleep_Timing_optimal_K.tsv`).
+| Fig | Uses (typical) |
+|-----|----------------|
+| **Fig3** | Result2 (total sleep time) + Result3 (NREM ratio) |
+| **Fig4** | Result4 (sleep timing) + Result5 (sleep frequency) |
+| **Fig5** | Cross-validation tables (`data/Cross_validation/`) + Result6 DEG expression |
 
-### Result4_Cochran_enrichment.R
-
-- **Purpose:** Cochran–Armitage (and chi-square for multiallelic sites) enrichment between sleep timing categories and SNP/cluster; produces the sleep timing association table used by visualization.
-- **Input:** `data/Result4/Sleeptiming_optimal_K.tsv`, alignment and metadata as used in Result4 pipeline.
-- **Output:** `data/Result4/Sleeptiming_Cochran_Result.tsv`.
-
-### Result4_visualization.R
-
-- **Purpose:** Result4 figures: lollipop enrichment (4A), sleep timing dendrogram (4B), evolution quadrant (4C), Manhattan (4D), PER1 amino acid landscape (4E), SuppFig12 SNP heatmap.
-- **Input:** `data/Result4/Sleeptiming_Cochran_Result.tsv`, `Sleeptiming_Manhattan_Dataset.tsv`, `Sleeptiming_AA_Mutation.tsv`, `data/Result1/species_sleep_metadata.txt`, `data/Fasta/`, `data/Heatmap/Sleep_timing.tsv`, `data/Circadian_gene_Nucleotide_Matrix/`.
-- **Output:** `figures/Result4/`.
-
-### SNP association testing strategy
-
-For sleep timing, species were categorized into three groups: **Sleep at daytime**, **Sleep at night**, and **Sleep at anytime**.
-
-Because the number of phenotype categories exceeded two, two different statistical tests were applied depending on the allelic structure of each variant site.
-
-- **Biallelic sites:** The Cochran–Armitage trend test was applied to evaluate the association between allele frequency and sleep timing categories.
-
-- **Triallelic or multiallelic sites:** A chi-square test of independence was applied to assess the association between genotype counts and sleep timing categories.
-
-This approach allows appropriate statistical testing across variant sites with different allelic complexities while preserving statistical power for biallelic variants.
+Older monolithic Result* *visualization* scripts live under `scripts/99.previous/` for reference. Prefer the modular **`Fig*`** scripts for regenerating main figures.
 
 ---
 
-## Result5 — Sleep frequency
+## Main figures (`Fig*` scripts)
 
-### Result5_SNP_Cochran_sleep_frequency.R
+Run from the **project root**. Outputs go to `Result/Fig3`, `Result/Fig4`, or `Result/Fig5` (jpg + pdf unless noted).
 
-- **Purpose:** Site-level Cochran–Armitage trend test between nucleotide variants and sleep frequency.
-- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result5/Sleep_frequency_Cochran.tsv`, `data/Circadian_gene_Nucleotide_Matrix/<Gene>.tsv`.
-- **Output:** `figures/Result5/SNP_Significant.tsv`.
+### Fig3 — Sleep duration & NREM ratio
 
-### Result5_Sleepfrequency_associated_AA_effect_from_SNP.R
+| Script | Panel / content |
+|--------|------------------|
+| `Fig3_AB_Sleepduration_tree.R` | **3A/B** Phylogenetic trees for total-sleep–associated genes (e.g. ADRB1, ATF4) with sleep-duration bars |
+| `Fig3_C_Phylogenetic_signal.R` | **3C** Blomberg’s K / Moran’s I across genes (alphabetical top 20) |
+| `Fig3_D_Selection_signature_heatmap.R` | **3D** dN/dS vs Tajima’s D selection-signature scatter |
+| `Fig3_E_NREMratio.R` | **3E** NREM-ratio phylogenetic tree (e.g. ARNTL2) |
+| `Fig3_F_NREMratio_Manhattanplot.R` | **3F** Manhattan plot of NREM-associated SNPs |
+| `Fig3_G_ARNTL2_NREMratio_variants.R` | **3G** ARNTL2 focal SNP alignment + logo/boxplot |
 
-- **Purpose:** Amino-acid-level effects of sleep frequency–associated SNPs (translate, classify synonymous/non-synonymous, annotate property change).
-- **Input:** `data/Result1/species_sleep_metadata.txt`, `figures/Result5/SNP_Significant.tsv`, `data/Circadian_gene_Nucleotide_Matrix/<Gene>.tsv`.
-- **Output:** `figures/Result5/AminoAcid_Mutation_DF.tsv`.
+### Fig4 — Sleep timing & sleep frequency
 
-### Result5_Figures_visualization.R
+| Script | Panel / content |
+|--------|------------------|
+| `Fig4_A_Sleeptiming_enrichment.R` | **4A** Cochran enrichment lollipops (timing + frequency; also combined) |
+| `Fig4_B_PER1_sleeptiming_tree.R` | **4B** PER1 tree + sleep-timing heatmap column |
+| `Fig4_C_Selection_signature_heatmap.R` | **4C** Selection signature for sleep-timing candidates |
+| `Fig4_D_Manhattanplot.R` | **4D** Sleep-timing Manhattan plot |
+| `Fig4_E_PER1_AminoAcid_mutation.R` | **4E** PER1 nonsynonymous lollipop (UniProt domains) |
+| `Fig4_F_Sleepfrequency_tree.R` | **4F** ATF5 / NFIL3 sleep-frequency trees (+ combined) |
+| `Fig4_G_Sleepfrequency_mutation.R` | **4G** ATF5 & CARTPT SNP alignment windows |
+| `Fig4_H_NFIL3_sleepfrequency_indel.R` | **4H** NFIL3 indel schematic |
 
-- **Purpose:** Result5 figure panels: Cochran lollipop (5A), phylogenetic trees for ATF5/NFIL3 (5B/E), mosaic plots (5C/D).
-- **Input:** `data/Result1/species_sleep_metadata.txt`, `data/Result5/Sleep_frequency_Cochran.tsv`, `data/Fasta/<Gene>_muscle.fasta`.
-- **Output:** `figures/Result5/*.pdf`.
+### Fig5 — Cross-validation
 
-### Indel identification workflow (external tools)
-
-To complement SNP analyses in Result5, indel variants were identified
-using external command-line tools.
-
-Tool versions:
-- bcftools v1.10.2
-- Jvarkit (Git commit dea54f1a2)
-
-Workflow:
-
-1. Multiple sequence alignments (FASTA) were converted to VCF format
-   using:
-   `jvarkit msa2vcf --ignore-n-bases`
-
-2. Indel variants were extracted using:
-   `bcftools view -v indels`
-
-3. Variant statistics and site-level annotations were generated using:
-   `bcftools stats` and `bcftools query`
-
-4. Indels were classified as insertions or deletions based on
-   the relative sequence lengths of the REF (human reference)
-   and ALT alleles.
-
-This workflow documents the exact software versions and parameters
-used to ensure reproducibility of the indel identification step.
+| Script | Panel / content |
+|--------|------------------|
+| `Fig5_B_Sleep_associated_variants_type.R` | **5B** Fraction of variant types (monomorphic vs exonic classes) |
+| `Fig5_C_CADD.R` | **5C** Non-synonymous variants split by CADD ≥ 20 |
+| `Fig5_D_LOEUF.R` | **5D** Gene-level LOEUF intolerance bar + permutation null |
+| `Fig5_E_OPN4_translational_relevance.R` | **5E** OPN4 Chr10:86658604 ATLAS vs Human GWAS |
+| `Fig5_H_DEG_boxplot.R` | **5H** DEG expression boxplots → `Result/Fig5/Fig5_H_DEG_boxplot/` |
 
 ---
 
-## Result6 — DEG visualization
+## Phenotype analysis scripts (`Result*`)
 
-### Result6_visualization_DEG_boxplot.R
+These produce **tables / statistics** (or supporting panels) organized by phenotype. They feed Fig* scripts or supplementary analyses.
 
-- **Purpose:** Boxplot visualization for DEGs (e.g. Figure 6B). Linear model: `Expression ~ Group + Species:Sequencer`.
-- **Input:** `data/Result6/*_Metadata.tsv`, `data/Result6/*_Count.tsv` (e.g. `Total_sleep_time_Metadata.tsv`, `Total_sleep_time_Count.tsv`, and similarly for NREM_ratio, Sleep_timing, Sleep_frequency).
-- **Output:** `figures/Result6/<gene>_<suffix>.pdf`.
+| Script | Role |
+|--------|------|
+| `Supplementary_Fig1to6_sleep_architecture_metadata.R` | Supp. Figs 1–6 from species sleep metadata (Result1) |
+| `Result2and3_anova_enrichment.R` | Phylogenetic clustering + ANOVA/Kruskal for total sleep & NREM |
+| `Result2_sleep_duration_variants.R` | Total-sleep–associated SNPs |
+| `Result2_AA_mutation_analysis.R` | Amino-acid mutations for total-sleep SNPs |
+| `Result3_nrem_ratio_variants.R` | NREM-associated SNPs |
+| `Result3_AA_mutation_analysis.R` | Amino-acid mutations for NREM SNPs |
+| `Result3_ARNTL2_variants_LD.R` | LD-like co-evolution heatmap among NREM nonsynonymous SNPs |
+| `Result4_Cochran_enrichment.R` | Sleep-timing gene-level Cochran enrichment |
+| `Result4_Sleeptiming_optimal_cluster_group.R` | Optimal cluster grouping for sleep timing |
+| `Result5_SNP_Cochran_sleep_frequency.R` | Sleep-frequency SNP Cochran–Armitage tests |
+| `Result5_Sleepfrequency_associated_AA_effect_from_SNP.R` | AA effects of frequency-associated SNPs |
+| `Result5_Figures_visualization.R` | Legacy Result5 figure bundle (prefer modular `Fig4_*` / `Fig5_*` where applicable) |
+
+Legacy Result* visualization scripts: `scripts/99.previous/`.
 
 ---
 
-## Permutation-based cluster association (sleep timing & sleep frequency)
+## Requirements
 
-For categorical sleep traits, an empirical permutation test was used:
-
-1. Species clustered by hierarchical clustering (average linkage) on T92 genetic distance.
-2. Cochran–Armitage test statistic computed between cluster labels and phenotype categories.
-3. Cluster labels permuted (e.g. N = 1,000,000); empirical p-value: `P = (|T_perm| >= |T_obs| + 1) / (N + 1)`.
-
-Implemented in R (e.g. DescTools). Indel workflow used external tools (bcftools, Jvarkit) as documented in the project.
+- **R** (≥ 4.x recommended)
+- Core packages via `scripts/00_setup.R` (`data.table`, `dplyr`, `ggplot2`, …)
+- Additional packages used by Fig* scripts as needed, e.g. `ape`, `Biostrings`, `ggtree`, `ggrepel`, `patchwork`, `DescTools`
 
 ---
 
-## Notes
+## Quick start
 
-- All scripts assume the **project root** contains `data/` and (for most) `figures/`; directories are created as needed.
-- Scripts are modular and can be run independently per result section, provided required inputs exist as in [data/README.md](../data/README.md).
+```r
+setwd("path/to/SleEvo")   # project root
+source("scripts/00_setup.R")
+
+# Example: regenerate Fig3C
+source("scripts/Fig3_C_Phylogenetic_signal.R")
+```
+
+1. Place inputs as described in [data/README.md](data/README.md).
+2. Run phenotype analyses (`Result*`) when you need to refresh tables.
+3. Run **`Fig*`** scripts to write publication panels under `Result/Fig3|Fig4|Fig5/`.
+
+---
+
+## Reproducibility
+
+- Run all scripts from the **repository root**.
+- Fig* scripts write to `Result/FigN/` with relative paths only.
+- Phenotype data remain under `data/Result1`–`Result6` and `data/Cross_validation/`.
