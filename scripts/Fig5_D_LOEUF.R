@@ -162,7 +162,7 @@ ggsave(file.path(OUT_DIR, "LOEUF_permutation.pdf"),
 ## =========================================================
 
 n_hi <- sum(supple_LOEUF$LOEUF < 0.6, na.rm = TRUE)
-total_n <- n_circadian   # 127 circadian genes (Fig5 D)
+total_n <- n_circadian   # 125 circadian genes (Fig5 D)
 
 ## p label: match panel style (e.g. 0.0001)
 p_lab <- if (p_perm < 0.0001) {
