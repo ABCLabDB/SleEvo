@@ -10,7 +10,7 @@ All paths are relative to the **project root** (folder containing `data/`, `scri
   - **Fig4** — Sleep timing & sleep frequency  
   - **Fig5** — Cross-validation  
 
-Run `00_setup.R` first. Prefer **`Fig*`** scripts to regenerate main panels (`Result/Fig3|Fig4|Fig5/`). Older Result* visualization scripts are in `99.previous/`.
+Run `00_setup.R` first. Prefer **`Fig*`** scripts to regenerate main panels (`Result/Fig3|Fig4|Fig5/`).
 
 ---
 
@@ -116,18 +116,6 @@ Typical inputs: `data/Cross_validation/`, `data/Result6/`, `data/Fasta/`.
 ### Metadata supplementary figures
 
 - **`Supplementary_Fig1to6_sleep_architecture_metadata.R`** — Supp. Figs 1–6 from `data/Result1/species_sleep_metadata.txt`.
-
----
-
-## `99.previous/`
-
-Archived Result* **visualization** scripts replaced by modular `Fig*` scripts:
-
-- `Result2_visualization.R`
-- `Result2_AA_PML_visualization.R`
-- `Result3_visualization.R`
-- `Result4_visualization.R`
-- `Result6_visualization_DEG_boxplot.R` (superseded for main Fig5H by `Fig5_H_DEG_boxplot.R`)
 
 ---
 
