@@ -78,7 +78,7 @@ threshold <- -log10(0.05)
 ## Result3 highlighted ARNTL2 / PPARA; Fig3 G features Chr12:27401573
 target_snps <- c(
   "Chr12:27401573",
-  "Chr12:27389187",
+  "Chr12:27389187"
 )
 
 chr_levels <- sort(unique(don$CHR))
