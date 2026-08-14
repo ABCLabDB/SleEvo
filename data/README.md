@@ -1,6 +1,8 @@
 # Data directory
 
-This document describes the **final version** of the data layout: input files and output locations for the Sleep Evolution analyses. All paths are relative to the project root.
+Input files and intermediate tables for Sleep Evolution analyses. All paths are relative to the project root.
+
+**Convention:** `data/Result1`–`Result6` are organized by **phenotype**. Main manuscript panels are written by `Fig*` scripts to `Result/Fig3|Fig4|Fig5/` (see root [README.md](../README.md)).
 
 ---
 
@@ -40,8 +42,8 @@ Gene-wise nucleotide (and CDS) matrices are used by Result2, Result3, Result4, a
 
 | Use      | Directory | Scripts |
 |----------|------------|--------|
-| Result2  | `data/Result2/NucleotideMatrix/` | `Result2_visualization.R`, `Result2_AA_mutation_analysis.R` |
-| Result3–5| `data/Circadian_gene_Nucleotide_Matrix/` | `Result3_visualization.R`, `Result4_visualization.R`, `Result5_SNP_Cochran_sleep_frequency.R`, `Result5_Sleepfrequency_associated_AA_effect_from_SNP.R` |
+| Result2  | `data/Result2/NucleotideMatrix/` | `Result2_AA_mutation_analysis.R`, `Fig3_*` |
+| Result3–5| `data/Circadian_gene_Nucleotide_Matrix/` | Result3–5 analysis scripts, `Fig3_*` / `Fig4_*` |
 
 - One matrix file per gene, e.g. `[GENE].tsv`.
 - Ensure the correct directory is populated for the scripts you run (Result2 uses `Result2/NucleotideMatrix`, Result3–5 use `Circadian_gene_Nucleotide_Matrix`).
@@ -98,8 +100,25 @@ Gene-wise nucleotide (and CDS) matrices are used by Result2, Result3, Result4, a
 |--------|-------------|
 | Input  | `Sleep_frequency_Cochran.tsv` |
 | Input  | `data/Circadian_gene_Nucleotide_Matrix/<Gene>.tsv` |
-| Output | Significant SNPs are written to `figures/Result5/SNP_Significant.tsv` by `Result5_SNP_Cochran_sleep_frequency.R` |
-| Output | `figures/Result5/AminoAcid_Mutation_DF.tsv` from `Result5_Sleepfrequency_associated_AA_effect_from_SNP.R` |
+| Output | Significant SNPs / AA tables from `Result5_SNP_Cochran_sleep_frequency.R` and `Result5_Sleepfrequency_associated_AA_effect_from_SNP.R` (paths as set in those scripts) |
+
+---
+
+### Cross-validation — `data/Cross_validation/`
+
+Cross-validation / human constraint inputs used by **Fig5** scripts.
+
+| File | Role |
+|------|------|
+| `TableS22.txt` | Sleep-associated SNP / gene list (Fig5B, Fig5D) |
+| `TableS23.txt` | Variant annotation (Func / ExonicFunc, CADD, etc.; Fig5B, Fig5C) |
+| `TableS24.txt` | Gene-level LOEUF / pLI for target genes (Fig5D) |
+| `TableS25.txt` | Human GWAS overlap for translational relevance (Fig5E) |
+| `TableS27.txt` | RNA-seq run / BioProject metadata |
+| `TableS28.txt` | DEG summary across four sleep phenotypes |
+| `gnomAD_LOEUF_result_all.tsv` | Background gnomAD LOEUF table (Fig5D) |
+| `supplementaryS2.tsv` | Circadian gene annotation reference |
+| `gnomad.v2.1.1.lof_metrics.by_gene.txt.bgz` | Raw gnomAD LoF metrics (source archive) |
 
 ---
 
@@ -110,7 +129,7 @@ Phenotype-specific expression matrices, metadata, and DEG results. See **[data/R
 | Role   | File pattern |
 |--------|--------------|
 | Input  | `*_Count.tsv`, `*_Metadata.tsv` (and optionally `*_DEGs.tsv`) |
-| Output | Figures from `Result6_visualization_DEG_boxplot.R` are saved under `figures/Result6/` |
+| Output | DEG boxplots via `Fig5_H_DEG_boxplot.R` → `Result/Fig5/Fig5_H_DEG_boxplot/` |
 
 **RNA-seq data provenance**
 
@@ -124,10 +143,10 @@ Summary matrices used by visualization scripts:
 
 | File                     | Used by            |
 |--------------------------|--------------------|
-| `Total_sleep_time.tsv`   | Result2 scripts    |
-| `NREM_ratio.tsv`         | Result3 scripts    |
-| `Sleep_timing.tsv`       | Result4 scripts    |
-| `Number_of_sleep_times.tsv` | Optional / referenced as needed |
+| `Total_sleep_time.tsv`   | Fig3 / Result2     |
+| `NREM_ratio.tsv`         | Fig3 / Result3     |
+| `Sleep_timing.tsv`       | Fig4 / Result4     |
+| `Number_of_sleep_times.tsv` | Fig4 / Result5 as needed |
 
 **Evolutionary statistics provenance**
 
