@@ -38,7 +38,6 @@ SleEvo/
 │   ├── Fig3_*.R … Fig5_*.R        # Main figure generation (preferred)
 │   ├── Result*_*.R                # Phenotype analysis pipelines
 │   ├── Supplementary_Fig1to6_*.R
-│   ├── 99.previous/               # Older Result* visualization scripts
 │   └── README.md
 │
 └── README.md
@@ -122,8 +121,6 @@ These produce **tables / statistics** (or supporting panels) organized by phenot
 | `Result5_SNP_Cochran_sleep_frequency.R` | Sleep-frequency SNP Cochran–Armitage tests |
 | `Result5_Sleepfrequency_associated_AA_effect_from_SNP.R` | AA effects of frequency-associated SNPs |
 | `Result5_Figures_visualization.R` | Legacy Result5 figure bundle (prefer modular `Fig4_*` / `Fig5_*` where applicable) |
-
-Legacy Result* visualization scripts: `scripts/99.previous/`.
 
 ---
 
