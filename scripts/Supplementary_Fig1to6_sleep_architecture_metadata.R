@@ -1,5 +1,5 @@
 ############################################################
-# Result 1 – Supplementary Figures 1–6
+# Supplementary Figures 1–6
 # Metadata-based characterization of sleep architecture
 # across species
 #
