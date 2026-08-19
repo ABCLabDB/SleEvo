@@ -78,6 +78,8 @@ Outputs: `Result/Fig5/` (DEG plots under `Result/Fig5/Fig5_H_DEG_boxplot/`)
 | `Fig5_E_OPN4_translational_relevance.R` | OPN4 Chr10:86658604 ATLAS vs Human GWAS (TableS25) |
 | `Fig5_H_DEG_boxplot.R` | DEG boxplots (tst / nrem / timing / frequency) from `data/Result6/` |
 
+RNA-seq DEG analysis used the linear model `Expression ~ Group + Species:instrument`.
+
 Typical inputs: `data/Cross_validation/`, `data/Result6/`, `data/Fasta/`.
 
 ---
