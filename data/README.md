@@ -89,8 +89,12 @@ Gene-wise nucleotide (and CDS) matrices are used by Result2, Result3, Result4, a
 
 | Role   | File |
 |--------|------|
-| Input  | `Sleeptiming_Cochran_Result.tsv`, `Sleeptiming_Manhattan_Dataset.tsv`, `Sleeptiming_AA_Mutation.tsv` (from upstream analyses) |
+| Input / output | `Sleep_Timing_optimal_K.tsv` (optimal cluster K) |
+| Output | `Sleeptiming_Fisher_Result.tsv` — gene-level Fisher permutation (`Gene`, `Cluster`, `P_Value`) from `Result4_Sleeptiming_tree_association_test.R` |
+| Input  | `Sleeptiming_Manhattan_Dataset.tsv`, `Sleeptiming_AA_Mutation.tsv` (from upstream analyses) |
 | Input  | `data/Fasta/`, `data/Circadian_gene_Nucleotide_Matrix/`, `data/Heatmap/Sleep_timing.tsv` |
+
+Fig4 timing panels (A/B/C/E) read `Sleeptiming_Fisher_Result.tsv` (not the older Cochran enrichment table).
 
 ---
 
@@ -98,9 +102,13 @@ Gene-wise nucleotide (and CDS) matrices are used by Result2, Result3, Result4, a
 
 | Role   | File / path |
 |--------|-------------|
-| Input  | `Sleep_frequency_Cochran.tsv` |
-| Input  | `data/Circadian_gene_Nucleotide_Matrix/<Gene>.tsv` |
+| Input / output | `Number_of_sleep_optimal_K.tsv` (optimal cluster K) |
+| Output | `Sleep_frequency_Fisher.tsv` — gene-level Fisher permutation (`Gene`, `Cluster`, `P_Value`) from `Result5_Sleepfrequency_tree_association_test.R` |
+| Input  | `SNP.tsv`, `All_Indel_Split.tsv` |
+| Input  | `data/Circadian_gene_Nucleotide_Matrix/<Gene>.tsv` (or nucleotide matrices as configured) |
 | Output | Significant SNPs / AA tables from `Result5_SNP_Cochran_sleep_frequency.R` and `Result5_Sleepfrequency_associated_AA_effect_from_SNP.R` (paths as set in those scripts) |
+
+Fig4 frequency panels (A/F) and Result5 SNP gene filtering read `Sleep_frequency_Fisher.tsv`.
 
 ---
 
