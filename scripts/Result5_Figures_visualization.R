@@ -8,7 +8,7 @@
 #
 # Input:
 #   data/Result1/species_sleep_metadata.txt
-#   data/Result5/Sleep_frequency_Cochran.tsv
+#   data/Result5/Sleep_frequency_Fisher.tsv
 #   data/Fasta/<Gene>_muscle.fasta
 #
 # Output:
@@ -33,11 +33,11 @@ dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
 
 ############################################################
 # --------------------- Fig5A ------------------------------
-# Cochran lollipop plot
+# Fisher enrichment lollipop plot
 ############################################################
 
 cochran_df <- fread(
-  "data/Result5/Sleep_frequency_Cochran.tsv"
+  "data/Result5/Sleep_frequency_Fisher.tsv"
 ) %>% as.data.frame()
 
 cochran_df$log_Pvalue <- -log10(cochran_df$P_Value)
@@ -122,7 +122,7 @@ metadata$Group <- ifelse(
 )
 
 perm_test <- fread(
-  "data/Result5/Sleep_frequency_Cochran.tsv"
+  "data/Result5/Sleep_frequency_Fisher.tsv"
 ) %>% as.data.frame()
 
 knee <- perm_test %>%
