@@ -35,7 +35,7 @@ SleEvo/
 │
 ├── scripts/
 │   ├── 00_setup.R
-│   ├── Fig3_*.R … Fig5_*.R        # Main figure generation (preferred)
+│   ├── Fig3_*.R … Fig5_*.R        # Main figure generation
 │   ├── Result*_*.R                # Phenotype analysis pipelines
 │   ├── Supplementary_Fig1to6_*.R
 │   └── README.md
@@ -56,10 +56,10 @@ SleEvo/
 | Fig | Uses (typical) |
 |-----|----------------|
 | **Fig3** | Result2 (total sleep time) + Result3 (NREM ratio) |
-| **Fig4** | Result4 (sleep timing) + Result5 (sleep frequency) |
+| **Fig4** | Result4 (sleep timing) + Result5 (sleep frequency); gene-level association from Fisher permutation tables |
 | **Fig5** | Cross-validation tables (`data/Cross_validation/`) + Result6 DEG expression |
 
-Older monolithic Result* *visualization* scripts live under `scripts/99.previous/` for reference. Prefer the modular **`Fig*`** scripts for regenerating main figures.
+Prefer the modular **`Fig*`** scripts for regenerating main figures.
 
 ---
 
@@ -80,11 +80,16 @@ Run from the **project root**. Outputs go to `Result/Fig3`, `Result/Fig4`, or `R
 
 ### Fig4 — Sleep timing & sleep frequency
 
+Gene-level enrichment / candidate selection for panels **4A–4F** uses Fisher permutation results:
+
+- Timing: `data/Result4/Sleeptiming_Fisher_Result.tsv` (`Gene`, `Cluster`, `P_Value`)
+- Frequency: `data/Result5/Sleep_frequency_Fisher.tsv` (`Gene`, `Cluster`, `P_Value`)
+
 | Script | Panel / content |
 |--------|------------------|
-| `Fig4_A_Sleeptiming_enrichment.R` | **4A** Cochran enrichment lollipops (timing + frequency; also combined) |
+| `Fig4_A_Sleeptiming_enrichment.R` | **4A** Fisher enrichment lollipops (timing + frequency; also combined) |
 | `Fig4_B_PER1_sleeptiming_tree.R` | **4B** PER1 tree + sleep-timing heatmap column |
-| `Fig4_C_Selection_signature_heatmap.R` | **4C** Selection signature for sleep-timing candidates |
+| `Fig4_C_Selection_signature_heatmap.R` | **4C** Selection signature for sleep-timing candidates (`P_Value < 0.05`) |
 | `Fig4_D_Manhattanplot.R` | **4D** Sleep-timing Manhattan plot |
 | `Fig4_E_PER1_AminoAcid_mutation.R` | **4E** PER1 nonsynonymous lollipop (UniProt domains) |
 | `Fig4_F_Sleepfrequency_tree.R` | **4F** ATF5 / NFIL3 sleep-frequency trees (+ combined) |
@@ -116,9 +121,10 @@ These produce **tables / statistics** (or supporting panels) organized by phenot
 | `Result3_nrem_ratio_variants.R` | NREM-associated SNPs |
 | `Result3_AA_mutation_analysis.R` | Amino-acid mutations for NREM SNPs |
 | `Result3_ARNTL2_variants_LD.R` | LD-like co-evolution heatmap among NREM nonsynonymous SNPs |
-| `Result4_Cochran_enrichment.R` | Sleep-timing gene-level Cochran enrichment |
 | `Result4_Sleeptiming_optimal_cluster_group.R` | Optimal cluster grouping for sleep timing |
-| `Result5_SNP_Cochran_sleep_frequency.R` | Sleep-frequency SNP Cochran–Armitage tests |
+| `Result4_Sleeptiming_tree_association_test.R` | Sleep-timing gene-level Fisher permutation (2×K) → `Sleeptiming_Fisher_Result.tsv` |
+| `Result5_Sleepfrequency_tree_association_test.R` | Sleep-frequency gene-level Fisher permutation (2×K) → `Sleep_frequency_Fisher.tsv` |
+| `Result5_SNP_Cochran_sleep_frequency.R` | Sleep-frequency SNP Cochran–Armitage tests (genes from Fisher table) |
 | `Result5_Sleepfrequency_associated_AA_effect_from_SNP.R` | AA effects of frequency-associated SNPs |
 | `Result5_Figures_visualization.R` | Legacy Result5 figure bundle (prefer modular `Fig4_*` / `Fig5_*` where applicable) |
 
@@ -138,8 +144,8 @@ These produce **tables / statistics** (or supporting panels) organized by phenot
 setwd("path/to/SleEvo")   # project root
 source("scripts/00_setup.R")
 
-# Example: regenerate Fig3C
-source("scripts/Fig3_C_Phylogenetic_signal.R")
+# Example: regenerate Fig4A (Fisher enrichment)
+source("scripts/Fig4_A_Sleeptiming_enrichment.R")
 ```
 
 1. Place inputs as described in [data/README.md](data/README.md).
@@ -153,3 +159,4 @@ source("scripts/Fig3_C_Phylogenetic_signal.R")
 - Run all scripts from the **repository root**.
 - Fig* scripts write to `Result/FigN/` with relative paths only.
 - Phenotype data remain under `data/Result1`–`Result6` and `data/Cross_validation/`.
+- For categorical sleep traits (timing / frequency), gene-level tree association uses **permutation Fisher (2×K)** tables rather than the older Cochran enrichment files.
