@@ -8,7 +8,7 @@
 # Input:
 #   - data/Fasta/PER1_muscle.fasta
 #   - data/Result1/species_sleep_metadata.txt
-#   - data/Result4/Sleeptiming_Cochran_Result.tsv
+#   - data/Result4/Sleeptiming_Fisher_Result.tsv
 #
 # Output:
 #   - Result/Fig4/Fig4_B_PER1_sleeptiming_tree.jpg
@@ -41,8 +41,8 @@ PROJECT_DIR <- getwd()
 DATA_FASTA <- file.path(PROJECT_DIR, "data", "Fasta")
 META_FILE  <- file.path(PROJECT_DIR, "data", "Result1",
                         "species_sleep_metadata.txt")
-COCHRAN_FILE <- file.path(PROJECT_DIR, "data", "Result4",
-                          "Sleeptiming_Cochran_Result.tsv")
+FISHER_FILE <- file.path(PROJECT_DIR, "data", "Result4",
+                         "Sleeptiming_Fisher_Result.tsv")
 
 OUT_DIR <- file.path(PROJECT_DIR, "Result", "Fig4")
 dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
@@ -82,13 +82,13 @@ meta$Type[meta$Sleep_Timing == "Sleep at daytime"] <- "Sleep at daytime"
 
 
 ## =========================================================
-## 4. Gene list (Cochran / knee)
+## 4. Gene list (Fisher permutation / knee)
 ## =========================================================
 
-knee <- fread(COCHRAN_FILE) |> as.data.frame()
-knee$gene.cluster.idx <- as.numeric(
-  sapply(strsplit(as.character(knee$gene.cluster.idx), "_"), `[`, 2)
-)
+knee <- fread(FISHER_FILE) |> as.data.frame()
+## Gene, Cluster, P_Value from Sleeptiming_Fisher_Result.tsv
+knee$gene.idx <- knee$Gene
+knee$gene.cluster.idx <- as.numeric(knee$Cluster)
 rownames(knee) <- NULL
 
 
