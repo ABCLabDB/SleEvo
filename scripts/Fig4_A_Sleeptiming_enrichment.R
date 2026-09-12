@@ -1,15 +1,13 @@
 ############################################################
 # Fig4_A_Sleeptiming_enrichment.R
 #
-# Figure 4A. Cochran enrichment lollipop plots
+# Figure 4A. Fisher enrichment lollipop plots
 #   (top)    Sleep timing related
-#            from Result4_visualization.R (Figure4A)
 #   (bottom) Sleep frequency related
-#            from Result5_Figures_visualization.R (Fig5A)
 #
 # Input:
-#   - data/Result4/Sleeptiming_Cochran_Result.tsv
-#   - data/Result5/Sleep_frequency_Cochran.tsv
+#   - data/Result4/Sleeptiming_Fisher_Result.tsv
+#   - data/Result5/Sleep_frequency_Fisher.tsv
 #
 # Output:
 #   - Result/Fig4/Fig4_A_Sleeptiming_enrichment.jpg|.pdf
@@ -33,11 +31,11 @@ PROJECT_DIR <- getwd()
 
 TIMING_FILE <- file.path(
   PROJECT_DIR, "data", "Result4",
-  "Sleeptiming_Cochran_Result.tsv"
+  "Sleeptiming_Fisher_Result.tsv"
 )
 FREQ_FILE <- file.path(
   PROJECT_DIR, "data", "Result5",
-  "Sleep_frequency_Cochran.tsv"
+  "Sleep_frequency_Fisher.tsv"
 )
 
 OUT_DIR <- file.path(PROJECT_DIR, "Result", "Fig4")
@@ -109,7 +107,7 @@ make_enrichment_lollipop <- function(df, sig_label, sig_color,
 
 timing <- fread(TIMING_FILE) |> as.data.frame()
 timing_df <- timing |>
-  transmute(Gene = gene.idx, logP = -log10(P.cochran))
+  transmute(Gene = Gene, logP = -log10(P_Value))
 
 n_timing_total <- nrow(timing_df)
 n_timing_sig   <- sum(timing_df$logP > threshold, na.rm = TRUE)
