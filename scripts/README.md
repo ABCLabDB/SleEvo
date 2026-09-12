@@ -17,7 +17,7 @@ Run `00_setup.R` first. Prefer **`Fig*`** scripts to regenerate main panels (`Re
 ## Recommended run order
 
 1. `00_setup.R`
-2. Phenotype analyses as needed (`Result2and3_anova_enrichment.R`, SNP/AA scripts, Cochran scripts, …)
+2. Phenotype analyses as needed (`Result2and3_anova_enrichment.R`, SNP/AA scripts, Fisher tree-association tests, …)
 3. Main figures: `Fig3_*.R` → `Fig4_*.R` → `Fig5_*.R`
 
 ---
@@ -51,11 +51,18 @@ Typical inputs: `data/Result1/`, `data/Result2/`, `data/Result3/`, `data/Fasta/`
 
 Outputs: `Result/Fig4/`
 
+Gene-level panels use Fisher permutation results:
+
+- `data/Result4/Sleeptiming_Fisher_Result.tsv`
+- `data/Result5/Sleep_frequency_Fisher.tsv`
+
+Columns: `Gene`, `Cluster`, `P_Value` (permutation Fisher 2×K).
+
 | Script | Description |
 |--------|-------------|
-| `Fig4_A_Sleeptiming_enrichment.R` | Cochran enrichment lollipops (timing + frequency; combined panel) |
+| `Fig4_A_Sleeptiming_enrichment.R` | Fisher enrichment lollipops (timing + frequency; combined panel) |
 | `Fig4_B_PER1_sleeptiming_tree.R` | PER1 tree + categorical sleep-timing heatmap |
-| `Fig4_C_Selection_signature_heatmap.R` | Selection signature for timing candidates |
+| `Fig4_C_Selection_signature_heatmap.R` | Selection signature for timing candidates (`P_Value < 0.05`) |
 | `Fig4_D_Manhattanplot.R` | Sleep-timing Manhattan plot |
 | `Fig4_E_PER1_AminoAcid_mutation.R` | PER1 nonsynonymous protein lollipop (UniProt domains) |
 | `Fig4_F_Sleepfrequency_tree.R` | ATF5 / NFIL3 frequency trees (+ side-by-side combined) |
@@ -104,14 +111,15 @@ Typical inputs: `data/Cross_validation/`, `data/Result6/`, `data/Fasta/`.
 
 ### Sleep timing (Result4)
 
-- **`Result4_Sleeptiming_optimal_cluster_group.R`** — optimal K / group assignment.
-- **`Result4_Cochran_enrichment.R`** — gene-level Cochran enrichment → `data/Result4/Sleeptiming_Cochran_Result.tsv`.
+- **`Result4_Sleeptiming_optimal_cluster_group.R`** — optimal K / group assignment → `data/Result4/Sleep_Timing_optimal_K.tsv`.
+- **`Result4_Sleeptiming_tree_association_test.R`** — gene-level Fisher permutation (2×K) → `data/Result4/Sleeptiming_Fisher_Result.tsv`.
 
 **SNP testing note:** biallelic sites use Cochran–Armitage; multiallelic sites use χ².
 
 ### Sleep frequency (Result5)
 
-- **`Result5_SNP_Cochran_sleep_frequency.R`** — site-level Cochran–Armitage → significant SNP table.
+- **`Result5_Sleepfrequency_tree_association_test.R`** — gene-level Fisher permutation (2×K) → `data/Result5/Sleep_frequency_Fisher.tsv`.
+- **`Result5_SNP_Cochran_sleep_frequency.R`** — site-level Cochran–Armitage on Fisher-significant genes → significant SNP table.
 - **`Result5_Sleepfrequency_associated_AA_effect_from_SNP.R`** — AA effects from those SNPs.
 - **`Result5_Figures_visualization.R`** — legacy Result5 figure bundle (prefer `Fig4_*` / `Fig5_*` for main panels).
 
