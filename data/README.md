@@ -2,7 +2,29 @@
 
 Input files and intermediate tables for Sleep Evolution analyses. All paths are relative to the project root.
 
-**Convention:** `data/Result1`–`Result6` are organized by **phenotype**. Main manuscript panels are written by `Fig*` scripts to `Result/Fig3|Fig4|Fig5/` (see root [README.md](../README.md)).
+**Convention:** `data/Result1`–`Result6` are organized by **phenotype**. Main manuscript panels are written by `Fig*` scripts to `Result/Fig3|Fig4|Fig5/`, and Fig3D/Fig4C evolution-pressure panels to `Result/Evolution_Pressure/` (see root [README.md](../README.md)).
+
+---
+
+## Evolution Pressure — `data/Evolution_Pressure/`
+
+Per-phenotype evolutionary-pressure tables used by `scripts/Fig3D_and_Fig4C_evolution_pressure.R`.
+
+| Manuscript panel | Phenotypes | Output prefix |
+|------------------|------------|---------------|
+| **Fig3D** | Sleep duration + NREM ratio | `Result/Evolution_Pressure/Fig3D_*` |
+| **Fig4C** | Sleep timing + Sleep frequency | `Result/Evolution_Pressure/Fig4C_*` |
+
+| File | Phenotype | Typical n |
+|------|-----------|-----------|
+| `Sleep_duration.tsv` | Sleep duration | 112 |
+| `NREM_ratio.tsv` | NREM ratio | 142 |
+| `Sleep_timing.tsv` | Sleep timing | 60 |
+| `Sleep_frequency.tsv` | Sleep frequency | 4 |
+
+Key columns include `Gene_symbol`, `omega_M0`, `dN_tree`, `dS_tree`, `FDR_M1a_vs_M2a`, site-model summaries, and significance flags. When `omega_M0` is absent in the source sheet it is computed as `dN_tree / dS_tree`.
+
+Derived from `Evolution_Pressure.xlsx`. This figure set **replaces** the older standalone Fig3D / Fig4C selection-signature heatmap scripts.
 
 ---
 
@@ -94,7 +116,8 @@ Gene-wise nucleotide (and CDS) matrices are used by Result2, Result3, Result4, a
 | Input  | `Sleeptiming_Manhattan_Dataset.tsv`, `Sleeptiming_AA_Mutation.tsv` (from upstream analyses) |
 | Input  | `data/Fasta/`, `data/Circadian_gene_Nucleotide_Matrix/`, `data/Heatmap/Sleep_timing.tsv` |
 
-Fig4 timing panels (A/B/C/E) read `Sleeptiming_Fisher_Result.tsv` (not the older Cochran enrichment table).
+Fig4 timing panels (A/B/D/E) read `Sleeptiming_Fisher_Result.tsv` (not the older Cochran enrichment table).
+Fig4C evolutionary-pressure panels use `data/Evolution_Pressure/` via `Fig3D_and_Fig4C_evolution_pressure.R`.
 
 ---
 
@@ -108,7 +131,8 @@ Fig4 timing panels (A/B/C/E) read `Sleeptiming_Fisher_Result.tsv` (not the older
 | Input  | `data/Circadian_gene_Nucleotide_Matrix/<Gene>.tsv` (or nucleotide matrices as configured) |
 | Output | Significant SNPs / AA tables from `Result5_SNP_Cochran_sleep_frequency.R` and `Result5_Sleepfrequency_associated_AA_effect_from_SNP.R` (paths as set in those scripts) |
 
-Fig4 frequency panels (A/F) and Result5 SNP gene filtering read `Sleep_frequency_Fisher.tsv`.
+Fig4 frequency panels (A/F/G/H) and Result5 SNP gene filtering read `Sleep_frequency_Fisher.tsv`.
+Fig4C evolutionary-pressure panels use `data/Evolution_Pressure/` via `Fig3D_and_Fig4C_evolution_pressure.R`.
 
 ---
 
