@@ -11,6 +11,7 @@ Analysis and figure code for evolutionary associations between circadian genes a
 | **Fig3** | Sleep duration & NREM ratio | Total sleep time, NREM ratio |
 | **Fig4** | Sleep timing & sleep frequency | Sleep timing, sleep frequency |
 | **Fig5** | Cross-validation | Human constraint / GWAS / transcriptomics |
+| **Fig3D / Fig4C** | Evolutionary pressure (dN/dS) | Duration+NREM (3D); Timing+Frequency (4C) |
 
 ---
 
@@ -23,20 +24,23 @@ SleEvo/
 ├── data/                          # Inputs & intermediate analysis tables
 │   ├── Circadian_gene_Nucleotide_Matrix/
 │   ├── Cross_validation/          # Fig5 tables (TableS22–S28, LOEUF, etc.)
+│   ├── Evolution_Pressure/        # Per-phenotype dN/dS / site-model tables
 │   ├── Fasta/                     # MUSCLE-aligned CDS FASTA
 │   ├── Heatmap/
 │   ├── Result1/ … Result6/        # Phenotype-organized analysis inputs
 │   └── README.md
 │
-├── Result/                        # Main figure outputs (from Fig* scripts)
+├── Result/                        # Figure outputs
 │   ├── Fig3/
 │   ├── Fig4/
-│   └── Fig5/
+│   ├── Fig5/
+│   └── Evolution_Pressure/
 │
 ├── scripts/
 │   ├── 00_setup.R
-│   ├── Fig3_*.R … Fig5_*.R        # Main figure generation
-│   ├── Result*_*.R                # Phenotype analysis pipelines
+│   ├── Fig3_*.R … Fig5_*.R
+│   ├── Fig3D_and_Fig4C_evolution_pressure.R  # Fig3D + Fig4C dN/dS panels
+│   ├── Result*_*.R
 │   ├── Supplementary_Fig1to6_*.R
 │   └── README.md
 │
@@ -58,14 +62,15 @@ SleEvo/
 | **Fig3** | Result2 (total sleep time) + Result3 (NREM ratio) |
 | **Fig4** | Result4 (sleep timing) + Result5 (sleep frequency); gene-level association from Fisher permutation tables |
 | **Fig5** | Cross-validation tables (`data/Cross_validation/`) + Result6 DEG expression |
+| **Fig3D / Fig4C** | `data/Evolution_Pressure/*.tsv` (per phenotype) |
 
-Prefer the modular **`Fig*`** scripts for regenerating main figures.
+Prefer the modular **`Fig*`** scripts (including `Fig3D_and_Fig4C_evolution_pressure.R`) for regenerating main figures.
 
 ---
 
 ## Main figures (`Fig*` scripts)
 
-Run from the **project root**. Outputs go to `Result/Fig3`, `Result/Fig4`, or `Result/Fig5` (jpg + pdf unless noted).
+Run from the **project root**. Outputs go to `Result/Fig3`, `Result/Fig4`, `Result/Fig5`, or `Result/Evolution_Pressure` (jpg + pdf unless noted).
 
 ### Fig3 — Sleep duration & NREM ratio
 
@@ -73,14 +78,15 @@ Run from the **project root**. Outputs go to `Result/Fig3`, `Result/Fig4`, or `R
 |--------|------------------|
 | `Fig3_AB_Sleepduration_tree.R` | **3A/B** Phylogenetic trees for total-sleep–associated genes (e.g. ADRB1, ATF4) with sleep-duration bars |
 | `Fig3_C_Phylogenetic_signal.R` | **3C** Blomberg’s K / Moran’s I across genes (alphabetical top 20) |
-| `Fig3_D_Selection_signature_heatmap.R` | **3D** dN/dS vs Tajima’s D selection-signature scatter |
 | `Fig3_E_NREMratio.R` | **3E** NREM-ratio phylogenetic tree (e.g. ARNTL2) |
 | `Fig3_F_NREMratio_Manhattanplot.R` | **3F** Manhattan plot of NREM-associated SNPs |
 | `Fig3_G_ARNTL2_NREMratio_variants.R` | **3G** ARNTL2 focal SNP alignment + logo/boxplot |
 
+Selection / dN/dS for duration & NREM → **`Fig3D_and_Fig4C_evolution_pressure.R`** (Fig3D block).
+
 ### Fig4 — Sleep timing & sleep frequency
 
-Gene-level enrichment / candidate selection for panels **4A–4F** uses Fisher permutation results:
+Gene-level enrichment / candidate selection for panels **4A–4H** uses Fisher permutation results:
 
 - Timing: `data/Result4/Sleeptiming_Fisher_Result.tsv` (`Gene`, `Cluster`, `P_Value`)
 - Frequency: `data/Result5/Sleep_frequency_Fisher.tsv` (`Gene`, `Cluster`, `P_Value`)
@@ -89,12 +95,13 @@ Gene-level enrichment / candidate selection for panels **4A–4F** uses Fisher p
 |--------|------------------|
 | `Fig4_A_Sleeptiming_enrichment.R` | **4A** Fisher enrichment lollipops (timing + frequency; also combined) |
 | `Fig4_B_PER1_sleeptiming_tree.R` | **4B** PER1 tree + sleep-timing heatmap column |
-| `Fig4_C_Selection_signature_heatmap.R` | **4C** Selection signature for sleep-timing candidates (`P_Value < 0.05`) |
 | `Fig4_D_Manhattanplot.R` | **4D** Sleep-timing Manhattan plot |
 | `Fig4_E_PER1_AminoAcid_mutation.R` | **4E** PER1 nonsynonymous lollipop (UniProt domains) |
 | `Fig4_F_Sleepfrequency_tree.R` | **4F** ATF5 / NFIL3 sleep-frequency trees (+ combined) |
 | `Fig4_G_Sleepfrequency_mutation.R` | **4G** ATF5 & CARTPT SNP alignment windows |
 | `Fig4_H_NFIL3_sleepfrequency_indel.R` | **4H** NFIL3 indel schematic |
+
+Selection / dN/dS for timing & frequency → **`Fig3D_and_Fig4C_evolution_pressure.R`** (Fig4C block).
 
 ### Fig5 — Cross-validation
 
@@ -105,6 +112,17 @@ Gene-level enrichment / candidate selection for panels **4A–4F** uses Fisher p
 | `Fig5_D_LOEUF.R` | **5D** Gene-level LOEUF intolerance bar + permutation null |
 | `Fig5_E_OPN4_translational_relevance.R` | **5E** OPN4 Chr10:86658604 ATLAS vs Human GWAS |
 | `Fig5_H_DEG_boxplot.R` | **5H** DEG expression boxplots → `Result/Fig5/Fig5_H_DEG_boxplot/` |
+
+### Fig3D & Fig4C — Evolution Pressure (dN/dS)
+
+| Script | Panel / content |
+|--------|------------------|
+| `Fig3D_and_Fig4C_evolution_pressure.R` | **Fig3D** Sleep duration + NREM ratio; **Fig4C** Sleep timing + Sleep frequency. Each: **P1** ω(M0) violin, **P2** constraint vs site-class selection, **P7** % site-level positive selection |
+
+- Inputs: `data/Evolution_Pressure/{Sleep_duration,NREM_ratio,Sleep_timing,Sleep_frequency}.tsv`
+- Outputs: `Result/Evolution_Pressure/Fig3D_*` and `Fig4C_*`
+
+Replaces the older `Fig3_D_Selection_signature_heatmap.R` and `Fig4_C_Selection_signature_heatmap.R`.
 
 ---
 
@@ -144,19 +162,19 @@ These produce **tables / statistics** (or supporting panels) organized by phenot
 setwd("path/to/SleEvo")   # project root
 source("scripts/00_setup.R")
 
-# Example: regenerate Fig4A (Fisher enrichment)
-source("scripts/Fig4_A_Sleeptiming_enrichment.R")
+# Example: regenerate Fig3D / Fig4C evolution-pressure panels
+source("scripts/Fig3D_and_Fig4C_evolution_pressure.R")
 ```
 
 1. Place inputs as described in [data/README.md](data/README.md).
 2. Run phenotype analyses (`Result*`) when you need to refresh tables.
-3. Run **`Fig*`** scripts to write publication panels under `Result/Fig3|Fig4|Fig5/`.
+3. Run **`Fig*`** scripts to write panels under `Result/`.
 
 ---
 
 ## Reproducibility
 
 - Run all scripts from the **repository root**.
-- Fig* scripts write to `Result/FigN/` with relative paths only.
-- Phenotype data remain under `data/Result1`–`Result6` and `data/Cross_validation/`.
+- Fig* scripts write to `Result/FigN/` (or `Result/Evolution_Pressure/`) with relative paths only.
+- Phenotype data remain under `data/Result1`–`Result6`, `data/Cross_validation/`, and `data/Evolution_Pressure/`.
 - For categorical sleep traits (timing / frequency), gene-level tree association uses **permutation Fisher (2×K)** tables rather than the older Cochran enrichment files.
