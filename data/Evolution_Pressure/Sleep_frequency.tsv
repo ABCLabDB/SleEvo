@@ -1,0 +1,5 @@
+Gene_symbol	Phenotype	ph	Pi	omega_M0	dN_tree	dS_tree	FDR_M2	FDR_M1a_vs_M2a	Significant_M1a_vs_M2a_FDR05	Status_M1a_vs_M2a	omega_positive_M1a_vs_M2a	prop_sites_positive_M1a_vs_M2a	N_BEB_sites_P95_M1a_vs_M2a	N_BEB_sites_P99_M1a_vs_M2a	BEB_P99_gap_enrichment_M1a_vs_M2a	FDR_M7_vs_M8	Significant_M7_vs_M8_FDR05	Status_M7_vs_M8	dN	dS
+ATF5	Sleep frequency	Sleep_frequency	0.059	0.1163	1.9877	17.0919	0.01752	1	NO	OK	1	0.15423	1	1	0.063				0.23906531	0.16343598
+CARTPT	Sleep frequency	Sleep_frequency	0.034	0.09618	1.6301	16.9484	0.0005217	1	NO	OK	1	0.04824	0	0	NA				0.16741245	0.28561888
+HDAC1	Sleep frequency	Sleep_frequency	0.043	0.08072	0.7706	9.5466	5.276e-07	5.045e-13	YES	OK	6.8031	0.06084	5	2	2.509				0.1697196	0.0390602
+NFIL3	Sleep frequency	Sleep_frequency	0.121	0.10896	2.2907	21.0238	0.1375	1	NO	OK	1	0.05721	0	0	NA				0.28559048	0.25077575
