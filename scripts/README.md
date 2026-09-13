@@ -9,8 +9,12 @@ All paths are relative to the **project root** (folder containing `data/`, `scri
   - **Fig3** — Sleep duration & NREM ratio  
   - **Fig4** — Sleep timing & sleep frequency  
   - **Fig5** — Cross-validation  
+- **`Fig3D_and_Fig4C_evolution_pressure.R`** — evolutionary pressure (dN/dS):
+  - **Fig3D** — Sleep duration + NREM ratio  
+  - **Fig4C** — Sleep timing + Sleep frequency  
+  - Each: P1 ω(M0) violin, P2 constraint vs site-class scatter, P7 significant-gene bar  
 
-Run `00_setup.R` first. Prefer **`Fig*`** scripts to regenerate main panels (`Result/Fig3|Fig4|Fig5/`).
+Run `00_setup.R` first. Prefer **`Fig*`** scripts to regenerate main panels.
 
 ---
 
@@ -18,7 +22,7 @@ Run `00_setup.R` first. Prefer **`Fig*`** scripts to regenerate main panels (`Re
 
 1. `00_setup.R`
 2. Phenotype analyses as needed (`Result2and3_anova_enrichment.R`, SNP/AA scripts, Fisher tree-association tests, …)
-3. Main figures: `Fig3_*.R` → `Fig4_*.R` → `Fig5_*.R`
+3. Main figures: `Fig3_*.R` → `Fig4_*.R` → `Fig5_*.R` → `Fig3D_and_Fig4C_evolution_pressure.R`
 
 ---
 
@@ -38,12 +42,13 @@ Outputs: `Result/Fig3/`
 |--------|-------------|
 | `Fig3_AB_Sleepduration_tree.R` | Phylogenetic trees + sleep-duration bars (e.g. ADRB1, ATF4) |
 | `Fig3_C_Phylogenetic_signal.R` | Blomberg’s K / Moran’s I (alphabetical first 20 genes) |
-| `Fig3_D_Selection_signature_heatmap.R` | dN/dS vs Tajima’s D selection signature |
 | `Fig3_E_NREMratio.R` | NREM-ratio tree (e.g. ARNTL2) |
 | `Fig3_F_NREMratio_Manhattanplot.R` | NREM SNP Manhattan plot |
 | `Fig3_G_ARNTL2_NREMratio_variants.R` | ARNTL2 focal SNP alignment + logo/boxplot |
 
 Typical inputs: `data/Result1/`, `data/Result2/`, `data/Result3/`, `data/Fasta/`, `data/Heatmap/`.
+
+Selection / dN/dS for duration & NREM → **`Fig3D_and_Fig4C_evolution_pressure.R`** (Fig3D).
 
 ---
 
@@ -62,7 +67,6 @@ Columns: `Gene`, `Cluster`, `P_Value` (permutation Fisher 2×K).
 |--------|-------------|
 | `Fig4_A_Sleeptiming_enrichment.R` | Fisher enrichment lollipops (timing + frequency; combined panel) |
 | `Fig4_B_PER1_sleeptiming_tree.R` | PER1 tree + categorical sleep-timing heatmap |
-| `Fig4_C_Selection_signature_heatmap.R` | Selection signature for timing candidates (`P_Value < 0.05`) |
 | `Fig4_D_Manhattanplot.R` | Sleep-timing Manhattan plot |
 | `Fig4_E_PER1_AminoAcid_mutation.R` | PER1 nonsynonymous protein lollipop (UniProt domains) |
 | `Fig4_F_Sleepfrequency_tree.R` | ATF5 / NFIL3 frequency trees (+ side-by-side combined) |
@@ -70,6 +74,8 @@ Columns: `Gene`, `Cluster`, `P_Value` (permutation Fisher 2×K).
 | `Fig4_H_NFIL3_sleepfrequency_indel.R` | NFIL3 indel schematic |
 
 Typical inputs: `data/Result4/`, `data/Result5/`, `data/Fasta/`, `data/Circadian_gene_Nucleotide_Matrix/`.
+
+Selection / dN/dS for timing & frequency → **`Fig3D_and_Fig4C_evolution_pressure.R`** (Fig4C).
 
 ---
 
@@ -88,6 +94,21 @@ Outputs: `Result/Fig5/` (DEG plots under `Result/Fig5/Fig5_H_DEG_boxplot/`)
 RNA-seq DEG analysis used the linear model `Expression ~ Group + Species:instrument`.
 
 Typical inputs: `data/Cross_validation/`, `data/Result6/`, `data/Fasta/`.
+
+---
+
+## Fig3D & Fig4C — Evolution Pressure (dN/dS)
+
+Outputs: `Result/Evolution_Pressure/`
+
+| Script | Description |
+|--------|-------------|
+| `Fig3D_and_Fig4C_evolution_pressure.R` | **Fig3D** Sleep duration + NREM ratio; **Fig4C** Sleep timing + Sleep frequency. Each: **P1** ω(M0) violin, **P2** constraint vs site-class scatter, **P7** % site-level positive selection |
+
+- **Fig3D_*** → Sleep duration & NREM ratio  
+- **Fig4C_*** → Sleep timing & Sleep frequency  
+
+Inputs: `data/Evolution_Pressure/*.tsv` (one file per phenotype).
 
 ---
 
@@ -131,6 +152,6 @@ Typical inputs: `data/Cross_validation/`, `data/Result6/`, `data/Fasta/`.
 
 ## Notes
 
-- Run from project root; Fig* scripts create `Result/FigN/` as needed.
+- Run from project root; Fig* scripts create `Result/FigN/` (or `Result/Evolution_Pressure/`) as needed.
 - See [data/README.md](../data/README.md) for input layouts.
 - Indel calling for frequency analyses used external tools (bcftools / jvarkit); see project documentation / Result5 notes.
