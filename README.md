@@ -25,6 +25,7 @@ SleEvo/
 │   ├── Circadian_gene_Nucleotide_Matrix/
 │   ├── Cross_validation/          # Fig5 tables (TableS22–S28, LOEUF, etc.)
 │   ├── Evolution_Pressure/        # Per-phenotype dN/dS / site-model tables
+│   ├── Supplementary_three_method/ # NJ / MP / ML inputs, trees, tables, Supp. Fig. 10
 │   ├── Fasta/                     # MUSCLE-aligned CDS FASTA
 │   ├── Heatmap/
 │   ├── Result1/ … Result6/        # Phenotype-organized analysis inputs
@@ -42,6 +43,7 @@ SleEvo/
 │   ├── Fig3D_and_Fig4C_evolution_pressure.R  # Fig3D + Fig4C dN/dS panels
 │   ├── Result*_*.R
 │   ├── Supplementary_Fig1to6_*.R
+│   ├── Supplementary_three_method/ # NJ → MP → ML comparison (01–07)
 │   └── README.md
 │
 └── README.md
@@ -123,6 +125,15 @@ Selection / dN/dS for timing & frequency → **`Fig3D_and_Fig4C_evolution_pressu
 - Outputs: `Result/Evolution_Pressure/Fig3D_*` and `Fig4C_*`
 
 Replaces the older `Fig3_D_Selection_signature_heatmap.R` and `Fig4_C_Selection_signature_heatmap.R`.
+
+### Supplementary three-method comparison (NJ / MP / ML)
+
+| Location | Content |
+|----------|---------|
+| `data/Supplementary_three_method/` | Inputs (`00_input/`), MP/ML trees (`01_trees/`), NJ/MP/ML association tables (`02_association/`), Supplementary Tables 12–13 plus supporting tables (`03_supplementary_table/`), Supplementary Figure 10 (`figure/`) |
+| `scripts/Supplementary_three_method/` | `01`–`07`: MP trees, MP association, ML trees (IQ-TREE), ML association, three-method comparison, tree-quality table, Supplementary Figure 10 |
+
+NJ = neighbour-joining (T92; published analysis), MP = maximum parsimony, ML = maximum likelihood. Detail: [data/Supplementary_three_method/README.md](data/Supplementary_three_method/README.md).
 
 ---
 
