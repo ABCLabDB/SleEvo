@@ -28,6 +28,20 @@ Derived from `Evolution_Pressure.xlsx`. This figure set **replaces** the older s
 
 ---
 
+## Supplementary three-method comparison — `data/Supplementary_three_method/`
+
+NJ, maximum parsimony, and maximum likelihood comparison (Supplementary Tables 12–13 and Supplementary Figure 10). Scripts: `scripts/Supplementary_three_method/` (`01`–`07`). Full layout: [Supplementary_three_method/README.md](Supplementary_three_method/README.md).
+
+| Path | Content |
+|------|---------|
+| `00_input/` | Alignments, metadata, gene list, fixed optimal-K tables |
+| `01_trees/` | MP, MP equal-best, and ML trees |
+| `02_association/` | NJ / MP / ML association results |
+| `03_supplementary_table/` | Supplementary Tables 12–13 and supporting tables |
+| `figure/` | `SupplementaryFigure10_reproducibility` (jpg, pdf, tif) and legend |
+
+---
+
 ## Metadata (Result1)
 
 Species-level sleep phenotype metadata is required for all analyses.
