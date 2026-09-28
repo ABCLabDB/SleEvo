@@ -1,0 +1,5 @@
+Phenotype	N_genes	N_species	MP_parsimony_score	MP_CI	MP_RI	MP_RC	MP_bootstrap_mean	MP_pct_nodes_BS70	MP_equally_parsimonious_trees	MP_strict_consensus_resolution	ML_parsimony_informative_sites	ML_logL	ML_SHaLRT_mean	ML_UFBoot_mean	ML_pct_nodes_UFBoot95	ML_pct_nodes_SHaLRT80_UFBoot95	Criterion	NJ_significant	MP_significant	ML_significant	Retained_in_MP	MP_retention_pct	Retained_in_ML	ML_retention_pct	Supported_by_all_three	Min_possible_overlap	Spearman_NJ_MP	Spearman_NJ_ML	Spearman_MP_ML
+Sleep duration	143	64	4948	0.449	0.618	0.272	73.9	61.3	16	88.5	842	-25502.0	82.7	87.6	60.8	56.6	BH	112	132	128	108	96.4	110	98.2	106	101	0.458	0.755	0.353
+NREM ratio	143	43	2795	0.514	0.625	0.32	72.6	61.0	7	90.0	642	-15688.0	82.0	85.4	56.5	54.3	BH	142	140	142	139	97.9	141	99.3	138	139	0.48	0.729	0.472
+Sleep timing	143	52	4006	0.48	0.594	0.28	71.8	60.0	11	88.7	734	-20947.0	81.6	86.0	55.9	52.5	raw	60	69	50	50	83.3	40	66.7	36	0	0.678	0.651	0.67
+Sleep frequency	143	40	3255	0.533	0.575	0.304	71.8	60.5	6	89.7	675	-17468.0	81.9	83.2	50.2	48.8	raw	4	10	3	4	100.0	3	75.0	3	0	0.246	0.283	0.202

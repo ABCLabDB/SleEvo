@@ -1,0 +1,52 @@
+Supplementary Figure 10. Reproducibility of gene-sleep-phenotype associations across
+three tree-reconstruction criteria.
+
+For each of the 143 circadian and sleep-related genes, gene trees were reconstructed
+independently under three optimality criteria - neighbour joining on T92 distances (NJ),
+maximum parsimony (MP; phangorn, parsimony ratchet, 2,000 bootstrap replicates) and
+maximum likelihood (ML; IQ-TREE, ModelFinder Plus, 1,000 ultrafast-bootstrap and 1,000
+SH-aLRT replicates) - from the same MUSCLE alignments and the same phenotype-specific
+species sets. All downstream steps (average-linkage clustering of patristic distances,
+cluster number and the association test) were held identical, so that the inferred
+topology is the only quantity that differs. Criteria are ordered NJ, MP, ML throughout
+this figure and in all accompanying supplementary tables.
+
+Significance is defined separately by trait type and this definition is used
+consistently in every panel. For the two continuous traits (NREM ratio, sleep duration),
+cluster membership was tested by one-way ANOVA and genes were called significant at a
+Benjamini-Hochberg adjusted P below 0.05. For the two categorical traits (sleep timing,
+sleep frequency), a 2 x K contingency table was tested by Fisher's exact test calibrated
+by 20,000 permutations at fixed K, and genes were called significant at a raw
+permutation P below 0.05, following the convention of the primary analysis. Adjusted
+values for the categorical traits are provided in the source tables.
+
+(A) Number of genes reaching significance under each criterion, for each phenotype
+(143 genes tested per phenotype).
+
+(B) Distribution of all 143 genes per phenotype by the number of criteria under which
+they are significant (3/3, 2/3, 1/3, 0/3). Counts of fewer than ten genes are drawn
+outside the bar with a leader line; zero counts are omitted.
+
+(C) Spearman rank correlation of -log10(P) between each pair of criteria, computed over
+all 143 genes and therefore independent of any significance threshold. Note that P
+values index statistical evidence rather than effect size, so this panel measures
+concordance of the ranking of gene-level association statistics, not of effect
+magnitudes.
+
+(D) Significance calls and association statistics for eight representative candidate
+genes, each shown for the phenotype in which it was prioritised. Values indicate
+BH-adjusted P values for continuous traits and raw permutation P values for categorical
+traits; shaded tiles denote a value below 0.05 under the criterion indicated.
+
+Note that for NREM ratio and sleep duration nearly every gene is significant under every
+criterion, so that the minimum overlap attainable from the observed set sizes already
+approaches the observed overlap; the high retention rates for those two phenotypes are
+therefore structurally constrained and the rank concordances in (C) are the more
+informative summary.
+
+Figure specification: 180 x 168 mm (double column), 600 dpi, sans-serif, minimum type
+size 5.8 pt. Supplied as JPEG, vector PDF and LZW-compressed TIFF.
+
+Source data: tables/SupplementaryTable_three_method_comparison.tsv
+             tables/SupplementaryTable_reproducibility_by_phenotype.tsv
+Script:      Code/02_supplementary_figure10.R

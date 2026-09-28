@@ -1,0 +1,5 @@
+Phenotype	Criterion	N_genes	NJ_significant	MP_significant	ML_significant	Replicated_in_MP	MP_retention_pct	Replicated_in_ML	ML_retention_pct	Replicated_in_both	Both_retention_pct	Novel_MP_only	Novel_ML_only	All_three	Min_possible_overlap_NJ_MP	Min_possible_overlap_NJ_ML	Spearman_NJ_MP	Spearman_NJ_ML	Spearman_MP_ML
+NREM ratio	BH	143	142	140	142	139	97.9	141	99.3	138	97.2	1	1	138	139	141	0.48	0.729	0.472
+Sleep duration	BH	143	112	132	128	108	96.4	110	98.2	106	94.6	24	18	106	101	97	0.458	0.755	0.353
+Sleep timing	raw	143	60	69	50	50	83.3	40	66.7	36	60.0	19	10	36	0	0	0.678	0.651	0.67
+Sleep frequency	raw	143	4	10	3	4	100.0	3	75.0	3	75.0	6	0	3	0	0	0.246	0.283	0.202
