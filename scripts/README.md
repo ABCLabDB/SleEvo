@@ -148,6 +148,22 @@ Inputs: `data/Evolution_Pressure/*.tsv` (one file per phenotype).
 
 - **`Supplementary_Fig1to6_sleep_architecture_metadata.R`** — Supp. Figs 1–6 from `data/Result1/species_sleep_metadata.txt`.
 
+### Supplementary three-method comparison (`scripts/Supplementary_three_method/`)
+
+NJ (neighbour-joining, published) vs maximum parsimony vs maximum likelihood. Data live in `data/Supplementary_three_method/`.
+
+| Script | Role |
+|--------|------|
+| `01_mp_trees.R` | MP trees → `01_trees/MP/`, `01_trees/MP_equalbest/` |
+| `02_mp_association.R` | MP association → `02_association/MP/` |
+| `03_ml_trees_iqtree.py` | ML trees (IQ-TREE) → `01_trees/ML/` |
+| `04_ml_association.R` | ML association → `02_association/ML/` |
+| `05_three_method_comparison.R` | Supplementary Table 12 and reproducibility summaries |
+| `06_tree_quality_table.py` | Supplementary Table 13 (tree quality + reproducibility) |
+| `07_supplementary_figure.R` | Supplementary Figure 10 |
+
+With `02_association/` already present, Tables 12–13 and Supplementary Figure 10 can be regenerated from scripts **05 → 06 → 07**. Detail: [data/Supplementary_three_method/README.md](../data/Supplementary_three_method/README.md).
+
 ---
 
 ## Notes
